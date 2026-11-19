@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Module 4.2: Iteration That Builds Quality | CC × Remotion</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#FACC15',
+            dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' }
+          }
+        }
+      }
+    }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+
+    /* Light mode - base */
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    /* Light mode - amber */
+    html:not(.dark) .text-amber-400 { color: #92400e; }
+    html:not(.dark) .bg-amber-500\/20 { background: rgba(217,119,6,.12); }
+    html:not(.dark) .bg-amber-500\/10 { background: rgba(217,119,6,.08); }
+    html:not(.dark) .border-amber-500\/30 { border-color: rgba(217,119,6,.25); }
+    html:not(.dark) .hover\:bg-amber-500\/30:hover { background: rgba(217,119,6,.18); }
+
+    /* Light mode - outras trilhas nav */
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #059669; }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(5,150,105,.08); }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #2563eb; }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(37,99,235,.08); }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #7c3aed; }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(124,58,237,.08); }
+    html:not(.dark) .hover\:text-amber-400:hover { color: #92400e; }
+    html:not(.dark) .hover\:bg-amber-500\/10:hover { background: rgba(217,119,6,.08); }
+
+    /* Light mode - primary / sky */
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161,98,7,.08); }
+    html:not(.dark) .border-primary\/30 { border-color: rgba(161,98,7,.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+
+    /* Light mode - remove gradient */
+    html:not(.dark) .from-amber-900\/30 { --tw-gradient-from: transparent; }
+    html:not(.dark) .bg-gradient-to-br { background: #f9fafb; }
+
+    /* Nav light */
+    html:not(.dark) nav { background-color: rgba(255,255,255,.95) !important; border-color: #e5e7eb; }
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255,255,255,.95); }
+
+    /* SVG light */
+    html:not(.dark) svg[role="img"] { filter: saturate(0.82) brightness(0.96); }
+
+    /* Dark borders */
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+
+    /* === DEMOS === */
+    @keyframes m42-frame1 {
+      0%, 20% { opacity: 1; transform: scale(1); }
+      25%, 100% { opacity: 0; transform: scale(0.95); }
+    }
+    @keyframes m42-frame2 {
+      0%, 24% { opacity: 0; }
+      25%, 44% { opacity: 1; transform: scale(1); }
+      50%, 100% { opacity: 0; transform: scale(0.95); }
+    }
+    @keyframes m42-frame3 {
+      0%, 49% { opacity: 0; }
+      50%, 69% { opacity: 1; transform: scale(1); }
+      75%, 100% { opacity: 0; transform: scale(0.95); }
+    }
+    @keyframes m42-frame4 {
+      0%, 74% { opacity: 0; }
+      75%, 96% { opacity: 1; transform: scale(1); }
+      100% { opacity: 0; }
+    }
+    @keyframes m42-bar1 { from { width: 0; } to { width: 25%; } }
+    @keyframes m42-bar2 { from { width: 0; } to { width: 50%; } }
+    @keyframes m42-bar3 { from { width: 0; } to { width: 75%; } }
+    @keyframes m42-bar4 { from { width: 0; } to { width: 100%; } }
+    @media (prefers-reduced-motion: no-preference) {
+      .m42-f1 { animation: m42-frame1 8s ease-in-out infinite; }
+      .m42-f2 { animation: m42-frame2 8s ease-in-out infinite; }
+      .m42-f3 { animation: m42-frame3 8s ease-in-out infinite; }
+      .m42-f4 { animation: m42-frame4 8s ease-in-out infinite; }
+      .m42-bar1 { animation: m42-bar1 1s ease-out 0.2s both; }
+      .m42-bar2 { animation: m42-bar2 1s ease-out 0.6s both; }
+      .m42-bar3 { animation: m42-bar3 1s ease-out 1s both; }
+      .m42-bar4 { animation: m42-bar4 1s ease-out 1.4s both; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .m42-f1,.m42-f2,.m42-f3 { opacity: 0; }
+      .m42-f4 { opacity: 1; }
+      .m42-bar1 { width: 25%; }
+      .m42-bar2 { width: 50%; }
+      .m42-bar3 { width: 75%; }
+      .m42-bar4 { width: 100%; }
+    }
+  </style>
+<link href="https://inematds.github.io/claude-remotion-motion/curso/trilha4/modulo-4-2.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/claude-remotion-motion/en/curso/trilha4/modulo-4-2.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/claude-remotion-motion/es/curso/trilha4/modulo-4-2.html" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha4/modulo-4-2.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="modulo-4-2.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">EN</a><a href="../../../es/curso/trilha4/modulo-4-2.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">ES</a></div>
+<!-- NAV -->
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14">
+<div class="flex items-center space-x-4">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🎞️</span>
+<span class="font-bold text-lg hidden sm:inline">CC × Remotion</span>
+</a>
+<span class="text-neutral-600">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+</div>
+<div class="flex items-center space-x-1 sm:space-x-2">
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors" href="../trilha1/index.html"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentals</span></a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors" href="../trilha2/index.html"><span class="sm:hidden">T2</span><span class="hidden sm:inline">Libraries</span></a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors" href="../trilha3/index.html"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Projects</span></a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-amber-400 bg-amber-500/10" href="index.html"><span class="sm:hidden">T4</span><span class="hidden sm:inline">Production</span></a>
+<button class="p-2 rounded-lg text-neutral-400 hover:text-white hover:bg-dark-700 transition-colors ml-2" id="theme-toggle">
+<svg class="hidden w-5 h-5" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+<svg class="hidden w-5 h-5" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path></svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<!-- BREADCRUMB -->
+<nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-amber-400" href="../../index.html">Start</a><span>/</span>
+<a class="hover:text-amber-400" href="index.html">Track 4</a><span>/</span>
+<span class="text-amber-400">Module 4.2</span>
+</div>
+</nav>
+<!-- HEADER -->
+<header class="bg-gradient-to-br from-amber-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-amber-500/20 text-amber-400 text-xs font-semibold rounded-full mb-4">MODULE 4.2</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">🔁 Iteration That Builds Quality</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">The best Remotion outputs aren’t first-prompt masterpieces—they’re simple skeletons refined 3-4 times in the <strong class="text-amber-400">same conversation</strong>. Quality is cumulative.</p>
+<div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">6</div><div class="text-xs text-neutral-400">Topics</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">30</div><div class="text-xs text-neutral-400">Minutes</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">Advanced</div><div class="text-xs text-neutral-400">Level</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">Process</div><div class="text-xs text-neutral-400">Type</div></div>
+</div>
+</div>
+</header>
+<main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+<!-- TÓPICO 1: Turn 1 -->
+<section class="mb-16" id="topico-1">
+<div class="flex items-center space-x-4 mb-6">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-amber-500/20 flex items-center justify-center">
+<span class="text-amber-400 font-bold text-lg">1</span>
+</div>
+<h2 class="text-2xl font-bold">Turn 1: the basic skeleton</h2>
+</div>
+<p class="text-neutral-300 mb-6">The first prompt should ask for <strong class="text-amber-400">just the structure</strong>. Elements in the right place, correct text, without worrying about timing, easing, or aesthetics. The goal of Turn 1 is to validate the composition — whether the elements are in place and the sequence makes sense.</p>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-5 mb-6 font-mono text-sm">
+<div class="text-xs text-neutral-500 mb-3">sample prompt — Turn 1</div>
+<div class="text-neutral-300">
+<span class="text-amber-400">Create</span> a product intro animation in Remotion. Elements: logo in the center, then title, then subtitle. <span class="text-amber-400">Don’t worry about easing or timing right now</span> — I just want to see the elements in the right place.
+        </div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Why start simple?</h3>
+<p class="text-neutral-300 text-sm">If you ask for timing and aesthetics in Turn 1 and the composition is wrong, you waste time refining something that will be redone. Approve the skeleton first, then add layers.</p>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600 text-center"><span class="text-xs font-semibold text-amber-400">Elements in place</span></div>
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600 text-center"><span class="text-xs font-semibold text-amber-400">Correct sequence</span></div>
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600 text-center"><span class="text-xs font-semibold text-neutral-400">No easing yet</span></div>
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600 text-center"><span class="text-xs font-semibold text-neutral-400">Validate the composition</span></div>
+</div>
+</section>
+<!-- TÓPICO 2: Turn 2 -->
+<section class="mb-16" id="topico-2">
+<div class="flex items-center space-x-4 mb-6">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-amber-500/20 flex items-center justify-center">
+<span class="text-amber-400 font-bold text-lg">2</span>
+</div>
+<h2 class="text-2xl font-bold">Turn 2: add timing</h2>
+</div>
+<p class="text-neutral-300 mb-6">With the composition approved, Turn 2 is about <strong class="text-amber-400">timing and sequence</strong>. How long each element stays on screen, when it enters, when it exits, and the delay between elements. Claude remembers the entire structure from Turn 1 and applies the timing to it—it doesn’t start from scratch.</p>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-5 mb-6 font-mono text-sm">
+<div class="text-xs text-neutral-500 mb-3">sample prompt — Turn 2</div>
+<div class="text-neutral-300">
+<span class="text-amber-400">Now add timing:</span> logo appears at 0-1s, title enters at 1.5s, subtitle at 2.5s. Total of 5 seconds. Use easing <span class="text-amber-400">ease-out</span> for the inputs.
+        </div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-4">
+<h4 class="font-semibold text-emerald-400 mb-2 flex items-center"><span class="mr-2">✓</span> What to specify in Turn 2</h4>
+<ul class="space-y-1 text-sm text-neutral-400">
+<li>Total video duration</li>
+<li>Entry/exit timestamps for each element</li>
+<li>General easing (ease-in, ease-out, linear)</li>
+<li>Delays between elements</li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-4">
+<h4 class="font-semibold text-red-400 mb-2 flex items-center"><span class="mr-2">✗</span> What to leave for later</h4>
+<ul class="space-y-1 text-sm text-neutral-400">
+<li>Overshoot and spring (Turn 3)</li>
+<li>Advanced stagger (Turn 3)</li>
+<li>Colors and gradients (Turn 4)</li>
+<li>Shadows and glow (Turn 4)</li>
+</ul>
+</div>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600 text-center"><span class="text-xs font-semibold text-amber-400">Exact timestamps</span></div>
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600 text-center"><span class="text-xs font-semibold text-amber-400">Base easing</span></div>
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600 text-center"><span class="text-xs font-semibold text-neutral-400">Delays</span></div>
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600 text-center"><span class="text-xs font-semibold text-neutral-400">Same session</span></div>
+</div>
+</section>
+<!-- TÓPICO 3: Turn 3 -->
+<section class="mb-16" id="topico-3">
+<div class="flex items-center space-x-4 mb-6">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-amber-500/20 flex items-center justify-center">
+<span class="text-amber-400 font-bold text-lg">3</span>
+</div>
+<h2 class="text-2xl font-bold">Turn 3: refine the motion</h2>
+</div>
+<p class="text-neutral-300 mb-6">With the timing approved, Turn 3 adds <strong class="text-amber-400">expressiveness in motion</strong>. This is where the animation gains personality—overshoot, spring, asymmetric stagger between elements. Subtleties that make the difference between "functional" and "fluid".</p>
+<!-- DEMO 1: 4 frames da evolução -->
+<div class="rounded-2xl border border-amber-500/30 bg-dark-900/40 p-5 mb-8">
+<div class="flex items-center justify-between mb-4">
+<span class="text-xs font-semibold text-neutral-400 uppercase tracking-wide">live demo</span>
+<span class="text-xs text-amber-400 font-mono">4 turns → animation evolution</span>
+</div>
+<div class="relative grid grid-cols-4 gap-3">
+<!-- Frame 1 -->
+<div class="relative">
+<div class="m42-f1 absolute inset-0 rounded-lg bg-dark-800 border border-dark-600 p-3 flex flex-col items-center justify-center gap-2">
+<div class="w-6 h-6 rounded bg-neutral-700"></div>
+<div class="w-full h-1.5 bg-neutral-700 rounded"></div>
+<div class="w-3/4 h-1.5 bg-neutral-700 rounded"></div>
+<div class="text-xs text-neutral-500 mt-1">static</div>
+</div>
+<div class="rounded-lg bg-dark-800 border border-dark-600 p-3 flex flex-col items-center justify-center gap-2 opacity-0">
+<div class="w-6 h-6 rounded bg-neutral-700"></div>
+</div>
+</div>
+<!-- Frame 2 -->
+<div class="relative">
+<div class="m42-f2 absolute inset-0 rounded-lg bg-dark-800 border border-amber-500/20 p-3 flex flex-col items-center justify-center gap-2">
+<div class="w-6 h-6 rounded bg-amber-500/30"></div>
+<div class="w-full h-1.5 bg-amber-500/20 rounded"></div>
+<div class="w-3/4 h-1.5 bg-amber-500/15 rounded"></div>
+<div class="text-xs text-amber-500/70 mt-1">+ timing</div>
+</div>
+<div class="rounded-lg bg-dark-800 border border-dark-600 p-3 opacity-0 flex flex-col items-center justify-center gap-2">
+<div class="w-6 h-6 rounded bg-neutral-700"></div>
+</div>
+</div>
+<!-- Frame 3 -->
+<div class="relative">
+<div class="m42-f3 absolute inset-0 rounded-lg bg-dark-800 border border-amber-500/30 p-3 flex flex-col items-center justify-center gap-2">
+<div class="w-6 h-6 rounded-full bg-amber-500/50"></div>
+<div class="w-full h-1.5 bg-amber-400/40 rounded"></div>
+<div class="w-3/4 h-1.5 bg-amber-400/30 rounded"></div>
+<div class="text-xs text-amber-400/70 mt-1">+ spring</div>
+</div>
+<div class="rounded-lg bg-dark-800 border border-dark-600 p-3 opacity-0 flex flex-col items-center justify-center gap-2">
+<div class="w-6 h-6 rounded bg-neutral-700"></div>
+</div>
+</div>
+<!-- Frame 4 -->
+<div class="relative">
+<div class="m42-f4 absolute inset-0 rounded-lg bg-dark-800 border border-amber-400/60 p-3 flex flex-col items-center justify-center gap-2" style="box-shadow:0 0 12px rgba(251,191,36,0.15)">
+<div class="w-6 h-6 rounded-full bg-amber-400"></div>
+<div class="w-full h-1.5 bg-amber-400 rounded" style="box-shadow:0 0 4px #fbbf24"></div>
+<div class="w-3/4 h-1.5 bg-amber-300 rounded"></div>
+<div class="text-xs text-amber-300 mt-1 font-semibold">polished</div>
+</div>
+<div class="rounded-lg bg-dark-800 border border-dark-600 p-3 opacity-0 flex flex-col items-center justify-center gap-2">
+<div class="w-6 h-6 rounded bg-neutral-700"></div>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-4 gap-3 mt-2">
+<div class="text-center text-xs text-neutral-500">Turn 1</div>
+<div class="text-center text-xs text-neutral-500">Turn 2</div>
+<div class="text-center text-xs text-neutral-500">Turn 3</div>
+<div class="text-center text-xs text-amber-400 font-semibold">Turn 4</div>
+</div>
+<p class="text-xs text-neutral-500 mt-3 text-center">The same animation evolves in a loop—from the static structure to the final polish.</p>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Spring vs. ease-out</h3>
+<p class="text-neutral-300 text-sm">Spring adds natural overshoot — the element “passes” its destination and comes back. Ease-out simply slows down. For product animations, spring tends to feel more alive and less mechanical.</p>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600 text-center"><span class="text-xs font-semibold text-amber-400">Overshoot</span></div>
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600 text-center"><span class="text-xs font-semibold text-amber-400">Spring physics</span></div>
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600 text-center"><span class="text-xs font-semibold text-neutral-400">Asymmetric stagger</span></div>
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600 text-center"><span class="text-xs font-semibold text-neutral-400">Expressiveness</span></div>
+</div>
+</section>
+<!-- TÓPICO 4: Turn 4 -->
+<section class="mb-16" id="topico-4">
+<div class="flex items-center space-x-4 mb-6">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-amber-500/20 flex items-center justify-center">
+<span class="text-amber-400 font-bold text-lg">4</span>
+</div>
+<h2 class="text-2xl font-bold">Turn 4: final polish</h2>
+</div>
+<p class="text-neutral-300 mb-6">Turn 4 is the finishing touch. <strong class="text-amber-400">Final colors, typography, gradients, shadows, glow</strong>. What turns "works" into "impressive." It only makes sense once the motion has been approved in the previous turns.</p>
+<!-- DEMO 2: barra de qualidade -->
+<div class="rounded-2xl border border-amber-500/30 bg-dark-900/40 p-5 mb-8">
+<div class="flex items-center justify-between mb-4">
+<span class="text-xs font-semibold text-neutral-400 uppercase tracking-wide">live demo</span>
+<span class="text-xs text-amber-400 font-mono">cumulative quality per turn</span>
+</div>
+<div class="space-y-4">
+<div>
+<div class="flex items-center justify-between mb-1.5">
+<span class="text-xs font-semibold text-neutral-400">Turn 1 — skeleton</span>
+<span class="text-xs text-neutral-500">25%</span>
+</div>
+<div class="h-4 bg-dark-700 rounded-full overflow-hidden border border-dark-600">
+<div class="m42-bar1 h-full bg-neutral-600 rounded-full" style="width:0"></div>
+</div>
+</div>
+<div>
+<div class="flex items-center justify-between mb-1.5">
+<span class="text-xs font-semibold text-neutral-400">Turn 2 — timing</span>
+<span class="text-xs text-neutral-500">50%</span>
+</div>
+<div class="h-4 bg-dark-700 rounded-full overflow-hidden border border-dark-600">
+<div class="m42-bar2 h-full bg-amber-600/60 rounded-full" style="width:0"></div>
+</div>
+</div>
+<div>
+<div class="flex items-center justify-between mb-1.5">
+<span class="text-xs font-semibold text-amber-400/80">Turn 3 — motion</span>
+<span class="text-xs text-amber-500/70">75%</span>
+</div>
+<div class="h-4 bg-dark-700 rounded-full overflow-hidden border border-dark-600">
+<div class="m42-bar3 h-full bg-amber-500/80 rounded-full" style="width:0"></div>
+</div>
+</div>
+<div>
+<div class="flex items-center justify-between mb-1.5">
+<span class="text-xs font-semibold text-amber-400">Turn 4 — polish</span>
+<span class="text-xs text-amber-400 font-bold">100%</span>
+</div>
+<div class="h-4 bg-dark-700 rounded-full overflow-hidden border border-amber-500/30">
+<div class="m42-bar4 h-full rounded-full" style="width:0;background:linear-gradient(90deg,#f59e0b,#fbbf24);box-shadow:0 0 8px rgba(251,191,36,0.4)"></div>
+</div>
+</div>
+</div>
+<p class="text-xs text-neutral-500 mt-4 text-center">Each turn builds on the previous one — quality isn’t replaced; it’s built.</p>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600 text-center"><span class="text-xs font-semibold text-amber-400">Final colors</span></div>
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600 text-center"><span class="text-xs font-semibold text-amber-400">Typography</span></div>
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600 text-center"><span class="text-xs font-semibold text-neutral-400">Gradients</span></div>
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600 text-center"><span class="text-xs font-semibold text-neutral-400">Glow / shadow</span></div>
+</div>
+</section>
+<!-- TÓPICO 5: A regra não one-shot -->
+<section class="mb-16" id="topico-5">
+<div class="flex items-center space-x-4 mb-6">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-amber-500/20 flex items-center justify-center">
+<span class="text-amber-400 font-bold text-lg">5</span>
+</div>
+<h2 class="text-2xl font-bold">The “no one-shot” rule</h2>
+</div>
+<p class="text-neutral-300 mb-6">A single long, detailed prompt rarely beats 4 incremental prompts in the same session. Why? Because it's impossible to perfectly describe in words something you haven't seen yet. You need to <strong class="text-amber-400">see the skeleton to know what to change</strong>.</p>
+<!-- SVG ilustrativo: one-shot vs iteração -->
+<div class="rounded-2xl border border-amber-500/30 bg-dark-900/40 p-4 mb-8">
+<svg aria-label="Comparison: a one-shot produces an average result; iteration over 4 turns produces an excellent result" class="w-full h-auto" font-family="Inter,sans-serif" role="img" viewbox="0 0 400 140" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<filter id="m42-glow"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<pattern height="12" id="m42-grid" patternunits="userSpaceOnUse" width="12">
+<path d="M 12 0 L 0 0 0 12" fill="none" opacity=".2" stroke="#fbbf24" stroke-width=".1"></path>
+</pattern>
+</defs>
+<rect fill="url(#m42-grid)" height="140" width="400"></rect>
+<!-- One-shot -->
+<rect fill="#1f1604" height="120" opacity=".5" rx="8" stroke="#9ca3af" stroke-width="1" width="170" x="10" y="10"></rect>
+<text fill="#9ca3af" font-size="10" font-weight="600" text-anchor="middle" x="95" y="30">One-shot</text>
+<rect fill="#374151" height="70" rx="6" stroke="#4b5563" stroke-width="1" width="140" x="25" y="40"></rect>
+<text fill="#9ca3af" font-size="9" text-anchor="middle" x="95" y="80">average result</text>
+<text fill="#6b7280" font-size="8" text-anchor="middle" x="95" y="122">1 attempt = fixed result</text>
+<!-- Arrow -->
+<text fill="#9ca3af" font-size="14" text-anchor="middle" x="200" y="74">vs</text>
+<!-- Iteração -->
+<rect fill="#1f1604" filter="url(#m42-glow)" height="120" rx="8" stroke="#fbbf24" stroke-width="1.5" width="170" x="220" y="10"></rect>
+<text fill="#fbbf24" font-size="10" font-weight="600" text-anchor="middle" x="305" y="30">Iteration (4 turns)</text>
+<!-- 4 mini boxes empilhados -->
+<rect fill="#2d1f00" height="14" rx="3" stroke="#92400e" stroke-width="1" width="146" x="232" y="38"></rect>
+<text fill="#d97706" font-size="7" text-anchor="middle" x="305" y="49">T1: skeleton</text>
+<rect fill="#2d1f00" height="14" rx="3" stroke="#b45309" stroke-width="1" width="146" x="232" y="56"></rect>
+<text fill="#d97706" font-size="7" text-anchor="middle" x="305" y="67">T2: timing</text>
+<rect fill="#2d1f00" height="14" rx="3" stroke="#d97706" stroke-width="1" width="146" x="232" y="74"></rect>
+<text fill="#fbbf24" font-size="7" text-anchor="middle" x="305" y="85">T3: motion</text>
+<rect fill="#1f1604" filter="url(#m42-glow)" height="14" rx="3" stroke="#fbbf24" stroke-width="1.5" width="146" x="232" y="92"></rect>
+<text fill="#fbbf24" font-size="7" font-weight="600" text-anchor="middle" x="305" y="103">T4: polish ✓</text>
+<text fill="#fbbf24" font-size="8" text-anchor="middle" x="305" y="122">optimal result</text>
+</svg>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-4">
+<h4 class="font-semibold text-red-400 mb-2 flex items-center"><span class="mr-2">✗</span> One-shot</h4>
+<ul class="space-y-1 text-sm text-neutral-400">
+<li>Long prompt full of requirements</li>
+<li>Claude tries to do everything at once</li>
+<li>Mediocre result that doesn’t impress</li>
+<li>Difficult to fix without redoing everything</li>
+</ul>
+</div>
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-4">
+<h4 class="font-semibold text-emerald-400 mb-2 flex items-center"><span class="mr-2">✓</span> 4 Turns</h4>
+<ul class="space-y-1 text-sm text-neutral-400">
+<li>Each turn focuses on one dimension</li>
+<li>Approves each layer before advancing</li>
+<li>Great result that impresses</li>
+<li>Easy to adjust: only the relevant turn changes</li>
+</ul>
+</div>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600 text-center"><span class="text-xs font-semibold text-red-400">One-shot = medium</span></div>
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600 text-center"><span class="text-xs font-semibold text-amber-400">4 turns = great</span></div>
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600 text-center"><span class="text-xs font-semibold text-neutral-400">Start with the minimum</span></div>
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600 text-center"><span class="text-xs font-semibold text-neutral-400">Build on approved work</span></div>
+</div>
+</section>
+<!-- TÓPICO 6: Contexto que compõe -->
+<section class="mb-16" id="topico-6">
+<div class="flex items-center space-x-4 mb-6">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-amber-500/20 flex items-center justify-center">
+<span class="text-amber-400 font-bold text-lg">6</span>
+</div>
+<h2 class="text-2xl font-bold">Context that shapes quality</h2>
+</div>
+<p class="text-neutral-300 mb-6">Claude remembers all the code generated in the session. Each turn builds on the approved state—it doesn’t start from scratch. This means the quality is <strong class="text-amber-400">cumulative</strong>, not replaced. That’s why the same session produces a better result than separate sessions.</p>
+<!-- Timeline dos 4 turns -->
+<div class="space-y-4 mb-8">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-neutral-700 flex items-center justify-center">
+<span class="text-neutral-300 font-bold text-sm">T1</span>
+</div>
+<div class="flex-1 bg-dark-800 rounded-xl p-4 border border-dark-600">
+<h4 class="font-semibold text-white mb-1">Basic skeleton</h4>
+<p class="text-sm text-neutral-400">Structure created. Claude keeps all the code in session memory. You approve the composition.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center">
+<span class="text-amber-400 font-bold text-sm">T2</span>
+</div>
+<div class="flex-1 bg-dark-800 rounded-xl p-4 border border-amber-500/20">
+<h4 class="font-semibold text-white mb-1">+ Applied timing</h4>
+<p class="text-sm text-neutral-400">Claude reads the T1 context and adds the timing <em>about</em> the structure. The skeleton stays intact; only the timing is new.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-amber-500/30 flex items-center justify-center">
+<span class="text-amber-400 font-bold text-sm">T3</span>
+</div>
+<div class="flex-1 bg-dark-800 rounded-xl p-4 border border-amber-500/25">
+<h4 class="font-semibold text-white mb-1">+ Expressive motion</h4>
+<p class="text-sm text-neutral-400">Spring, overshoot, and stagger added to the T1+T2 state. None of the previous layers are lost.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-amber-400 flex items-center justify-center">
+<span class="text-dark-900 font-bold text-sm">T4</span>
+</div>
+<div class="flex-1 bg-dark-800 rounded-xl p-4 border border-amber-400/40" style="box-shadow:0 0 12px rgba(251,191,36,0.08)">
+<h4 class="font-semibold text-amber-400 mb-1">= Polished result</h4>
+<p class="text-sm text-neutral-400">Colors, typography, and glow applied to T1+T2+T3. The final result includes all the layers accumulated during the session.</p>
+</div>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Separate sessions break the flow</h3>
+<p class="text-neutral-300 text-sm">If you start a new session in Turn 2, Claude has no context from T1. You lose the accumulated memory. Always keep all 4 turns in the same conversation to make use of the cumulative context.</p>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600 text-center"><span class="text-xs font-semibold text-amber-400">Context persists</span></div>
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600 text-center"><span class="text-xs font-semibold text-amber-400">Cumulative quality</span></div>
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600 text-center"><span class="text-xs font-semibold text-neutral-400">Same session</span></div>
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600 text-center"><span class="text-xs font-semibold text-neutral-400">4 layers = great</span></div>
+</div>
+</section>
+<!-- RESUMO -->
+<section class="bg-dark-800 rounded-2xl border border-amber-500/30 p-8 mb-12">
+<h2 class="text-2xl font-bold mb-6">Module summary</h2>
+<div class="space-y-3 mb-8">
+<div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-white">4 turns, not 1</strong><span class="text-neutral-400"> — skeleton → timing → movement → polish. Each turn focuses on one dimension.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-white">Approve before advancing</strong><span class="text-neutral-400"> — validate each layer before asking for the next. This avoids rework.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-white">Same session</strong><span class="text-neutral-400"> — the cumulative context is what makes the 4 turns effective. Don’t start new sessions midway.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-white">One-shot produces a medium result</strong><span class="text-neutral-400"> — incremental iteration produces an excellent result. Always start with the minimum.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-white">Cumulative quality</strong><span class="text-neutral-400"> — each turn builds on the previous one; nothing is lost, everything is built up.</span></div></div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-4 mb-8 border border-dark-600">
+<h3 class="font-semibold text-amber-400 mb-2">Next module:</h3>
+<p class="text-neutral-300">4.3 — Recap &amp; final map: the complete library matrix, the 4 universal rules, and why this is production now.</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4 justify-start">
+<a class="px-6 py-3 bg-dark-700 hover:bg-dark-600 rounded-xl text-sm font-medium transition-colors" href="modulo-4-1.html">← 4.1 Production Tricks</a>
+<a class="px-6 py-3 bg-amber-600 hover:bg-amber-500 text-white rounded-xl text-sm font-medium transition-colors" href="modulo-4-3.html">Next: 4.3 Recap →</a>
+</div>
+</section>
+</main>
+<footer class="border-t border-dark-600 py-8">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>Claude Code × Remotion — <a class="text-sky-400 hover:text-sky-300" href="https://inema.club" target="_blank">INEMA.CLUB</a> — 2025</p>
+</div>
+</footer>
+<script>
+    const themeToggle=document.getElementById('theme-toggle'),themeToggleDarkIcon=document.getElementById('theme-toggle-dark-icon'),themeToggleLightIcon=document.getElementById('theme-toggle-light-icon'),html=document.documentElement;
+    if(localStorage.getItem('theme')==='light'||(!localStorage.getItem('theme')&&!html.classList.contains('dark'))){themeToggleDarkIcon.classList.remove('hidden');html.classList.remove('dark');}else{themeToggleLightIcon.classList.remove('hidden');}
+    themeToggle.addEventListener('click',()=>{themeToggleDarkIcon.classList.toggle('hidden');themeToggleLightIcon.classList.toggle('hidden');html.classList.toggle('dark');localStorage.setItem('theme',html.classList.contains('dark')?'dark':'light');});
+  </script>
+</body>
+</html>

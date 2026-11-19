@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Módulo 3.4 · Onboarding bancario (Lottie) | CC × Remotion</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#FACC15', dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' } } } } }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    code, .font-mono { font-family: 'JetBrains Mono', monospace; }
+
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+    html:not(.dark) .text-purple-400 { color: #7c3aed; }
+    html:not(.dark) .bg-purple-500\/20 { background-color: rgba(124,58,237,0.12); }
+    html:not(.dark) .bg-purple-500\/10 { background-color: rgba(124,58,237,0.08); }
+    html:not(.dark) .border-purple-500\/30 { border-color: rgba(124,58,237,0.25); }
+    html:not(.dark) .hover\:bg-purple-500\/30:hover { background-color: rgba(124,58,237,0.18); }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #7c3aed; }
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #059669; }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(5,150,105,0.08); }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #2563eb; }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(37,99,235,0.08); }
+    html:not(.dark) .hover\:text-amber-400:hover { color: #92400e; }
+    html:not(.dark) .hover\:bg-amber-500\/10:hover { background-color: rgba(217,119,6,0.08); }
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161,98,7,0.08); }
+    html:not(.dark) .border-primary\/30 { border-color: rgba(161,98,7,0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255,255,255,0.95); }
+    html:not(.dark) .bg-emerald-900\/20 { background-color: rgba(5,150,105,0.08); }
+    html:not(.dark) .bg-red-900\/20 { background-color: rgba(185,28,28,0.08); }
+    html:not(.dark) .border-emerald-500\/30 { border-color: rgba(5,150,105,0.25); }
+    html:not(.dark) .border-red-500\/30 { border-color: rgba(185,28,28,0.25); }
+    html:not(.dark) .text-emerald-400 { color: #059669; }
+    html:not(.dark) .text-red-400 { color: #b91c1c; }
+    html:not(.dark) svg[role="img"] { filter: saturate(0.82) brightness(0.96); }
+    .dark .border-dark-600 { border-color: #374151; }
+
+    /* === DEMOS === */
+    /* Sequência de 4 cenas: phone mock animando */
+    @keyframes m34-scene1 { 0%,20%{opacity:1} 22%,100%{opacity:0} }
+    @keyframes m34-scene2 { 0%,22%{opacity:0} 24%,44%{opacity:1} 46%,100%{opacity:0} }
+    @keyframes m34-scene3 { 0%,46%{opacity:0} 48%,68%{opacity:1} 70%,100%{opacity:0} }
+    @keyframes m34-scene4 { 0%,70%{opacity:0} 72%,95%{opacity:1} 97%,100%{opacity:0} }
+    /* Coin falling */
+    @keyframes m34-coinFall { 0%{transform:translateY(-20px);opacity:0} 60%{transform:translateY(4px);opacity:1} 80%{transform:translateY(0)} 100%{transform:translateY(0);opacity:1} }
+    /* Transfer arrow */
+    @keyframes m34-arrowSlide { 0%{transform:scaleX(0);transform-origin:left;} 100%{transform:scaleX(1);transform-origin:left;} }
+    /* Checkmark stroke */
+    @keyframes m34-checkDraw { 0%{stroke-dashoffset:100} 100%{stroke-dashoffset:0} }
+    @keyframes m34-circleDraw { 0%{stroke-dashoffset:160} 100%{stroke-dashoffset:0} }
+    @keyframes m34-checkBounce { 0%,80%{transform:scale(1)} 90%{transform:scale(1.12)} 100%{transform:scale(1)} }
+    /* Phone open */
+    @keyframes m34-phoneOpen { 0%{transform:scale(0.85);opacity:0} 100%{transform:scale(1);opacity:1} }
+
+    .m34-s1 { animation: m34-scene1 6s ease-in-out infinite; }
+    .m34-s2 { animation: m34-scene2 6s ease-in-out infinite; }
+    .m34-s3 { animation: m34-scene3 6s ease-in-out infinite; }
+    .m34-s4 { animation: m34-scene4 6s ease-in-out infinite; }
+    .m34-coin { animation: m34-coinFall 0.7s cubic-bezier(0.34,1.56,0.64,1) both; animation-delay: 1.5s; }
+    .m34-check-circle { stroke-dasharray: 160; animation: m34-circleDraw 0.8s ease-out 4.4s both; }
+    .m34-check-mark { stroke-dasharray: 100; animation: m34-checkDraw 0.5s ease-out 5s both; }
+    .m34-check-wrap { animation: m34-checkBounce 0.4s ease-out 5.5s both; }
+    @media (prefers-reduced-motion: reduce) {
+      .m34-s1,.m34-s2,.m34-s3,.m34-s4 { animation: none; opacity: 0; }
+      .m34-s1 { opacity: 1; }
+      .m34-coin,.m34-check-circle,.m34-check-mark,.m34-check-wrap { animation: none; }
+      .m34-check-circle { stroke-dashoffset: 0; }
+      .m34-check-mark { stroke-dashoffset: 0; }
+    }
+  </style>
+<link href="https://inematds.github.io/claude-remotion-motion/curso/trilha3/modulo-3-4.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/claude-remotion-motion/en/curso/trilha3/modulo-3-4.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/claude-remotion-motion/es/curso/trilha3/modulo-3-4.html" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha3/modulo-3-4.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="../../../en/curso/trilha3/modulo-3-4.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">EN</a><a href="modulo-3-4.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">ES</a></div>
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14">
+<div class="flex items-center space-x-4">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html"><span class="text-2xl">🎞️</span><span class="font-bold text-lg hidden sm:inline">CC × Remotion</span></a>
+<span class="text-neutral-600">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+</div>
+<div class="flex items-center space-x-1 sm:space-x-2">
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors" href="../trilha1/index.html"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentos</span></a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors" href="../trilha2/index.html"><span class="sm:hidden">T2</span><span class="hidden sm:inline">Bibliotecas</span></a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-purple-400 bg-purple-500/10" href="index.html"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Proyectos</span></a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors" href="../trilha4/index.html"><span class="sm:hidden">T4</span><span class="hidden sm:inline">Producción</span></a>
+<button class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path></svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-purple-400" href="../../index.html">Inicio</a>
+<span>/</span>
+<a class="hover:text-purple-400" href="index.html">Ruta 3</a>
+<span>/</span>
+<span class="text-purple-400">Módulo 3.4</span>
+</div>
+</nav>
+<header class="bg-gradient-to-br from-purple-900/30 via-dark-800 to-dark-800 py-10 border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-purple-500/20 text-purple-400 text-xs font-semibold rounded-full mb-3">MÓDULO 3.4</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-3">🏦 Banking Onboarding (Lottie)</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">Una fintech necesita cuatro microanimaciones de onboarding móvil: crear una cuenta, depositar, transferir y confirmar. <strong class="text-purple-400">Alcance pequeño, rápido y extremadamente confiable</strong> — Lottie es la opción correcta cuando la animación va directamente a la app de producción.</p>
+<div class="grid grid-cols-4 gap-4 mt-6 max-w-xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-lg font-bold text-purple-400">6</div><div class="text-xs text-neutral-400">Secciones</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-lg font-bold text-purple-400">~45</div><div class="text-xs text-neutral-400">min</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-lg font-bold text-purple-400">Lottie</div><div class="text-xs text-neutral-400">Lib</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-lg font-bold text-purple-400">4</div><div class="text-xs text-neutral-400">Escenas</div></div>
+</div>
+</div>
+</header>
+<main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+<!-- SEÇÃO 1 -->
+<section class="mb-16" id="topico-1">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold">🏦 Escenario: el onboarding que genera confianza en el usuario</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">NuBank, Inter, C6 — todas las fintechs modernas usan microanimaciones en el onboarding para reducir la fricción y aumentar la confianza. El usuario no lee las instrucciones; él <strong class="text-purple-400">mira la animación y ya sabrás qué hacer</strong>. Lottie ofrece esta experiencia en kilobytes.</p>
+<div class="bg-gradient-to-r from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-purple-400 mb-3">¿Por qué Lottie para este proyecto?</h3>
+<p class="text-neutral-300 text-sm leading-relaxed">Lottie es JSON: un archivo de ~50KB que funciona en React Native, web e iOS/Android sin recompilar. Para microinteracciones de apps, eso supera a cualquier lib programática en <strong>velocidad de implementación</strong> e <strong>fidelidad multiplataforma</strong>. GSAP, D3 o Three.js aquí serían excesivos.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+<div>
+<h4 class="text-sm font-semibold text-emerald-400 mb-2 flex items-center"><span class="mr-2">✓</span> Lottie es ideal cuando…</h4>
+<div class="space-y-2">
+<div class="bg-emerald-900/20 border border-emerald-500/30 rounded-lg px-4 py-2 text-sm text-neutral-300">La animación se usará en una app móvil de producción</div>
+<div class="bg-emerald-900/20 border border-emerald-500/30 rounded-lg px-4 py-2 text-sm text-neutral-300">Alcance limitado: íconos, loaders, confirmaciones</div>
+<div class="bg-emerald-900/20 border border-emerald-500/30 rounded-lg px-4 py-2 text-sm text-neutral-300">El diseñador entrega After Effects: exporta con Bodymovin</div>
+</div>
+</div>
+<div>
+<h4 class="text-sm font-semibold text-red-400 mb-2 flex items-center"><span class="mr-2">✗</span> Lottie no es la mejor opción cuando…</h4>
+<div class="space-y-2">
+<div class="bg-red-900/20 border border-red-500/30 rounded-lg px-4 py-2 text-sm text-neutral-300">Escenas largas con storytelling complejo (→ GSAP)</div>
+<div class="bg-red-900/20 border border-red-500/30 rounded-lg px-4 py-2 text-sm text-neutral-300">Visualización dinámica de datos (→ D3)</div>
+<div class="bg-red-900/20 border border-red-500/30 rounded-lg px-4 py-2 text-sm text-neutral-300">Objeto 3D con cámara real (→ Three.js)</div>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">JSON</div><div class="text-xs text-neutral-400">~50KB por animación</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">Multiplataforma</div><div class="text-xs text-neutral-400">web + native</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">Vector</div><div class="text-xs text-neutral-400">escala infinita</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">Bodymovin</div><div class="text-xs text-neutral-400">exporta desde AE</div></div>
+</div>
+</section>
+<!-- SEÇÃO 2 — DEMO SEQUÊNCIA 4 CENAS -->
+<section class="mb-16" id="topico-2">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold">📱 Las 4 escenas en secuencia</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">Cada escena es una microanimación independiente. En Remotion, colocas las 4 en <code class="text-purple-400 bg-dark-700 px-1 rounded">&lt;Series&gt;</code> y cada una se reproduce en el momento adecuado, como en las diapositivas de un onboarding real.</p>
+<!-- DEMO ANIMADO: sequência de 4 cenas -->
+<div class="rounded-2xl border border-purple-500/30 bg-dark-900/40 p-5 mb-6 overflow-hidden">
+<div class="flex items-center gap-2 mb-4"><span class="w-3 h-3 rounded-full bg-red-400/70"></span><span class="w-3 h-3 rounded-full bg-yellow-400/70"></span><span class="w-3 h-3 rounded-full bg-purple-400/70"></span><span class="text-xs text-neutral-500 ml-2 font-mono">secuencia de onboarding — demostración en vivo</span></div>
+<div class="flex items-center justify-center" style="min-height:200px;">
+<!-- Phone mock container -->
+<div style="width:120px;height:200px;background:linear-gradient(180deg,#1f1f2e,#111827);border:2px solid rgba(168,85,247,0.4);border-radius:20px;position:relative;overflow:hidden;">
+<!-- Status bar -->
+<div style="height:12px;background:rgba(168,85,247,0.15);display:flex;align-items:center;justify-content:center;"><div style="width:30px;height:4px;background:rgba(168,85,247,0.4);border-radius:2px;"></div></div>
+<!-- Cena 1: abre app -->
+<div class="m34-s1" style="position:absolute;top:12px;left:0;right:0;bottom:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;">
+<div style="width:40px;height:40px;background:linear-gradient(135deg,#7c3aed,#c084fc);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;">🏦</div>
+<div style="font-size:8px;color:#c084fc;font-weight:600;">NoteBank</div>
+<div style="font-size:7px;color:#6b7280;">¡Bienvenido!</div>
+</div>
+<!-- Cena 2: depósito -->
+<div class="m34-s2" style="position:absolute;top:12px;left:0;right:0;bottom:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;opacity:0;">
+<div class="m34-coin" style="font-size:24px;">🪙</div>
+<div style="width:36px;height:20px;background:rgba(124,58,237,0.3);border:1px solid rgba(168,85,247,0.4);border-radius:6px;display:flex;align-items:center;justify-content:center;"><span style="font-size:7px;color:#c084fc;">+R$50</span></div>
+<div style="font-size:7px;color:#6b7280;">Depósito</div>
+</div>
+<!-- Cena 3: transferência -->
+<div class="m34-s3" style="position:absolute;top:12px;left:0;right:0;bottom:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;opacity:0;">
+<div style="display:flex;align-items:center;gap:6px;">
+<div style="width:22px;height:22px;background:rgba(124,58,237,0.3);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;">A</div>
+<div style="width:28px;height:2px;background:linear-gradient(90deg,#7c3aed,#38bdf8);border-radius:1px;"></div>
+<div style="width:22px;height:22px;background:rgba(56,189,248,0.2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;">B</div>
+</div>
+<div style="font-size:7px;color:#38bdf8;">Transfiriendo…</div>
+</div>
+<!-- Cena 4: checkmark -->
+<div class="m34-s4 m34-check-wrap" style="position:absolute;top:12px;left:0;right:0;bottom:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;opacity:0;">
+<svg height="50" viewbox="0 0 50 50" width="50">
+<circle class="m34-check-circle" cx="25" cy="25" fill="none" r="22" stroke="#22c55e" stroke-width="2.5"></circle>
+<polyline class="m34-check-mark" fill="none" points="14,26 21,33 36,18" stroke="#22c55e" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"></polyline>
+</svg>
+<div style="font-size:7px;color:#22c55e;font-weight:600;">¡Confirmado!</div>
+</div>
+</div>
+<!-- Labels das cenas -->
+<div class="ml-6 space-y-4">
+<div class="flex items-center space-x-3">
+<span class="w-5 h-5 rounded-full bg-purple-500/20 text-purple-400 text-xs font-bold flex items-center justify-center">1</span>
+<span class="text-xs text-neutral-400">Inicio de la app</span>
+</div>
+<div class="flex items-center space-x-3">
+<span class="w-5 h-5 rounded-full bg-purple-500/20 text-purple-400 text-xs font-bold flex items-center justify-center">2</span>
+<span class="text-xs text-neutral-400">La moneda cae → depósito</span>
+</div>
+<div class="flex items-center space-x-3">
+<span class="w-5 h-5 rounded-full bg-purple-500/20 text-purple-400 text-xs font-bold flex items-center justify-center">3</span>
+<span class="text-xs text-neutral-400">La flecha recorre A→B</span>
+</div>
+<div class="flex items-center space-x-3">
+<span class="w-5 h-5 rounded-full bg-purple-500/20 text-purple-400 text-xs font-bold flex items-center justify-center">4</span>
+<span class="text-xs text-neutral-400">El checkmark se dibuja</span>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-5 mb-6">
+<h3 class="text-base font-semibold text-primary mb-2 flex items-center"><span class="mr-2">💡</span> Duración de cada escena</h3>
+<p class="text-neutral-300 text-sm">Escena 1 (apertura): 1.5s. Escenas 2 y 3 (acciones): 1.2s cada una. Escena 4 (confirmación): 2s: dale tiempo al usuario para sentir el éxito. Total: ~6s por ciclo de onboarding. Si dura más, el usuario lo salta.</p>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">Escena 1</div><div class="text-xs text-neutral-400">revelación del logo 1.5s</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">Escenas 2–3</div><div class="text-xs text-neutral-400">acciones de 1.2s cada una</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">Escena 4</div><div class="text-xs text-neutral-400">éxito 2s</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">Total</div><div class="text-xs text-neutral-400">~6s por loop</div></div>
+</div>
+</section>
+<!-- SEÇÃO 3 — SVG PIPELINE -->
+<section class="mb-16" id="topico-3">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold">🎛️ Sincronizar Lottie con Remotion</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">El desafío técnico central: la animación JSON de Lottie tiene su propio sistema de tiempos. Para que el render de Remotion sea <strong class="text-purple-400">determinista</strong>, necesitas forzar a Lottie a avanzar frame por frame junto con el <code>useCurrentFrame()</code>.</p>
+<!-- SVG Pipeline Lottie + Remotion -->
+<div class="rounded-2xl border border-purple-500/30 bg-dark-900/40 p-4 mb-6">
+<svg aria-label="Pipeline de sincronización: el frame de Remotion determina el progreso de Lottie mediante goToAndStop, lo que garantiza un render determinista" class="w-full h-auto" id="m34-svg" role="img" viewbox="0 0 640 130">
+<defs>
+<lineargradient id="m34-grad" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#c084fc"></stop><stop offset="1" stop-color="#a855f7"></stop></lineargradient>
+<filter height="180%" id="m34-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<marker id="m34-ah" markerheight="8" markerwidth="8" orient="auto" refx="6" refy="4"><path d="M0,0 L7,4 L0,8 L1.8,4 Z" fill="#a855f7"></path></marker>
+</defs>
+<g filter="url(#m34-glow)">
+<rect fill="#1a1230" height="42" rx="10" stroke="url(#m34-grad)" stroke-width="2" width="120" x="8" y="44"></rect>
+</g>
+<text fill="#c084fc" font-family="Inter,sans-serif" font-size="10" font-weight="600" text-anchor="middle" x="68" y="62">useCurrentFrame()</text>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="9" text-anchor="middle" x="68" y="76">frame de Remotion</text>
+<path d="M128,65 L152,65" fill="none" marker-end="url(#m34-ah)" opacity="0.7" stroke="#a855f7" stroke-width="1.6"></path>
+<rect fill="#0f1624" height="42" rx="10" stroke="#38bdf8" stroke-width="1.8" width="110" x="154" y="44"></rect>
+<text fill="#38bdf8" font-family="Inter,sans-serif" font-size="10" font-weight="600" text-anchor="middle" x="209" y="62">frame → progreso</text>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="9" text-anchor="middle" x="209" y="76">frame / fps = seconds</text>
+<path d="M264,65 L288,65" fill="none" marker-end="url(#m34-ah)" opacity="0.7" stroke="#a855f7" stroke-width="1.6"></path>
+<rect fill="#1a1230" height="42" rx="10" stroke="#a855f7" stroke-width="1.8" width="120" x="290" y="44"></rect>
+<text fill="#c084fc" font-family="Inter,sans-serif" font-size="10" font-weight="600" text-anchor="middle" x="350" y="62">goToAndStop()</text>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="9" text-anchor="middle" x="350" y="76">fuerza el frame de Lottie</text>
+<path d="M410,65 L434,65" fill="none" marker-end="url(#m34-ah)" opacity="0.7" stroke="#a855f7" stroke-width="1.6"></path>
+<g filter="url(#m34-glow)">
+<rect fill="#1a1230" height="42" rx="10" stroke="url(#m34-grad)" stroke-width="2.5" width="100" x="436" y="44"></rect>
+</g>
+<text fill="#c084fc" font-family="Inter,sans-serif" font-size="10" font-weight="700" text-anchor="middle" x="486" y="62">SVG renderizado</text>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="9" text-anchor="middle" x="486" y="76">determinista ✓</text>
+<text fill="#6b7280" font-family="Inter,sans-serif" font-size="10" text-anchor="middle" x="320" y="118">frame de Remotion → progreso de Lottie → SVG idéntico en cada renderizado</text>
+</svg>
+</div>
+<div class="rounded-2xl border border-purple-500/30 bg-dark-900/40 p-5 mb-6">
+<div class="flex items-center gap-2 mb-3"><span class="w-3 h-3 rounded-full bg-red-400/70"></span><span class="w-3 h-3 rounded-full bg-yellow-400/70"></span><span class="w-3 h-3 rounded-full bg-purple-400/70"></span><span class="text-xs text-neutral-500 ml-2 font-mono">sincronización de frame — estándar</span></div>
+<pre class="font-mono text-sm text-neutral-200 leading-relaxed whitespace-pre-wrap">const frame = useCurrentFrame();
+const { fps } = useVideoConfig();
+
+// Força o Lottie para o frame exato
+useEffect(() =&gt; {
+  if (lottieRef.current) {
+    const seconds = frame / fps;
+    lottieRef.current.goToAndStop(seconds * 1000, false);
+  }
+}, [frame, fps]);</pre>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">goToAndStop</div><div class="text-xs text-neutral-400">control manual</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">useEffect</div><div class="text-xs text-neutral-400">se dispara en cada frame</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">ms: s * 1000</div><div class="text-xs text-neutral-400">Lottie usa ms</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">Determinístico</div><div class="text-xs text-neutral-400">preview = MP4 final</div></div>
+</div>
+</section>
+<!-- SEÇÃO 4 -->
+<section class="mb-16" id="topico-4">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold">✅ La escena del checkmark: el momento de alivio</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">El checkmark de éxito es la escena más importante del onboarding. Es donde el usuario decide si confía en la app. El círculo se dibuja primero mediante <code class="text-purple-400 bg-dark-700 px-1 rounded">stroke-dashoffset</code>, después el check revela el interior, y un ligero bounce final sella la confirmación.</p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+<div>
+<h4 class="text-sm font-semibold text-emerald-400 mb-2 flex items-center"><span class="mr-2">✓</span> Qué hace eficaz un checkmark</h4>
+<div class="space-y-2">
+<div class="bg-emerald-900/20 border border-emerald-500/30 rounded-lg px-4 py-2 text-sm text-neutral-300">El círculo se dibuja primero: anticipa la marca de verificación</div>
+<div class="bg-emerald-900/20 border border-emerald-500/30 rounded-lg px-4 py-2 text-sm text-neutral-300">Verde intenso (#22c55e) — color universal del éxito</div>
+<div class="bg-emerald-900/20 border border-emerald-500/30 rounded-lg px-4 py-2 text-sm text-neutral-300">Ligero rebote al final: transmite solidez</div>
+</div>
+</div>
+<div>
+<h4 class="text-sm font-semibold text-red-400 mb-2 flex items-center"><span class="mr-2">✗</span> Errores comunes</h4>
+<div class="space-y-2">
+<div class="bg-red-900/20 border border-red-500/30 rounded-lg px-4 py-2 text-sm text-neutral-300">El check aparece instantáneamente — sin satisfacción</div>
+<div class="bg-red-900/20 border border-red-500/30 rounded-lg px-4 py-2 text-sm text-neutral-300">Verde apagado o gris — no se interpreta como "éxito"</div>
+<div class="bg-red-900/20 border border-red-500/30 rounded-lg px-4 py-2 text-sm text-neutral-300">Demasiado rebote — parece inestable, no transmite confianza</div>
+</div>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-5 mb-6">
+<h3 class="text-base font-semibold text-primary mb-2 flex items-center"><span class="mr-2">💡</span> stroke-dashoffset: el truco del dibujo progresivo</h3>
+<p class="text-neutral-300 text-sm">Configura <code class="bg-dark-700 px-1 rounded">stroke-dasharray</code> igual al perímetro del círculo. Anima <code class="bg-dark-700 px-1 rounded">stroke-dashoffset</code> de perímetro a cero: eso "dibuja" el trazo progresivamente. Es la técnica más usada en animaciones de UX de confirmación.</p>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">dasharray</div><div class="text-xs text-neutral-400">perímetro del círculo</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">dashoffset</div><div class="text-xs text-neutral-400">perímetro → 0</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">Verde #22c55e</div><div class="text-xs text-neutral-400">éxito universal</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">Bounce 10%</div><div class="text-xs text-neutral-400">scale 1 → 1.12 → 1</div></div>
+</div>
+</section>
+<!-- SEÇÃO 5 — PROMPT CODE BOX -->
+<section class="mb-16" id="topico-5">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold">💬 El prompt completo</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">Este es el prompt literal que le das a Claude Code (con la skill Remotion activa). Cada escena numerada corresponde a una microanimación Lottie independiente: Claude genera las 4 composiciones en serie.</p>
+<div class="rounded-2xl border border-purple-500/30 bg-dark-900/40 p-5 mb-6">
+<div class="flex items-center gap-2 mb-4"><span class="w-3 h-3 rounded-full bg-red-400/70"></span><span class="w-3 h-3 rounded-full bg-yellow-400/70"></span><span class="w-3 h-3 rounded-full bg-purple-400/70"></span><span class="text-xs text-neutral-500 ml-2 font-mono">prompt — copia y usa</span></div>
+<pre class="font-mono text-sm text-neutral-200 leading-relaxed whitespace-pre-wrap">Create a clean onboarding sequence.
+Scene 1: User opens mobile banking app.
+Scene 2: Money is deposited.
+Scene 3: Transfer is sent.
+Scene 4: Success checkmark appears.
+Use minimal design and smooth motion.</pre>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-5 mb-6">
+<h3 class="text-base font-semibold text-primary mb-2 flex items-center"><span class="mr-2">💡</span> "Minimal design" es la palabra clave de Lottie</h3>
+<p class="text-neutral-300 text-sm">El diseño minimalista es el estilo nativo de Lottie: íconos flat, trazos limpios, paleta reducida. «Clean» y «minimal» activan ese modo en Claude y evitan que intente crear animaciones complejas que no se traducen bien a JSON Lottie.</p>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">"clean"</div><div class="text-xs text-neutral-400">flat design</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">"minimal"</div><div class="text-xs text-neutral-400">sin ruido visual</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">"smooth"</div><div class="text-xs text-neutral-400">easing suave</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">4 escenas</div><div class="text-xs text-neutral-400">secuencia &lt;Series&gt;</div></div>
+</div>
+</section>
+<!-- SEÇÃO 6 -->
+<section class="mb-16" id="topico-6">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold">🚀 Entregable: de Remotion a la app de producción</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">Remotion genera el MP4 del onboarding para presentaciones y marketing. Los mismos JSON de Lottie se integran directamente en React Native de la app de producción — <strong class="text-purple-400">cero retrabajo</strong> entre el prototipo y el producto final.</p>
+<!-- Timeline build order -->
+<div class="space-y-4 mb-6">
+<h3 class="font-semibold text-white mb-3">Orden de build: de la animación a la app</h3>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold text-sm">1</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-4 border border-dark-600"><h4 class="font-semibold text-white text-sm mb-1">Generar los JSON de Lottie</h4><p class="text-xs text-neutral-400">Claude Code genera 4 animaciones Lottie como JSON. Guárdalas como animation1.json, animation2.json, etc. Valídalas en LottieFiles.com.</p></div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold text-sm">2</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-4 border border-dark-600"><h4 class="font-semibold text-white text-sm mb-1">Montar la composición de Remotion</h4><p class="text-xs text-neutral-400">Usa &lt;Series&gt; para secuenciar las 4 escenas. Configura la duración de cada una mediante durationInFrames. Sincroniza Lottie con el frame.</p></div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold text-sm">3</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-4 border border-dark-600"><h4 class="font-semibold text-white text-sm mb-1">Renderizar MP4 para marketing</h4><p class="text-xs text-neutral-400">Renderizado 1080×1920 (vertical) para Instagram Stories y vista previa de App Store. El video es el mismo onboarding que el usuario verá en la app.</p></div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold text-sm">4</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-4 border border-dark-600"><h4 class="font-semibold text-white text-sm mb-1">Integrar JSON en React Native</h4><p class="text-xs text-neutral-400">Copia los mismos animation.json al proyecto RN. Usa lottie-react-native con AnimatedLottieView. Cero rediseño.</p></div>
+</div>
+</div>
+<div class="bg-gradient-to-r from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6">
+<h3 class="text-base font-semibold text-purple-400 mb-3">Lo que aprendiste en este proyecto</h3>
+<ul class="space-y-2 text-sm text-neutral-300">
+<li class="flex items-start"><span class="text-purple-400 mr-2 mt-0.5">▸</span> Microinteracciones y animación UX para apps financieras</li>
+<li class="flex items-start"><span class="text-purple-400 mr-2 mt-0.5">▸</span> Sincronización de Lottie con el sistema de frames de Remotion</li>
+<li class="flex items-start"><span class="text-purple-400 mr-2 mt-0.5">▸</span> stroke-dashoffset para animaciones de «dibujo progresivo»</li>
+<li class="flex items-start"><span class="text-purple-400 mr-2 mt-0.5">▸</span> Del prototipo a la app de producción sin retrabajo</li>
+<li class="flex items-start"><span class="text-purple-400 mr-2 mt-0.5">▸</span> Lottie como puente entre diseño e ingeniería</li>
+</ul>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">React Native</div><div class="text-xs text-neutral-400">mismo JSON</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">App Store</div><div class="text-xs text-neutral-400">preview de la app</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">Instagram</div><div class="text-xs text-neutral-400">story 9:16</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">Cero rediseño</div><div class="text-xs text-neutral-400">proto → prod</div></div>
+</div>
+</section>
+<!-- RESUMO -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-8">
+<h2 class="text-xl font-bold mb-4">📋 Resumen del Módulo 3.4</h2>
+<ul class="space-y-2 mb-6">
+<li class="flex items-start text-sm"><span class="text-purple-400 mr-2 mt-0.5">✓</span><span class="text-neutral-300">Lottie = JSON ligero, multiplataforma e ideal para microinteracciones de apps</span></li>
+<li class="flex items-start text-sm"><span class="text-purple-400 mr-2 mt-0.5">✓</span><span class="text-neutral-300">Sincronizar mediante goToAndStop() garantiza un render determinístico en Remotion</span></li>
+<li class="flex items-start text-sm"><span class="text-purple-400 mr-2 mt-0.5">✓</span><span class="text-neutral-300">stroke-dashoffset es la técnica estándar para checkmarks y loading rings</span></li>
+<li class="flex items-start text-sm"><span class="text-purple-400 mr-2 mt-0.5">✓</span><span class="text-neutral-300">Los mismos JSON van de Remotion a React Native sin cambios</span></li>
+<li class="flex items-start text-sm"><span class="text-purple-400 mr-2 mt-0.5">✓</span><span class="text-purple-400">Entregable: animaciones listas para producción para una app fintech</span></li>
+</ul>
+<div class="border-t border-dark-600 pt-4">
+<p class="text-sm text-neutral-400 mb-2">Completaste la Trilha 3. Siguiente etapa:</p>
+<a class="text-amber-400 hover:text-amber-300 font-semibold" href="../trilha4/index.html">🎬 Tramo 4 — Producción: render, deploy y workflows avanzados →</a>
+</div>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="modulo-3-3.html">← Motorcycle Commercial</a>
+<a class="flex-1 text-center px-6 py-3 bg-amber-600 text-white rounded-lg font-semibold hover:bg-amber-500 transition-colors" href="../trilha4/index.html">Siguiente ruta: Producción →</a>
+</div>
+</main>
+<footer class="border-t border-dark-600 py-8 mt-8"><div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm"><p>Claude Code × Remotion · Módulo 3.4 · 2026 · <a class="text-sky-400 hover:text-sky-300" href="https://inema.club" target="_blank">INEMA.CLUB</a></p></div></footer>
+<script>
+    const themeToggle=document.getElementById('theme-toggle'),themeToggleDarkIcon=document.getElementById('theme-toggle-dark-icon'),themeToggleLightIcon=document.getElementById('theme-toggle-light-icon'),html=document.documentElement;
+    if(localStorage.getItem('theme')==='light'||(!localStorage.getItem('theme')&&!html.classList.contains('dark'))){themeToggleDarkIcon.classList.remove('hidden');html.classList.remove('dark');}else{themeToggleLightIcon.classList.remove('hidden');}
+    themeToggle.addEventListener('click',()=>{themeToggleDarkIcon.classList.toggle('hidden');themeToggleLightIcon.classList.toggle('hidden');html.classList.toggle('dark');localStorage.setItem('theme',html.classList.contains('dark')?'dark':'light');});
+  </script>
+</body>
+</html>

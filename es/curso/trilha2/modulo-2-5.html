@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Módulo 2.5 · Lottie — prompt→output más rápido | CC × Remotion</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#FACC15', dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' } } } } }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    code, .font-mono { font-family: 'JetBrains Mono', monospace; }
+
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+    html:not(.dark) .text-blue-400 { color: #2563eb; }
+    html:not(.dark) .bg-blue-500\/20 { background: rgba(37,99,235,.12); }
+    html:not(.dark) .bg-blue-500\/10 { background: rgba(37,99,235,.08); }
+    html:not(.dark) .border-blue-500\/30 { border-color: rgba(37,99,235,.25); }
+    html:not(.dark) .hover\:bg-blue-500\/30:hover { background: rgba(37,99,235,.18); }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #2563eb; }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(37,99,235,0.08); }
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #059669; }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(5,150,105,0.08); }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #7c3aed; }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(124,58,237,0.08); }
+    html:not(.dark) .hover\:text-amber-400:hover { color: #92400e; }
+    html:not(.dark) .hover\:bg-amber-500\/10:hover { background-color: rgba(217,119,6,0.08); }
+    html:not(.dark) .text-red-400 { color: #b91c1c; }
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161,98,7,0.08); }
+    html:not(.dark) .border-primary\/30 { border-color: rgba(161,98,7,0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255,255,255,0.95); }
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+    html:not(.dark) svg[role="img"] { filter: saturate(0.82) brightness(0.96); }
+
+    /* ===== DEMOS ===== */
+    @keyframes drawCheck {
+      0%   { stroke-dashoffset: 60; opacity: 0; }
+      20%  { opacity: 1; }
+      100% { stroke-dashoffset: 0; opacity: 1; }
+    }
+    @keyframes checkCircle {
+      0%   { stroke-dashoffset: 200; opacity: 0; }
+      20%  { opacity: 1; }
+      100% { stroke-dashoffset: 0; opacity: 1; }
+    }
+    @keyframes loaderSpin {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+    @keyframes dotPulse {
+      0%,100% { transform: scale(0.7); opacity: 0.4; }
+      50%      { transform: scale(1.2); opacity: 1; }
+    }
+    @keyframes scanLine {
+      0%   { transform: translateY(0); }
+      100% { transform: translateY(64px); }
+    }
+    .check-path {
+      stroke-dasharray: 60;
+      stroke-dashoffset: 60;
+      animation: drawCheck 1.4s cubic-bezier(0.4,0,0.2,1) 0.5s forwards;
+    }
+    .check-circle {
+      stroke-dasharray: 200;
+      stroke-dashoffset: 200;
+      animation: checkCircle 1s ease 0s forwards;
+    }
+    .loader-ring {
+      transform-origin: 50% 50%;
+      animation: loaderSpin 1.2s linear infinite;
+    }
+    .dot-pulse { animation: dotPulse 1s ease-in-out infinite; }
+    .dot-pulse:nth-child(2){ animation-delay: 0.15s; }
+    .dot-pulse:nth-child(3){ animation-delay: 0.30s; }
+    .scan-line { animation: scanLine 1.4s linear infinite alternate; }
+    @media (prefers-reduced-motion: reduce) {
+      .check-path { animation: none; stroke-dashoffset: 0; }
+      .check-circle { animation: none; stroke-dashoffset: 0; opacity: 1; }
+      .loader-ring,.dot-pulse,.scan-line { animation: none; }
+    }
+  </style>
+<link href="https://inematds.github.io/claude-remotion-motion/curso/trilha2/modulo-2-5.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/claude-remotion-motion/en/curso/trilha2/modulo-2-5.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/claude-remotion-motion/es/curso/trilha2/modulo-2-5.html" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha2/modulo-2-5.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="../../../en/curso/trilha2/modulo-2-5.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">EN</a><a href="modulo-2-5.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">ES</a></div>
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14">
+<div class="flex items-center space-x-4">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html"><span class="text-2xl">🎞️</span><span class="font-bold text-lg hidden sm:inline">CC × Remotion</span></a>
+<span class="text-neutral-600">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+</div>
+<div class="flex items-center space-x-1 sm:space-x-2">
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors" href="../trilha1/index.html"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentos</span></a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-blue-400 bg-blue-500/10" href="index.html"><span class="sm:hidden">T2</span><span class="hidden sm:inline">Bibliotecas</span></a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors" href="../trilha3/index.html"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Proyectos</span></a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors" href="../trilha4/index.html"><span class="sm:hidden">T4</span><span class="hidden sm:inline">Producción</span></a>
+<button class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path></svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-blue-400" href="../../index.html">Inicio</a><span>/</span>
+<a class="hover:text-blue-400" href="index.html">Ruta 2</a><span>/</span>
+<span class="text-blue-400">Módulo 2.5</span>
+</div>
+</nav>
+<header class="bg-gradient-to-br from-blue-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-blue-500/20 text-blue-400 text-xs font-semibold rounded-full mb-4">MÓDULO 2.5</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">✨ Lottie — prompt→output más rápido</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">Alcance pequeño, resultado rápido. Lottie es el camino más directo de un prompt a una animación lista para producción: social clips, onboarding de apps y microcontenido de marca salen <strong class="text-blue-400">casi siempre correctos a la primera</strong>.</p>
+<div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">6</div><div class="text-xs text-neutral-400">Temas</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">25</div><div class="text-xs text-neutral-400">Minutos</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">Básico</div><div class="text-xs text-neutral-400">Nivel</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">Práctica</div><div class="text-xs text-neutral-400">Tipo</div></div>
+</div>
+</div>
+</header>
+<main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+<!-- DEMO 1: checkmark se desenhando + micro-loader -->
+<div class="rounded-2xl border border-blue-500/30 bg-dark-900/40 p-5 mb-12 overflow-hidden">
+<div class="flex items-center justify-between mb-4">
+<span class="text-xs font-semibold text-neutral-400 uppercase tracking-wide">demostración en vivo</span>
+<span class="text-xs text-blue-400 font-mono">SVG stroke-dashoffset · microbucle</span>
+</div>
+<div class="flex items-center justify-center gap-16 bg-dark-800 rounded-xl border border-dark-600 p-8">
+<!-- Checkmark se desenhando -->
+<div class="flex flex-col items-center gap-3">
+<svg height="80" viewbox="0 0 80 80" width="80">
+<circle class="check-circle" cx="40" cy="40" fill="none" r="32" stroke="#3b82f6" stroke-linecap="round" stroke-width="3"></circle>
+<polyline class="check-path" fill="none" points="24,41 35,53 57,29" stroke="#60a5fa" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"></polyline>
+</svg>
+<span class="text-xs text-neutral-500 font-mono">stroke-dashoffset</span>
+</div>
+<!-- Micro-loader em loop -->
+<div class="flex flex-col items-center gap-3">
+<svg height="60" viewbox="0 0 60 60" width="60">
+<circle cx="30" cy="30" fill="none" r="24" stroke="#1e3a5f" stroke-width="4"></circle>
+<circle class="loader-ring" cx="30" cy="30" fill="none" r="24" stroke="#38bdf8" stroke-dasharray="40 120" stroke-linecap="round" stroke-width="4"></circle>
+</svg>
+<span class="text-xs text-neutral-500 font-mono">microbucle</span>
+</div>
+<!-- Três pontos pulsando -->
+<div class="flex flex-col items-center gap-3">
+<div class="flex items-center gap-2 h-10">
+<div class="dot-pulse w-3 h-3 rounded-full bg-blue-400"></div>
+<div class="dot-pulse w-3 h-3 rounded-full bg-blue-400"></div>
+<div class="dot-pulse w-3 h-3 rounded-full bg-blue-400"></div>
+</div>
+<span class="text-xs text-neutral-500 font-mono">loading dots</span>
+</div>
+</div>
+<p class="text-xs text-neutral-500 mt-3 text-center">Tres patrones típicos de Lottie: check de éxito, loader continuo y puntos de carga — cada uno generado en pocos segundos a partir de un prompt.</p>
+</div>
+<!-- TÓPICO 1 -->
+<section class="mb-16" id="topico-1">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold">🎯 Qué es Lottie y por qué es diferente</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">Lottie es una biblioteca de animación basada en <strong class="text-blue-400">JSON descriptivo</strong> — el formato captura vectores, colores y curvas de animación de forma compacta. A diferencia de Three.js o GSAP, el alcance es intencionalmente pequeño: animaciones limpias, ligeras y hechas para repetirse.</p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Donde Lottie no es la opción adecuada</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Escenas 3D con perspectiva e iluminación real.</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Coreografías largas con múltiples elementos sincronizados.</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Animaciones de datos (gráficos, charts complejos).</span></li>
+</ul>
+</div>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6">
+<h4 class="font-bold text-blue-400 mb-4">✓ Donde Lottie domina</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span>Microanimaciones de marca: marcas de verificación, loaders, íconos en bucle.</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span>Onboarding de apps: ilustración que se anima para explicar un paso.</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span>Clips rápidos para redes sociales donde lo limpio y preciso vale más que lo elaborado.</span></li>
+</ul>
+</div>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Formato</div><div class="text-xs text-neutral-400">JSON descriptivo</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Peso</div><div class="text-xs text-neutral-400">Ultraligero</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Alcance</div><div class="text-xs text-neutral-400">Pequeño y limpio</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Reutilización</div><div class="text-xs text-neutral-400">Loop natural</div></div>
+</div>
+</section>
+<!-- TÓPICO 2 -->
+<section class="mb-16" id="topico-2">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold">⚡ Por qué Claude acierta más rápido</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">El secreto de Lottie con Claude: un alcance pequeño significa que el modelo <strong class="text-blue-400">no hay espacio para complicarse</strong>. El resultado casi siempre está listo para producción desde el primer intento: limpio, correcto y útil.</p>
+<!-- Timeline: por que funciona -->
+<div class="space-y-4 mb-6">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400 font-bold text-sm">1</div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600">
+<h4 class="font-semibold text-white mb-1">Alcance delimitado</h4>
+<p class="text-neutral-300 text-sm">Una microanimación tiene un inicio, un desarrollo y un final claros. Claude no necesita inferir la coreografía: la estructura del problema es lo suficientemente pequeña como para resolverlo con certeza.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400 font-bold text-sm">2</div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600">
+<h4 class="font-semibold text-white mb-1">Sin decisiones de arquitectura</h4>
+<p class="text-neutral-300 text-sm">No hay ninguna escena 3D, pipeline WebGL ni reconciler de React que gestionar. El modelo escribe SVG + keyframes o JSON Lottie directamente — con mínimas posibilidades de error.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400 font-bold text-sm">3</div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600">
+<h4 class="font-semibold text-white mb-1">Enorme biblioteca comunitaria</h4>
+<p class="text-neutral-300 text-sm">Encuentra una animación Lottie que se acerque a lo que quieres, descríbesela a Claude y pídele que la recree en la composición de Remotion. El patrón ya existe; el modelo lo reconstruye con fidelidad.</p>
+</div>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Consejo de workflow</h3>
+<p class="text-neutral-300">Busca en el <strong>LottieFiles.com</strong> algo parecido a lo que quieres. Describe lo que viste para Claude ("una animación de un ícono de corazón que late en loop, vectorial, con fondo transparente") — la descripción basada en una referencia real mejora mucho el resultado.</p>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Complejidad</div><div class="text-xs text-neutral-400">Mínima</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Acierto</div><div class="text-xs text-neutral-400">1.er intento</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Referencia</div><div class="text-xs text-neutral-400">LottieFiles</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Salida</div><div class="text-xs text-neutral-400">Production-ready</div></div>
+</div>
+</section>
+<!-- TÓPICO 3 -->
+<section class="mb-16" id="topico-3">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold">🛒 La prueba de calidad de Lottie</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">La prueba decisiva: pídele a Claude una <strong class="text-blue-400">"animación de escaneo de código de barras en la caja de una tienda de conveniencia"</strong>. El resultado esperado es limpio, correcto y útil desde la primera respuesta, sin iteraciones.</p>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-5 mb-6">
+<div class="flex items-center gap-2 mb-3">
+<span class="w-3 h-3 rounded-full bg-red-400/70"></span>
+<span class="w-3 h-3 rounded-full bg-yellow-400/70"></span>
+<span class="w-3 h-3 rounded-full bg-blue-400/70"></span>
+<span class="text-xs text-neutral-500 ml-2 font-mono">prompt de prueba</span>
+</div>
+<pre class="text-sm text-neutral-200 leading-relaxed font-mono whitespace-pre-wrap">Crie uma animação Lottie-style para Remotion:
+- Scanner de código de barras num caixa de loja
+- Linha de scan vermelho varrendo de cima a baixo
+- Ícone do código de barras em vetorial simples
+- Loop contínuo, fundo transparente
+- Clean, sem elementos desnecessários</pre>
+</div>
+<!-- DEMO 2: animação de scan de código de barras -->
+<div class="rounded-2xl border border-blue-500/30 bg-dark-900/40 p-5 mb-6">
+<div class="flex items-center justify-between mb-4">
+<span class="text-xs font-semibold text-neutral-400 uppercase tracking-wide">demostración en vivo</span>
+<span class="text-xs text-blue-400 font-mono">barcode scanner loop</span>
+</div>
+<div class="flex items-center justify-center bg-dark-800 rounded-xl border border-dark-600 p-8">
+<div class="relative flex items-center justify-center">
+<!-- Barcode SVG -->
+<svg class="relative z-10" height="80" viewbox="0 0 120 80" width="120">
+<!-- Barras do código -->
+<rect fill="#60a5fa" height="64" rx="1" width="4" x="8" y="8"></rect>
+<rect fill="#60a5fa" height="64" rx="1" width="2" x="16" y="8"></rect>
+<rect fill="#60a5fa" height="64" rx="1" width="6" x="22" y="8"></rect>
+<rect fill="#60a5fa" height="64" rx="1" width="3" x="32" y="8"></rect>
+<rect fill="#60a5fa" height="64" rx="1" width="5" x="39" y="8"></rect>
+<rect fill="#60a5fa" height="64" rx="1" width="2" x="48" y="8"></rect>
+<rect fill="#60a5fa" height="64" rx="1" width="7" x="54" y="8"></rect>
+<rect fill="#60a5fa" height="64" rx="1" width="3" x="65" y="8"></rect>
+<rect fill="#60a5fa" height="64" rx="1" width="5" x="72" y="8"></rect>
+<rect fill="#60a5fa" height="64" rx="1" width="2" x="81" y="8"></rect>
+<rect fill="#60a5fa" height="64" rx="1" width="6" x="87" y="8"></rect>
+<rect fill="#60a5fa" height="64" rx="1" width="3" x="97" y="8"></rect>
+<rect fill="#60a5fa" height="64" rx="1" width="4" x="104" y="8"></rect>
+<!-- Linha de scan (animada) -->
+<rect class="scan-line" fill="#ef4444" height="3" opacity="0.85" rx="1" width="120" x="0" y="8"></rect>
+<!-- Cantos do frame -->
+<path d="M2,2 L2,18 M2,2 L18,2" fill="none" stroke="#38bdf8" stroke-linecap="round" stroke-width="2.5"></path>
+<path d="M118,2 L102,2 M118,2 L118,18" fill="none" stroke="#38bdf8" stroke-linecap="round" stroke-width="2.5"></path>
+<path d="M2,78 L2,62 M2,78 L18,78" fill="none" stroke="#38bdf8" stroke-linecap="round" stroke-width="2.5"></path>
+<path d="M118,78 L102,78 M118,78 L118,62" fill="none" stroke="#38bdf8" stroke-linecap="round" stroke-width="2.5"></path>
+</svg>
+</div>
+</div>
+<p class="text-xs text-neutral-500 mt-3 text-center">Una línea roja recorre el código de barras: exactamente lo que sale de un único prompt al estilo Lottie.</p>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Prompt</div><div class="text-xs text-neutral-400">Una línea</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Salida</div><div class="text-xs text-neutral-400">Limpia de una vez</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Iteración</div><div class="text-xs text-neutral-400">Rara vez</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Usable</div><div class="text-xs text-neutral-400">Directo</div></div>
+</div>
+</section>
+<!-- TÓPICO 4 -->
+<section class="mb-16" id="topico-4">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold">📱 Casos de uso: redes sociales, onboarding, marca</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">Lottie brilla en tres contextos: <strong class="text-blue-400">social clips</strong> que necesitan movimiento limpio y rápido, <strong class="text-blue-400">incorporación a una app</strong> donde las ilustraciones se animan para guiar al usuario, y <strong class="text-blue-400">microcontenido de marca</strong> con una identidad visual coherente.</p>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+<div class="bg-dark-800 rounded-xl p-5 border border-dark-600">
+<div class="text-2xl mb-2">📲</div>
+<h4 class="font-semibold text-white mb-2">Clips para redes sociales</h4>
+<p class="text-neutral-400 text-sm">Motion limpio, bucle perfecto, sin distracciones. El tipo de animación que funciona en Reels y Stories sin parecer "hecha con una herramienta".</p>
+</div>
+<div class="bg-dark-800 rounded-xl p-5 border border-dark-600">
+<div class="text-2xl mb-2">🚀</div>
+<h4 class="font-semibold text-white mb-2">Onboarding de apps</h4>
+<p class="text-neutral-400 text-sm">Ilustraciones que se mueven para explicar un paso de UI. Son livianas, cargan rápido y se animan con precisión — el estándar del mercado móvil.</p>
+</div>
+<div class="bg-dark-800 rounded-xl p-5 border border-dark-600">
+<div class="text-2xl mb-2">🎨</div>
+<h4 class="font-semibold text-white mb-2">Microcontenido de marca</h4>
+<p class="text-neutral-400 text-sm">Íconos animados, pantallas de carga con la marca, confirmaciones de acciones. Pequeños detalles que dan vida a la identidad visual.</p>
+</div>
+</div>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-3 flex items-center"><span class="mr-2">🔷</span> Lottie vs animación CSS pura</h3>
+<p class="text-neutral-300 text-sm">Para microanimaciones dentro de Remotion, Lottie y CSS @keyframes son intercambiables. La diferencia es que Lottie es <strong class="text-blue-400">reutilizable fuera de Remotion</strong> (web, mobile, apps), mientras que CSS @keyframes está contenido en la composición.</p>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Social</div><div class="text-xs text-neutral-400">Loop limpio</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Onboarding</div><div class="text-xs text-neutral-400">La UI explica</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Marca</div><div class="text-xs text-neutral-400">Ícono con vida</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Reutilización</div><div class="text-xs text-neutral-400">Web + mobile</div></div>
+</div>
+</section>
+<!-- TÓPICO 5: SVG ilustrativo -->
+<section class="mb-16" id="topico-5">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold">🗺️ El flujo prompt→Lottie→Remotion</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">El flujo de trabajo con Lottie en Remotion es lineal y rápido. Describes la animación, Claude genera el JSON o el SVG animado, lo incluyes en la composición de Remotion y renderizas: tres etapas, sin idas y vueltas.</p>
+<div class="rounded-2xl border border-blue-500/30 bg-dark-900/40 p-4 mb-6">
+<svg aria-label="Flujo de Lottie en Remotion: se ingresa un prompt descriptivo, Claude genera JSON/SVG animado, la composición de Remotion incluye el asset y el render genera el frame final" class="w-full h-auto" role="img" viewbox="0 0 860 160">
+<defs>
+<lineargradient id="m25-grad" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#60a5fa"></stop><stop offset="1" stop-color="#3b82f6"></stop></lineargradient>
+<filter height="180%" id="m25-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="2"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<pattern height="28" id="m25-grid" patternunits="userSpaceOnUse" width="28"><circle cx="1" cy="1" fill="#3b82f6" opacity="0.10" r="1"></circle></pattern>
+<marker id="m25-ah" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#60a5fa"></path></marker>
+</defs>
+<rect fill="url(#m25-grid)" height="160" width="860" x="0" y="0"></rect>
+<!-- Box 1: Prompt -->
+<g filter="url(#m25-glow)"><rect fill="#0e1622" height="50" rx="12" stroke="url(#m25-grad)" stroke-width="2.2" width="140" x="20" y="55"></rect></g>
+<text fill="#60a5fa" font-family="Inter,sans-serif" font-size="14" font-weight="700" text-anchor="middle" x="90" y="78">Prompt</text>
+<text fill="#93c5fd" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="90" y="97">describe la animación</text>
+<!-- Arrow -->
+<path d="M160,80 L200,80" fill="none" marker-end="url(#m25-ah)" opacity="0.7" stroke="#60a5fa" stroke-width="1.8"></path>
+<!-- Box 2: Claude Code -->
+<rect fill="#0e1622" height="60" rx="12" stroke="#38bdf8" stroke-width="2" width="160" x="208" y="50"></rect>
+<text fill="#bae6fd" font-family="Inter,sans-serif" font-size="13" font-weight="600" text-anchor="middle" x="288" y="78">Claude Code</text>
+<text fill="#7dd3fc" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="288" y="97">genera JSON / SVG+CSS</text>
+<!-- Arrow -->
+<path d="M368,80 L408,80" fill="none" marker-end="url(#m25-ah)" opacity="0.7" stroke="#60a5fa" stroke-width="1.8"></path>
+<!-- Box 3: Composição Remotion -->
+<rect fill="#0e1622" height="60" rx="12" stroke="#38bdf8" stroke-width="2" width="175" x="416" y="50"></rect>
+<text fill="#bae6fd" font-family="Inter,sans-serif" font-size="13" font-weight="600" text-anchor="middle" x="503" y="78">Composición de Remotion</text>
+<text fill="#7dd3fc" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="503" y="97">incluye un asset animado</text>
+<!-- Arrow -->
+<path d="M591,80 L631,80" fill="none" marker-end="url(#m25-ah)" opacity="0.7" stroke="#60a5fa" stroke-width="1.8"></path>
+<!-- Box 4: Vídeo final -->
+<g filter="url(#m25-glow)"><rect fill="#0e1622" height="50" rx="12" stroke="url(#m25-grad)" stroke-width="2.2" width="150" x="639" y="55"></rect></g>
+<text fill="#60a5fa" font-family="Inter,sans-serif" font-size="14" font-weight="700" text-anchor="middle" x="714" y="78">Video final</text>
+<text fill="#93c5fd" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="714" y="97">listo para publicar</text>
+<!-- Rótulo -->
+<text fill="#60a5fa" font-family="Inter,sans-serif" font-size="11" opacity="0.6" text-anchor="middle" x="430" y="22">flujo de 3 pasos — sin iteración en la mayoría de los casos</text>
+</svg>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Cuándo iterar</h3>
+<p class="text-neutral-300 text-sm">Lottie rara vez necesita iteraciones, pero cuando las necesita, son rápidas. Como el alcance es pequeño, el seguimiento es preciso: «aumenta el radio del loader» o «cambia el color del check a verde»; una línea por ajuste.</p>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Pasos</div><div class="text-xs text-neutral-400">3 etapas</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Iteración</div><div class="text-xs text-neutral-400">Rara vez</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Ajuste</div><div class="text-xs text-neutral-400">1 línea</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Tiempo</div><div class="text-xs text-neutral-400">Minutos</div></div>
+</div>
+</section>
+<!-- TÓPICO 6 -->
+<section class="mb-16" id="topico-6">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold">📐 Anatomía de un buen prompt de Lottie</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">Los prompts de Lottie de calidad tienen cuatro ingredientes: <strong class="text-blue-400">el objeto que se anima</strong>, <strong class="text-blue-400">el movimiento en palabras físicas</strong>, <strong class="text-blue-400">el contexto de uso</strong> e <strong class="text-blue-400">la instrucción de loop</strong>. Con estos cuatro, Claude entrega a la primera.</p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Prompt incompleto</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>"Haz una animación de un corazón." — sin contexto de uso, sin loop.</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>"Animate this icon." — sin describir físicamente el movimiento.</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Sin mencionar el fondo transparente cuando sea necesario.</span></li>
+</ul>
+</div>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6">
+<h4 class="font-bold text-blue-400 mb-4">✓ Prompt completo</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span>"Ícono de corazón que palpita — escala 1→1.2→1 — loop de 1s."</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span>"Fondo transparente, estilo vectorial flat, color #ef4444."</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span>"Para un clip para redes sociales — clean, sin bordes ni sombras."</span></li>
+</ul>
+</div>
+</div>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-3 flex items-center"><span class="mr-2">🔷</span> Lottie es el atajo adecuado cuando…</h3>
+<p class="text-neutral-300 text-sm">Necesitas un resultado rápido, la animación es sencilla y limpia, el contexto es social / mobile / onboarding o quieres algo que también funcione fuera de Remotion. En los demás casos, GSAP, D3 o Three.js ofrecen más.</p>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Objeto</div><div class="text-xs text-neutral-400">Lo que se anima</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Movimiento</div><div class="text-xs text-neutral-400">Físico y directo</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Contexto</div><div class="text-xs text-neutral-400">Social / mobile</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Loop</div><div class="text-xs text-neutral-400">Siempre especifica</div></div>
+</div>
+</section>
+<!-- RESUMO -->
+<section class="mb-12">
+<div class="bg-gradient-to-br from-blue-900/40 via-dark-800 to-dark-800 rounded-xl border border-blue-500/30 p-8">
+<h2 class="text-2xl font-bold mb-6 flex items-center"><span class="mr-3">📌</span> Resumen del módulo</h2>
+<div class="space-y-4 mb-8">
+<div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-white">Alcance pequeño = acierto a la primera</strong><span class="text-neutral-400"> — Lottie no le da espacio a Claude para complicar las cosas; el resultado casi siempre está listo para producción.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-white">Ideal para redes sociales, onboarding y marca</strong><span class="text-neutral-400"> — donde lo limpio y preciso vale más que lo elaborado.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-white">Flujo de 3 pasos</strong><span class="text-neutral-400"> — prompt → Claude genera → Remotion lo incluye. Sin iteraciones en la mayoría de los casos.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-white">Prompt con 4 ingredientes</strong><span class="text-neutral-400"> — objeto, movimiento físico, contexto, loop. Con eso, la primera respuesta ya funciona.</span></div></div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+<h3 class="font-semibold text-blue-400 mb-2">Siguiente módulo:</h3>
+<p class="text-neutral-300">2.6 — Mapa de decisión: qué librería usar para cada tipo de motion.</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="modulo-2-4.html">← Módulo anterior</a>
+<a class="flex-1 text-center px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-500 transition-colors" href="modulo-2-6.html">Siguiente módulo →</a>
+</div>
+</div>
+</section>
+</main>
+<footer class="border-t border-dark-600 py-8 mt-8">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>Claude Code × Remotion · Módulo 2.5 · 2026 · <a class="text-sky-400 hover:text-sky-300" href="https://inema.club" target="_blank">INEMA.CLUB</a></p>
+</div>
+</footer>
+<script>
+    const themeToggle=document.getElementById('theme-toggle'),themeToggleDarkIcon=document.getElementById('theme-toggle-dark-icon'),themeToggleLightIcon=document.getElementById('theme-toggle-light-icon'),html=document.documentElement;
+    if(localStorage.getItem('theme')==='light'||(!localStorage.getItem('theme')&&!html.classList.contains('dark'))){themeToggleDarkIcon.classList.remove('hidden');html.classList.remove('dark');}else{themeToggleLightIcon.classList.remove('hidden');}
+    themeToggle.addEventListener('click',()=>{themeToggleDarkIcon.classList.toggle('hidden');themeToggleLightIcon.classList.toggle('hidden');html.classList.toggle('dark');localStorage.setItem('theme',html.classList.contains('dark')?'dark':'light');});
+  </script>
+</body>
+</html>

@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Module 4.3: Recap &amp; Final Map | CC × Remotion</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#FACC15',
+            dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' }
+          }
+        }
+      }
+    }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+
+    /* Light mode - base */
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    /* Light mode - amber */
+    html:not(.dark) .text-amber-400 { color: #92400e; }
+    html:not(.dark) .bg-amber-500\/20 { background: rgba(217,119,6,.12); }
+    html:not(.dark) .bg-amber-500\/10 { background: rgba(217,119,6,.08); }
+    html:not(.dark) .border-amber-500\/30 { border-color: rgba(217,119,6,.25); }
+    html:not(.dark) .hover\:bg-amber-500\/30:hover { background: rgba(217,119,6,.18); }
+
+    /* Light mode - outras trilhas nav */
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #059669; }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(5,150,105,.08); }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #2563eb; }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(37,99,235,.08); }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #7c3aed; }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(124,58,237,.08); }
+    html:not(.dark) .hover\:text-amber-400:hover { color: #92400e; }
+    html:not(.dark) .hover\:bg-amber-500\/10:hover { background: rgba(217,119,6,.08); }
+
+    /* Light mode - primary / sky */
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161,98,7,.08); }
+    html:not(.dark) .border-primary\/30 { border-color: rgba(161,98,7,.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+
+    /* Light mode - sem gradiente */
+    html:not(.dark) .from-amber-900\/30 { --tw-gradient-from: transparent; }
+    html:not(.dark) .bg-gradient-to-br { background: #f9fafb; }
+
+    /* Nav light */
+    html:not(.dark) nav { background-color: rgba(255,255,255,.95) !important; border-color: #e5e7eb; }
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255,255,255,.95); }
+
+    /* SVG light */
+    html:not(.dark) svg[role="img"] { filter: saturate(0.82) brightness(0.96); }
+
+    /* Dark borders */
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+
+    /* === DEMOS === */
+    @keyframes m43-cardIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes m43-treeLine {
+      from { stroke-dashoffset: 100; }
+      to { stroke-dashoffset: 0; }
+    }
+    @media (prefers-reduced-motion: no-preference) {
+      .m43-c1 { animation: m43-cardIn 0.5s ease-out 0.1s both; }
+      .m43-c2 { animation: m43-cardIn 0.5s ease-out 0.3s both; }
+      .m43-c3 { animation: m43-cardIn 0.5s ease-out 0.5s both; }
+      .m43-c4 { animation: m43-cardIn 0.5s ease-out 0.7s both; }
+      .m43-c5 { animation: m43-cardIn 0.5s ease-out 0.9s both; }
+      .m43-tl { stroke-dasharray: 100; animation: m43-treeLine 1s ease-out 0.5s both; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .m43-c1,.m43-c2,.m43-c3,.m43-c4,.m43-c5 { opacity: 1; transform: none; }
+      .m43-tl { stroke-dashoffset: 0; }
+    }
+  </style>
+<link href="https://inematds.github.io/claude-remotion-motion/curso/trilha4/modulo-4-3.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/claude-remotion-motion/en/curso/trilha4/modulo-4-3.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/claude-remotion-motion/es/curso/trilha4/modulo-4-3.html" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha4/modulo-4-3.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="modulo-4-3.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">EN</a><a href="../../../es/curso/trilha4/modulo-4-3.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">ES</a></div>
+<!-- NAV -->
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14">
+<div class="flex items-center space-x-4">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🎞️</span>
+<span class="font-bold text-lg hidden sm:inline">CC × Remotion</span>
+</a>
+<span class="text-neutral-600">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+</div>
+<div class="flex items-center space-x-1 sm:space-x-2">
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors" href="../trilha1/index.html"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentals</span></a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors" href="../trilha2/index.html"><span class="sm:hidden">T2</span><span class="hidden sm:inline">Libraries</span></a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors" href="../trilha3/index.html"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Projects</span></a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-amber-400 bg-amber-500/10" href="index.html"><span class="sm:hidden">T4</span><span class="hidden sm:inline">Production</span></a>
+<button class="p-2 rounded-lg text-neutral-400 hover:text-white hover:bg-dark-700 transition-colors ml-2" id="theme-toggle">
+<svg class="hidden w-5 h-5" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+<svg class="hidden w-5 h-5" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path></svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<!-- BREADCRUMB -->
+<nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-amber-400" href="../../index.html">Start</a><span>/</span>
+<a class="hover:text-amber-400" href="index.html">Track 4</a><span>/</span>
+<span class="text-amber-400">Module 4.3</span>
+</div>
+</nav>
+<!-- HEADER -->
+<header class="bg-gradient-to-br from-amber-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-amber-500/20 text-amber-400 text-xs font-semibold rounded-full mb-4">MODULE 4.3</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">🗺️ Recap &amp; final map</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">Everything in one place: the matrix of the 4 libraries, the 4 universal rules, and confirmation that Claude Code + Remotion is <strong class="text-amber-400">production tool now</strong> — practically free.</p>
+<div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">6</div><div class="text-xs text-neutral-400">Topics</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">30</div><div class="text-xs text-neutral-400">Minutes</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">Recap</div><div class="text-xs text-neutral-400">Type</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">Final</div><div class="text-xs text-neutral-400">Module</div></div>
+</div>
+</div>
+</header>
+<main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+<!-- TÓPICO 1: A matriz das 4 libs -->
+<section class="mb-16" id="topico-1">
+<div class="flex items-center space-x-4 mb-6">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-amber-500/20 flex items-center justify-center">
+<span class="text-amber-400 font-bold text-lg">1</span>
+</div>
+<h2 class="text-2xl font-bold">The 4-library matrix</h2>
+</div>
+<p class="text-neutral-300 mb-6">Each library has a clear domain. There’s no “best library” — there’s the right library for each type of motion. The matrix below is the course’s main decision map.</p>
+<!-- DEMO 1: cards animando em stagger -->
+<div class="rounded-2xl border border-amber-500/30 bg-dark-900/40 p-5 mb-8">
+<div class="flex items-center justify-between mb-4">
+<span class="text-xs font-semibold text-neutral-400 uppercase tracking-wide">live demo</span>
+<span class="text-xs text-amber-400 font-mono">library matrix — card stagger</span>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+<div class="m43-c1 bg-dark-800 rounded-xl border border-amber-500/30 p-4 text-center">
+<div class="text-2xl mb-2">⚡</div>
+<div class="font-semibold text-amber-400 text-sm mb-1">GSAP</div>
+<div class="text-xs text-neutral-500">Fixed choreography</div>
+<div class="text-xs text-neutral-600 mt-1">SaaS intros, launch</div>
+</div>
+<div class="m43-c2 bg-dark-800 rounded-xl border border-amber-500/30 p-4 text-center">
+<div class="text-2xl mb-2">📊</div>
+<div class="font-semibold text-amber-400 text-sm mb-1">D3</div>
+<div class="text-xs text-neutral-500">Animated data</div>
+<div class="text-xs text-neutral-600 mt-1">Charts, graphs</div>
+</div>
+<div class="m43-c3 bg-dark-800 rounded-xl border border-sky-500/30 p-4 text-center">
+<div class="text-2xl mb-2">🧊</div>
+<div class="font-semibold text-sky-400 text-sm mb-1">Three.js</div>
+<div class="text-xs text-neutral-500">3D scenes</div>
+<div class="text-xs text-neutral-600 mt-1">Product, brand</div>
+</div>
+<div class="m43-c4 bg-dark-800 rounded-xl border border-sky-500/30 p-4 text-center">
+<div class="text-2xl mb-2">🪶</div>
+<div class="font-semibold text-sky-400 text-sm mb-1">Lottie</div>
+<div class="text-xs text-neutral-500">Light and fast</div>
+<div class="text-xs text-neutral-600 mt-1">Social, micro</div>
+</div>
+</div>
+<p class="text-xs text-neutral-500 mt-3 text-center">Each library appears in a stagger — like a product video created with the course itself.</p>
+</div>
+<!-- Tabela matriz -->
+<div class="overflow-x-auto mb-6">
+<table class="w-full text-sm border-collapse">
+<thead>
+<tr class="border-b border-dark-600">
+<th class="text-left py-3 px-4 font-semibold text-amber-400">Lib</th>
+<th class="text-left py-3 px-4 font-semibold text-neutral-400">Best for</th>
+<th class="text-left py-3 px-4 font-semibold text-neutral-400">Use cases</th>
+<th class="text-left py-3 px-4 font-semibold text-neutral-400">Avoid when</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-dark-600">
+<tr class="hover:bg-dark-800/50 transition-colors">
+<td class="py-3 px-4 font-semibold text-amber-400">GSAP</td>
+<td class="py-3 px-4 text-neutral-300">Deterministic choreography</td>
+<td class="py-3 px-4 text-neutral-400">SaaS intros, launch videos</td>
+<td class="py-3 px-4 text-neutral-500">Reactive / physical UI</td>
+</tr>
+<tr class="hover:bg-dark-800/50 transition-colors">
+<td class="py-3 px-4 font-semibold text-amber-400">Framer Motion</td>
+<td class="py-3 px-4 text-neutral-300">Physical and reactive UI</td>
+<td class="py-3 px-4 text-neutral-400">Interfaces, spring</td>
+<td class="py-3 px-4 text-neutral-500">Video choreography</td>
+</tr>
+<tr class="hover:bg-dark-800/50 transition-colors">
+<td class="py-3 px-4 font-semibold text-sky-400">D3</td>
+<td class="py-3 px-4 text-neutral-300">Animated data</td>
+<td class="py-3 px-4 text-neutral-400">Charts, dashboards, maps</td>
+<td class="py-3 px-4 text-neutral-500">3D, pure motion</td>
+</tr>
+<tr class="hover:bg-dark-800/50 transition-colors">
+<td class="py-3 px-4 font-semibold text-sky-400">Three.js / R3F</td>
+<td class="py-3 px-4 text-neutral-300">3D scenes</td>
+<td class="py-3 px-4 text-neutral-400">Product, brand, architecture</td>
+<td class="py-3 px-4 text-neutral-500">Simple 2D motion</td>
+</tr>
+<tr class="hover:bg-dark-800/50 transition-colors">
+<td class="py-3 px-4 font-semibold text-sky-400">Lottie</td>
+<td class="py-3 px-4 text-neutral-300">Light and fast</td>
+<td class="py-3 px-4 text-neutral-400">Social clips, micro-content</td>
+<td class="py-3 px-4 text-neutral-500">Complex choreography</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600 text-center"><span class="text-xs font-semibold text-amber-400">GSAP = video</span></div>
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600 text-center"><span class="text-xs font-semibold text-amber-400">D3 = data</span></div>
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600 text-center"><span class="text-xs font-semibold text-neutral-400">Three.js = 3D</span></div>
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600 text-center"><span class="text-xs font-semibold text-neutral-400">Lottie = social</span></div>
+</div>
+</section>
+<!-- TÓPICO 2: GSAP x Framer relembrado -->
+<section class="mb-16" id="topico-2">
+<div class="flex items-center space-x-4 mb-6">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-amber-500/20 flex items-center justify-center">
+<span class="text-amber-400 font-bold text-lg">2</span>
+</div>
+<h2 class="text-2xl font-bold">GSAP × Framer revisited</h2>
+</div>
+<p class="text-neutral-300 mb-6">The most important distinction in the course, revisited: <strong class="text-amber-400">GSAP for video</strong> (deterministic timeline, fixed choreography, what happens at frame X is defined); <strong class="text-amber-400">Framer Motion for UI</strong> (spring, physics, reactive to application state). They aren’t competitors—they serve different domains.</p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+<div class="bg-dark-800/50 rounded-xl border border-amber-500/30 p-6">
+<h3 class="font-semibold text-amber-400 mb-3">⚡ Use GSAP when:</h3>
+<ul class="space-y-2 text-sm text-neutral-300">
+<li class="flex items-start gap-2"><span class="text-amber-400 mt-0.5">→</span><span>You’re producing a rendered video</span></li>
+<li class="flex items-start gap-2"><span class="text-amber-400 mt-0.5">→</span><span>The choreography is fixed and defined by you</span></li>
+<li class="flex items-start gap-2"><span class="text-amber-400 mt-0.5">→</span><span>Needs precise audio synchronization</span></li>
+<li class="flex items-start gap-2"><span class="text-amber-400 mt-0.5">→</span><span>SaaS intro, launch video, presentation</span></li>
+</ul>
+</div>
+<div class="bg-dark-800/50 rounded-xl border border-sky-500/30 p-6">
+<h3 class="font-semibold text-sky-400 mb-3">🌊 Use Framer when:</h3>
+<ul class="space-y-2 text-sm text-neutral-300">
+<li class="flex items-start gap-2"><span class="text-sky-400 mt-0.5">→</span><span>You’re animating a user interface</span></li>
+<li class="flex items-start gap-2"><span class="text-sky-400 mt-0.5">→</span><span>The animation responds to the state (hover, click)</span></li>
+<li class="flex items-start gap-2"><span class="text-sky-400 mt-0.5">→</span><span>You want spring and natural physics</span></li>
+<li class="flex items-start gap-2"><span class="text-sky-400 mt-0.5">→</span><span>Interactive React components</span></li>
+</ul>
+</div>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600 text-center"><span class="text-xs font-semibold text-amber-400">GSAP = deterministic</span></div>
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600 text-center"><span class="text-xs font-semibold text-amber-400">Framer = reactive</span></div>
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600 text-center"><span class="text-xs font-semibold text-neutral-400">Distinct domains</span></div>
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600 text-center"><span class="text-xs font-semibold text-neutral-400">Non-competing</span></div>
+</div>
+</section>
+<!-- TÓPICO 3: Vanilla x R3F relembrado -->
+<section class="mb-16" id="topico-3">
+<div class="flex items-center space-x-4 mb-6">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-amber-500/20 flex items-center justify-center">
+<span class="text-amber-400 font-bold text-lg">3</span>
+</div>
+<h2 class="text-2xl font-bold">Vanilla Three.js × R3F revisited</h2>
+</div>
+<p class="text-neutral-300 mb-6">Same logic as the previous distinction: <strong class="text-amber-400">Vanilla Three.js</strong> for simple 3D scenes without a React dependency. <strong class="text-amber-400">React Three Fiber (R3F)</strong> when the 3D scene needs to be composed with other React elements — state, UI, Framer animations in the same component.</p>
+<!-- Timeline comparativa -->
+<div class="space-y-4 mb-8">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center">
+<span class="text-amber-400 font-bold text-xs">3js</span>
+</div>
+<div class="flex-1 bg-dark-800 rounded-xl p-4 border border-amber-500/20">
+<h4 class="font-semibold text-amber-400 mb-1">Vanilla Three.js — when to use it</h4>
+<p class="text-sm text-neutral-400">Isolated 3D scene, with no composition alongside React UI. Claude prompt: “Create a Three.js scene with [description] — no React.” Result: less boilerplate, more direct code.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-sky-500/20 flex items-center justify-center">
+<span class="text-sky-400 font-bold text-xs">R3F</span>
+</div>
+<div class="flex-1 bg-dark-800 rounded-xl p-4 border border-sky-500/20">
+<h4 class="font-semibold text-sky-400 mb-1">React Three Fiber — when to use it</h4>
+<p class="text-sm text-neutral-400">When the 3D component needs props, React state, or needs to be inside a larger composition. R3F's overhead pays off when it integrates with the rest of the app.</p>
+</div>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Rule of thumb</h3>
+<p class="text-neutral-300 text-sm">If your 3D scene will live inside a React component and needs to communicate with it — R3F. If it’s an independent scene on a separate canvas — Vanilla. When in doubt, start with Vanilla and migrate to R3F if you need the integration.</p>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600 text-center"><span class="text-xs font-semibold text-amber-400">Vanilla = simple</span></div>
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600 text-center"><span class="text-xs font-semibold text-amber-400">R3F = composition</span></div>
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600 text-center"><span class="text-xs font-semibold text-neutral-400">Question → Vanilla</span></div>
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600 text-center"><span class="text-xs font-semibold text-neutral-400">Migrate if needed</span></div>
+</div>
+</section>
+<!-- TÓPICO 4: As 4 regras universais -->
+<section class="mb-16" id="topico-4">
+<div class="flex items-center space-x-4 mb-6">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-amber-500/20 flex items-center justify-center">
+<span class="text-amber-400 font-bold text-lg">4</span>
+</div>
+<h2 class="text-2xl font-bold">The 4 universal rules</h2>
+</div>
+<p class="text-neutral-300 mb-6">Regardless of the library, video type, or complexity level, these 4 rules always apply. They are the common denominator across all the course projects.</p>
+<!-- 4 regras em timeline -->
+<div class="space-y-4 mb-8">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-amber-500/20 border-2 border-amber-500/40 flex items-center justify-center">
+<span class="text-amber-400 font-bold">1</span>
+</div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600">
+<h4 class="font-semibold text-amber-400 mb-2">Install the skill</h4>
+<p class="text-sm text-neutral-400">Without the Remotion skill, Claude produces generic motion. With the skill, it knows the specific conventions and APIs. It’s the difference between an average result and the right result on the first try.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-amber-500/20 border-2 border-amber-500/40 flex items-center justify-center">
+<span class="text-amber-400 font-bold">2</span>
+</div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600">
+<h4 class="font-semibold text-amber-400 mb-2">Start simple</h4>
+<p class="text-sm text-neutral-400">Skeleton first. Composition before timing. Timing before expressive movement. Movement before polish. The order matters—and each stage needs approval before moving on.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-amber-500/20 border-2 border-amber-500/40 flex items-center justify-center">
+<span class="text-amber-400 font-bold">3</span>
+</div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600">
+<h4 class="font-semibold text-amber-400 mb-2">Iterate in the same session</h4>
+<p class="text-sm text-neutral-400">The accumulated context in the session is the most valuable asset. Don’t start a new session mid-workflow—you’ll lose all the code and history Claude already has in memory.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-amber-400 border-2 border-amber-400 flex items-center justify-center">
+<span class="text-dark-900 font-bold">4</span>
+</div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-amber-500/30">
+<h4 class="font-semibold text-amber-400 mb-2">Render with the right settings</h4>
+<p class="text-sm text-neutral-400">ProRes 4444 XQ + PNG + last resort for alpha. H.264 for distribution. Know where the video will end up before rendering — the settings depend on where the video will be used.</p>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600 text-center"><span class="text-xs font-semibold text-amber-400">Installed skill</span></div>
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600 text-center"><span class="text-xs font-semibold text-amber-400">Start simple</span></div>
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600 text-center"><span class="text-xs font-semibold text-neutral-400">Same session</span></div>
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600 text-center"><span class="text-xs font-semibold text-neutral-400">Correct config</span></div>
+</div>
+</section>
+<!-- TÓPICO 5: É produção agora / praticamente grátis -->
+<section class="mb-16" id="topico-5">
+<div class="flex items-center space-x-4 mb-6">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-amber-500/20 flex items-center justify-center">
+<span class="text-amber-400 font-bold text-lg">5</span>
+</div>
+<h2 class="text-2xl font-bold">It’s production now / practically free</h2>
+</div>
+<p class="text-neutral-300 mb-6">Claude Code + Remotion isn't a prototype, isn't an experiment — it's <strong class="text-amber-400">real production tool, today</strong>. And each video produced with this stack costs a fraction of a cent in tokens. Experimentation costs practically nothing.</p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+<div class="bg-dark-800/50 rounded-xl border border-amber-500/30 p-6">
+<h3 class="font-semibold text-amber-400 mb-3">🚀 Why it’s production-ready now</h3>
+<ul class="space-y-2 text-sm text-neutral-300">
+<li class="flex items-start gap-2"><span class="text-amber-400 mt-0.5">✓</span><span>Claude Code with the Remotion skill generates working code on the first try</span></li>
+<li class="flex items-start gap-2"><span class="text-amber-400 mt-0.5">✓</span><span>Remotion renders at broadcast quality (4K, ProRes)</span></li>
+<li class="flex items-start gap-2"><span class="text-amber-400 mt-0.5">✓</span><span>The skeleton → polish workflow has been validated in hundreds of videos</span></li>
+<li class="flex items-start gap-2"><span class="text-amber-400 mt-0.5">✓</span><span>Quality scales with your approach—not your budget</span></li>
+</ul>
+</div>
+<div class="bg-dark-800/50 rounded-xl border border-emerald-500/20 p-6">
+<h3 class="font-semibold text-emerald-400 mb-3">💰 Practically Free</h3>
+<ul class="space-y-2 text-sm text-neutral-300">
+<li class="flex items-start gap-2"><span class="text-emerald-400 mt-0.5">✓</span><span>A 4-turn session costs pennies in tokens</span></li>
+<li class="flex items-start gap-2"><span class="text-emerald-400 mt-0.5">✓</span><span>Remotion is open source — no license fee</span></li>
+<li class="flex items-start gap-2"><span class="text-emerald-400 mt-0.5">✓</span><span>Node.js runs locally—no rendering costs</span></li>
+<li class="flex items-start gap-2"><span class="text-emerald-400 mt-0.5">✓</span><span>You can iterate 50 times for less than the price of a coffee</span></li>
+</ul>
+</div>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600 text-center"><span class="text-xs font-semibold text-amber-400">Real production</span></div>
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600 text-center"><span class="text-xs font-semibold text-amber-400">Minimal cost</span></div>
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600 text-center"><span class="text-xs font-semibold text-neutral-400">Now, not tomorrow</span></div>
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600 text-center"><span class="text-xs font-semibold text-neutral-400">Quality = approach</span></div>
+</div>
+</section>
+<!-- TÓPICO 6: Próximos passos -->
+<section class="mb-16" id="topico-6">
+<div class="flex items-center space-x-4 mb-6">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-amber-500/20 flex items-center justify-center">
+<span class="text-amber-400 font-bold text-lg">6</span>
+</div>
+<h2 class="text-2xl font-bold">Next steps</h2>
+</div>
+<p class="text-neutral-300 mb-6">You’ve finished the course. What should you do now to turn what you’ve learned into real fluency? Three concrete actions with immediate payoff.</p>
+<!-- DEMO 2: árvore de decisão animada -->
+<div class="rounded-2xl border border-amber-500/30 bg-dark-900/40 p-5 mb-8">
+<div class="flex items-center justify-between mb-4">
+<span class="text-xs font-semibold text-neutral-400 uppercase tracking-wide">live demo</span>
+<span class="text-xs text-amber-400 font-mono">decision tree — which lib to use?</span>
+</div>
+<svg aria-label="Decision tree: which type of motion calls for which library" class="w-full h-auto" font-family="Inter,sans-serif" role="img" viewbox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<filter id="m43-glow"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<pattern height="12" id="m43-grid" patternunits="userSpaceOnUse" width="12">
+<path d="M 12 0 L 0 0 0 12" fill="none" opacity=".2" stroke="#fbbf24" stroke-width=".1"></path>
+</pattern>
+</defs>
+<rect fill="url(#m43-grid)" height="200" width="400"></rect>
+<!-- Nó raiz -->
+<rect fill="#1f1604" filter="url(#m43-glow)" height="32" rx="6" stroke="#fbbf24" stroke-width="1.5" width="120" x="140" y="10"></rect>
+<text fill="#fbbf24" font-size="9" font-weight="600" text-anchor="middle" x="200" y="30">What kind of motion?</text>
+<!-- Linhas -->
+<line class="m43-tl" stroke="#fbbf24" stroke-width="1" x1="200" x2="60" y1="42" y2="80"></line>
+<line class="m43-tl" stroke="#fbbf24" stroke-width="1" x1="200" x2="150" y1="42" y2="80"></line>
+<line class="m43-tl" stroke="#38bdf8" stroke-width="1" x1="200" x2="255" y1="42" y2="80"></line>
+<line class="m43-tl" stroke="#38bdf8" stroke-width="1" x1="200" x2="345" y1="42" y2="80"></line>
+<!-- Nó GSAP -->
+<rect fill="#1f1604" height="28" rx="5" stroke="#fbbf24" stroke-width="1.2" width="88" x="15" y="80"></rect>
+<text fill="#fbbf24" font-size="8" font-weight="600" text-anchor="middle" x="59" y="92">Choreography</text>
+<text fill="#d97706" font-size="7" text-anchor="middle" x="59" y="103">→ GSAP</text>
+<!-- Nó D3 -->
+<rect fill="#1f1604" height="28" rx="5" stroke="#fbbf24" stroke-width="1.2" width="88" x="108" y="80"></rect>
+<text fill="#fbbf24" font-size="8" font-weight="600" text-anchor="middle" x="152" y="92">Data</text>
+<text fill="#d97706" font-size="7" text-anchor="middle" x="152" y="103">→ D3</text>
+<!-- Nó Three.js -->
+<rect fill="#0e1b26" height="28" rx="5" stroke="#38bdf8" stroke-width="1.2" width="88" x="210" y="80"></rect>
+<text fill="#38bdf8" font-size="8" font-weight="600" text-anchor="middle" x="254" y="92">3D</text>
+<text fill="#7dd3fc" font-size="7" text-anchor="middle" x="254" y="103">→ Three.js</text>
+<!-- Nó Lottie -->
+<rect fill="#0e1b26" height="28" rx="5" stroke="#38bdf8" stroke-width="1.2" width="88" x="303" y="80"></rect>
+<text fill="#38bdf8" font-size="8" font-weight="600" text-anchor="middle" x="347" y="92">Social / micro</text>
+<text fill="#7dd3fc" font-size="7" text-anchor="middle" x="347" y="103">→ Lottie</text>
+<!-- Segunda linha: UI fisica -->
+<line stroke="#fbbf24" stroke-dasharray="4 3" stroke-width="1" x1="59" x2="59" y1="108" y2="140"></line>
+<text fill="#9ca3af" font-size="7" text-anchor="middle" x="59" y="128">UI?</text>
+<rect fill="#0e1b26" height="28" rx="5" stroke="#38bdf8" stroke-width="1" width="88" x="15" y="140"></rect>
+<text fill="#38bdf8" font-size="8" font-weight="600" text-anchor="middle" x="59" y="152">Physical UI</text>
+<text fill="#7dd3fc" font-size="7" text-anchor="middle" x="59" y="163">→ Framer Motion</text>
+<!-- 3D legenda -->
+<line stroke="#38bdf8" stroke-dasharray="4 3" stroke-width="1" x1="254" x2="254" y1="108" y2="140"></line>
+<text fill="#9ca3af" font-size="7" text-anchor="middle" x="254" y="128">React?</text>
+<rect fill="#0e1b26" height="28" rx="5" stroke="#38bdf8" stroke-width="1" width="88" x="210" y="140"></rect>
+<text fill="#38bdf8" font-size="8" font-weight="600" text-anchor="middle" x="254" y="152">React 3D</text>
+<text fill="#7dd3fc" font-size="7" text-anchor="middle" x="254" y="163">→ R3F</text>
+<!-- Label -->
+<text fill="#9ca3af" font-size="7" text-anchor="middle" x="200" y="192">every decision leads to the right library</text>
+</svg>
+<p class="text-xs text-neutral-500 mt-3 text-center">Complete decision tree — never pick the wrong library again.</p>
+</div>
+<!-- Os 3 próximos passos -->
+<div class="space-y-4 mb-8">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-amber-400 flex items-center justify-center">
+<span class="text-dark-900 font-bold">1</span>
+</div>
+<div class="flex-1 bg-dark-800 rounded-xl p-4 border border-amber-400/30">
+<h4 class="font-semibold text-amber-400 mb-1">Practice with the 4 projects in Track 3</h4>
+<p class="text-sm text-neutral-400">SaaS intro, data viz (D3), 3D scene (Three.js/R3F), and social clip (Lottie). Each applies the 4-turn workflow in a real-world situation. Fluency comes from practice, not reading.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-amber-500/30 flex items-center justify-center">
+<span class="text-amber-400 font-bold">2</span>
+</div>
+<div class="flex-1 bg-dark-800 rounded-xl p-4 border border-dark-600">
+<h4 class="font-semibold text-white mb-1">Explore each library’s official documentation</h4>
+<p class="text-sm text-neutral-400">GSAP docs, D3 gallery, Three.js journey, React Three Fiber docs. Claude already knows how to use them—but you need to know what to ask for. Knowing a library’s catalog means knowing what’s possible.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center">
+<span class="text-amber-400 font-bold">3</span>
+</div>
+<div class="flex-1 bg-dark-800 rounded-xl p-4 border border-dark-600">
+<h4 class="font-semibold text-white mb-1">Build your first production video</h4>
+<p class="text-sm text-neutral-400">Not to learn—to deliver. A real video, with a real destination (YouTube, reel, presentation). The first production video is what turns the course from learning into a skill.</p>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600 text-center"><span class="text-xs font-semibold text-amber-400">4 T3 projects</span></div>
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600 text-center"><span class="text-xs font-semibold text-amber-400">Library docs</span></div>
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600 text-center"><span class="text-xs font-semibold text-neutral-400">1st real video</span></div>
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600 text-center"><span class="text-xs font-semibold text-neutral-400">Skill = practice</span></div>
+</div>
+</section>
+<!-- RESUMO FINAL DO CURSO -->
+<section class="bg-gradient-to-br from-amber-900/30 via-dark-800 to-dark-800 rounded-2xl border border-amber-500/30 p-8 mb-12">
+<h2 class="text-2xl font-bold mb-2">🎓 Course complete</h2>
+<p class="text-neutral-400 mb-8">You’ve completed all four tracks. Here’s what you can do now:</p>
+<div class="space-y-3 mb-8">
+<div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-white">Fundamentals (T1)</strong><span class="text-neutral-400"> — the stack, the skill, how to prompt Remotion with Claude Code.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-white">Libraries (T2)</strong><span class="text-neutral-400"> — GSAP, Framer, D3, Three.js/R3F, Lottie — and when to use each one.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-white">Projects (T3)</strong><span class="text-neutral-400"> — four complete projects, each with the right library for the right type of motion.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-white">Production (T4)</strong><span class="text-neutral-400"> — motion path via image, transparent render, 4-turn iteration, and the 4 universal rules.</span></div></div>
+</div>
+<div class="bg-amber-500/10 rounded-xl border border-amber-500/20 p-5 mb-8">
+<p class="text-amber-300 font-semibold text-center text-lg">Claude Code + Remotion is a production tool now. Quality scales with your approach. And each combo is practically free.</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4 justify-start">
+<a class="px-6 py-3 bg-dark-700 hover:bg-dark-600 rounded-xl text-sm font-medium transition-colors" href="modulo-4-2.html">← 4.2 Iteration</a>
+<a class="px-6 py-3 bg-amber-600 hover:bg-amber-500 text-white rounded-xl text-sm font-medium transition-colors" href="../../index.html">Return to the beginning →</a>
+</div>
+</section>
+</main>
+<footer class="border-t border-dark-600 py-8">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>Claude Code × Remotion — <a class="text-sky-400 hover:text-sky-300" href="https://inema.club" target="_blank">INEMA.CLUB</a> — 2025</p>
+</div>
+</footer>
+<script>
+    const themeToggle=document.getElementById('theme-toggle'),themeToggleDarkIcon=document.getElementById('theme-toggle-dark-icon'),themeToggleLightIcon=document.getElementById('theme-toggle-light-icon'),html=document.documentElement;
+    if(localStorage.getItem('theme')==='light'||(!localStorage.getItem('theme')&&!html.classList.contains('dark'))){themeToggleDarkIcon.classList.remove('hidden');html.classList.remove('dark');}else{themeToggleLightIcon.classList.remove('hidden');}
+    themeToggle.addEventListener('click',()=>{themeToggleDarkIcon.classList.toggle('hidden');themeToggleLightIcon.classList.toggle('hidden');html.classList.toggle('dark');localStorage.setItem('theme',html.classList.contains('dark')?'dark':'light');});
+  </script>
+</body>
+</html>

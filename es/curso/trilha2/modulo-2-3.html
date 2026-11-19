@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Módulo 2.3 · D3.js — el dato es el contenido | CC × Remotion</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#FACC15', dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' } } } } }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    code, .font-mono { font-family: 'JetBrains Mono', monospace; }
+
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+    html:not(.dark) .text-blue-400 { color: #2563eb; }
+    html:not(.dark) .bg-blue-500\/20 { background: rgba(37,99,235,.12); }
+    html:not(.dark) .bg-blue-500\/10 { background: rgba(37,99,235,.08); }
+    html:not(.dark) .border-blue-500\/30 { border-color: rgba(37,99,235,.25); }
+    html:not(.dark) .hover\:bg-blue-500\/30:hover { background: rgba(37,99,235,.18); }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #2563eb; }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background: rgba(37,99,235,.08); }
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #059669; }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(5,150,105,0.08); }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #7c3aed; }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(124,58,237,0.08); }
+    html:not(.dark) .hover\:text-amber-400:hover { color: #92400e; }
+    html:not(.dark) .hover\:bg-amber-500\/10:hover { background-color: rgba(217,119,6,0.08); }
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161,98,7,0.08); }
+    html:not(.dark) .border-primary\/30 { border-color: rgba(161,98,7,0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255,255,255,0.95); }
+    html:not(.dark) .bg-dark-900\/40 { background-color: rgba(255,255,255,0.7); }
+    html:not(.dark) .text-red-400 { color: #b91c1c; }
+    html:not(.dark) .border-red-500\/30 { border-color: rgba(185,28,28,0.25); }
+    html:not(.dark) .bg-red-900\/20 { background-color: rgba(185,28,28,0.08); }
+    html:not(.dark) .bg-emerald-900\/20 { background-color: rgba(5,150,105,0.08); }
+    html:not(.dark) .border-emerald-500\/30 { border-color: rgba(5,150,105,0.25); }
+    html:not(.dark) .text-emerald-400 { color: #059669; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #92400e; }
+
+    /* ===== DEMOS ===== */
+    /* Demo 1: bar race animado */
+    @keyframes m23-barA {
+      0%   { width: 15%; }  25%  { width: 72%; }
+      50%  { width: 88%; }  75%  { width: 55%; }
+      100% { width: 15%; }
+    }
+    @keyframes m23-barB {
+      0%   { width: 60%; }  25%  { width: 45%; }
+      50%  { width: 30%; }  75%  { width: 78%; }
+      100% { width: 60%; }
+    }
+    @keyframes m23-barC {
+      0%   { width: 40%; }  25%  { width: 88%; }
+      50%  { width: 62%; }  75%  { width: 40%; }
+      100% { width: 40%; }
+    }
+    @keyframes m23-barD {
+      0%   { width: 80%; }  25%  { width: 32%; }
+      50%  { width: 50%; }  75%  { width: 90%; }
+      100% { width: 80%; }
+    }
+    @keyframes m23-barE {
+      0%   { width: 25%; }  25%  { width: 60%; }
+      50%  { width: 95%; }  75%  { width: 20%; }
+      100% { width: 25%; }
+    }
+    .m23-bar-a { animation: m23-barA 6s ease-in-out infinite; }
+    .m23-bar-b { animation: m23-barB 6s ease-in-out infinite; }
+    .m23-bar-c { animation: m23-barC 6s ease-in-out infinite; }
+    .m23-bar-d { animation: m23-barD 6s ease-in-out infinite; }
+    .m23-bar-e { animation: m23-barE 6s ease-in-out infinite; }
+
+    /* Demo 2: linha sendo desenhada (stroke-dashoffset) */
+    @keyframes m23-drawLine {
+      from { stroke-dashoffset: 400; }
+      to   { stroke-dashoffset: 0; }
+    }
+    @keyframes m23-nodePop {
+      0%, 100% { opacity: 0; transform: scale(0.4); }
+      15%, 85%  { opacity: 1; transform: scale(1); }
+    }
+    .m23-line-path {
+      stroke-dasharray: 400;
+      animation: m23-drawLine 3s ease-in-out infinite alternate;
+    }
+    .m23-node-pop { animation: m23-nodePop 3s ease-in-out infinite; }
+    .m23-node-pop:nth-child(2) { animation-delay: 0.5s; }
+    .m23-node-pop:nth-child(3) { animation-delay: 1s; }
+    .m23-node-pop:nth-child(4) { animation-delay: 1.5s; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .m23-bar-a, .m23-bar-b, .m23-bar-c, .m23-bar-d, .m23-bar-e { animation: none; width: 60%; }
+      .m23-line-path { animation: none; stroke-dashoffset: 0; }
+      .m23-node-pop { animation: none; opacity: 1; transform: scale(1); }
+    }
+  </style>
+<link href="https://inematds.github.io/claude-remotion-motion/curso/trilha2/modulo-2-3.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/claude-remotion-motion/en/curso/trilha2/modulo-2-3.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/claude-remotion-motion/es/curso/trilha2/modulo-2-3.html" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha2/modulo-2-3.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="../../../en/curso/trilha2/modulo-2-3.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">EN</a><a href="modulo-2-3.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">ES</a></div>
+<!-- NAV -->
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14">
+<div class="flex items-center space-x-4">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🎞️</span>
+<span class="font-bold text-lg hidden sm:inline">CC × Remotion</span>
+</a>
+<span class="text-neutral-600">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+</div>
+<div class="flex items-center space-x-1 sm:space-x-2">
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors" href="../trilha1/index.html">
+<span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentos</span>
+</a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-blue-400 bg-blue-500/10" href="index.html">
+<span class="sm:hidden">T2</span><span class="hidden sm:inline">Bibliotecas</span>
+</a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors" href="../trilha3/index.html">
+<span class="sm:hidden">T3</span><span class="hidden sm:inline">Proyectos</span>
+</a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors" href="../trilha4/index.html">
+<span class="sm:hidden">T4</span><span class="hidden sm:inline">Producción</span>
+</a>
+<button class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path></svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<!-- BREADCRUMB -->
+<nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-blue-400" href="../../index.html">Inicio</a>
+<span>/</span>
+<a class="hover:text-blue-400" href="index.html">Ruta 2</a>
+<span>/</span>
+<span class="text-blue-400">Módulo 2.3</span>
+</div>
+</nav>
+<!-- MODULE HEADER -->
+<header class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-10">
+<div class="inline-flex items-center space-x-2 bg-blue-500/10 border border-blue-500/30 rounded-full px-4 py-1.5 mb-4">
+<span class="text-blue-400 text-sm font-semibold">MÓDULO 2.3</span>
+</div>
+<h1 class="text-3xl sm:text-4xl font-extrabold mb-3">📊 D3.js — el dato es el contenido</h1>
+<p class="text-neutral-300 text-lg mb-6 max-w-2xl">Estándar de visualización de datos. Los datos estáticos se convierten en animaciones potentes: tú proporcionas el conjunto de datos y describes el aspecto visual, Claude hace el resto.</p>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-xl font-extrabold text-blue-400">6</div><div class="text-xs text-neutral-400 mt-1">Temas</div></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-xl font-extrabold text-blue-400">~40</div><div class="text-xs text-neutral-400 mt-1">Minutos</div></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-xl font-extrabold text-blue-400">📊</div><div class="text-xs text-neutral-400 mt-1">Basado en datos</div></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-xl font-extrabold text-blue-400">⚡</div><div class="text-xs text-neutral-400 mt-1">Intermedio</div></div>
+</div>
+</header>
+<main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
+<!-- TÓPICO 1 -->
+<section class="mb-16" id="topico-1">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold">🌐 Qué es D3 y por qué es el estándar</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed"><strong class="text-blue-400">Data-Driven Documents</strong> — D3 vincula datos directamente a elementos DOM/SVG. No es una biblioteca de "gráficos listos"; es un mecanismo para transformar datos en formas visuales. Esto ofrece una flexibilidad imposible con Chart.js u otros.</p>
+<!-- SVG diagrama: dado → visual -->
+<div class="mb-6 overflow-x-auto">
+<svg aria-label="Flujo D3: dato vinculado a SVG" viewbox="0 0 540 120" width="100%" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<lineargradient id="m23-grad-a" x1="0" x2="1" y1="0" y2="0">
+<stop offset="0" stop-color="#3b82f6"></stop><stop offset="1" stop-color="#38bdf8"></stop>
+</lineargradient>
+<marker id="m23-ah" markerheight="8" markerwidth="8" orient="auto" refx="6" refy="4">
+<path d="M0,0 L8,4 L0,8 L2,4 Z" fill="#60a5fa" opacity="0.8"></path>
+</marker>
+</defs>
+<!-- Data block -->
+<rect fill="#1e3a5f" height="60" opacity="0.9" rx="10" stroke="#3b82f6" stroke-width="1.5" width="120" x="10" y="30"></rect>
+<text fill="#60a5fa" font-family="Inter,sans-serif" font-size="11" font-weight="600" text-anchor="middle" x="70" y="56">📄 Dato</text>
+<text fill="#94a3b8" font-family="Inter,sans-serif" font-size="9" text-anchor="middle" x="70" y="72">[ 42, 78, 55, 91 ]</text>
+<!-- Arrow 1 -->
+<line marker-end="url(#m23-ah)" stroke="#60a5fa" stroke-width="1.5" x1="130" x2="180" y1="60" y2="60"></line>
+<!-- D3 block -->
+<rect fill="#1e3a5f" height="60" opacity="0.9" rx="10" stroke="#38bdf8" stroke-width="1.5" width="130" x="184" y="30"></rect>
+<text fill="#38bdf8" font-family="Inter,sans-serif" font-size="11" font-weight="600" text-anchor="middle" x="249" y="56">⚙️ D3 binding</text>
+<text fill="#94a3b8" font-family="Inter,sans-serif" font-size="9" text-anchor="middle" x="249" y="72">selectAll + data()</text>
+<!-- Arrow 2 -->
+<line marker-end="url(#m23-ah)" stroke="#60a5fa" stroke-width="1.5" x1="314" x2="364" y1="60" y2="60"></line>
+<!-- SVG block -->
+<rect fill="#1e3a5f" height="60" opacity="0.9" rx="10" stroke="#3b82f6" stroke-width="1.5" width="140" x="368" y="30"></rect>
+<text fill="#60a5fa" font-family="Inter,sans-serif" font-size="11" font-weight="600" text-anchor="middle" x="438" y="52">🎨 SVG/DOM</text>
+<text fill="#94a3b8" font-family="Inter,sans-serif" font-size="9" text-anchor="middle" x="438" y="66">&lt;rect height="42px"&gt;</text>
+<text fill="#94a3b8" font-family="Inter,sans-serif" font-size="9" text-anchor="middle" x="438" y="80">+ transition()</text>
+</svg>
+</div>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-3">🧠 El paradigma central</h3>
+<p class="text-neutral-300">En D3, no dices «dibuja una barra de 42px». Dices <strong>"vincula este array al conjunto de rectángulos"</strong> — y D3 asigna automáticamente cada valor a un atributo SVG mediante scales. Cambia el dato y el aspecto cambia también.</p>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">selectAll()</div><div class="text-xs text-neutral-400">Selecciona elementos</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">.data()</div><div class="text-xs text-neutral-400">Vincula el array</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">.enter()</div><div class="text-xs text-neutral-400">Elementos nuevos</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">escalas</div><div class="text-xs text-neutral-400">Datos → píxeles</div></div>
+</div>
+</section>
+<!-- TÓPICO 2 — DEMO bar race -->
+<section class="mb-16" id="topico-2">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold">🏁 Bar race — ranking en movimiento</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">O <strong class="text-blue-400">bar race</strong> (carrera de barras) es el gráfico más impactante para las comparaciones temporales. Cada categoría gana tiempo en pantalla proporcional a su valor, y cuando cambia el ranking, las barras se reordenan suavemente.</p>
+<!-- DEMO 1: bar race animado -->
+<div class="rounded-2xl border border-blue-500/30 bg-dark-900/40 p-6 mb-6">
+<div class="text-xs font-semibold text-neutral-400 uppercase tracking-wide mb-5">demostración en vivo — bar race</div>
+<div class="space-y-3">
+<div class="flex items-center space-x-3">
+<span class="text-xs text-neutral-400 w-20 text-right font-mono flex-shrink-0">Brasil</span>
+<div class="flex-1 bg-dark-700 rounded-full h-7 overflow-hidden relative">
+<div class="m23-bar-a h-full bg-blue-500/70 rounded-full flex items-center justify-end pr-2 transition-all duration-300">
+<span class="text-xs font-bold text-white opacity-90">🇧🇷</span>
+</div>
+</div>
+</div>
+<div class="flex items-center space-x-3">
+<span class="text-xs text-neutral-400 w-20 text-right font-mono flex-shrink-0">EE. UU.</span>
+<div class="flex-1 bg-dark-700 rounded-full h-7 overflow-hidden relative">
+<div class="m23-bar-b h-full bg-cyan-500/70 rounded-full flex items-center justify-end pr-2 transition-all duration-300">
+<span class="text-xs font-bold text-white opacity-90">🇺🇸</span>
+</div>
+</div>
+</div>
+<div class="flex items-center space-x-3">
+<span class="text-xs text-neutral-400 w-20 text-right font-mono flex-shrink-0">China</span>
+<div class="flex-1 bg-dark-700 rounded-full h-7 overflow-hidden relative">
+<div class="m23-bar-c h-full bg-blue-400/70 rounded-full flex items-center justify-end pr-2 transition-all duration-300">
+<span class="text-xs font-bold text-white opacity-90">🇨🇳</span>
+</div>
+</div>
+</div>
+<div class="flex items-center space-x-3">
+<span class="text-xs text-neutral-400 w-20 text-right font-mono flex-shrink-0">India</span>
+<div class="flex-1 bg-dark-700 rounded-full h-7 overflow-hidden relative">
+<div class="m23-bar-d h-full bg-indigo-500/70 rounded-full flex items-center justify-end pr-2 transition-all duration-300">
+<span class="text-xs font-bold text-white opacity-90">🇮🇳</span>
+</div>
+</div>
+</div>
+<div class="flex items-center space-x-3">
+<span class="text-xs text-neutral-400 w-20 text-right font-mono flex-shrink-0">Europa</span>
+<div class="flex-1 bg-dark-700 rounded-full h-7 overflow-hidden relative">
+<div class="m23-bar-e h-full bg-sky-500/70 rounded-full flex items-center justify-end pr-2 transition-all duration-300">
+<span class="text-xs font-bold text-white opacity-90">🇪🇺</span>
+</div>
+</div>
+</div>
+</div>
+<p class="text-xs text-neutral-500 mt-4">↑ Las barras crecen y se encogen con el tiempo; en D3+Remotion, cada frame = interpolación entre dos estados de datos</p>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-5 mb-6 overflow-x-auto">
+<div class="text-xs font-semibold text-neutral-400 uppercase tracking-wide mb-3">cómo pedirle a Claude</div>
+<pre class="font-mono text-sm text-neutral-300 leading-relaxed"><code><span class="text-neutral-500">// Prompt:</span>
+<span class="text-yellow-400">"Crie um bar race Remotion com D3.js mostrando evolução
+ anual de 5 países. Dados: [ { ano: 2020, brasil: 42, ... } ]
+ Duração: 10s, fps: 30, transição suave entre anos."</span>
+
+<span class="text-neutral-500">// D3 + Remotion equivalente:</span>
+<span class="text-blue-400">const</span> t = frame / fps; <span class="text-neutral-500">// tempo atual</span>
+<span class="text-blue-400">const</span> current = <span class="text-cyan-400">interpolateData</span>(data, t);
+bars.<span class="text-cyan-400">attr</span>(<span class="text-yellow-400">"width"</span>, d =&gt; xScale(current[d.name]));</code></pre>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">interpolación</div><div class="text-xs text-neutral-400">Entre dos snapshots</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">xScale</div><div class="text-xs text-neutral-400">Valor → ancho px</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">frame/fps</div><div class="text-xs text-neutral-400">Tiempo de Remotion</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">reordenamiento</div><div class="text-xs text-neutral-400">yScale dinámico</div></div>
+</div>
+</section>
+<!-- TÓPICO 3 — DEMO linha desenhando -->
+<section class="mb-16" id="topico-3">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold">🏗️ Diagrama de arquitectura animado</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">Los nodos aparecen en secuencia y las líneas se dibujan conectando la topología. El <strong class="text-blue-400">stroke-dashoffset</strong> es la técnica: defines la longitud total de la línea y animas el offset de 100% → 0% — efecto de "dibujo progresivo".</p>
+<!-- DEMO 2: linha sendo desenhada -->
+<div class="rounded-2xl border border-blue-500/30 bg-dark-900/40 p-6 mb-6">
+<div class="text-xs font-semibold text-neutral-400 uppercase tracking-wide mb-4">demostración en vivo — línea dibujándose</div>
+<div class="flex justify-center">
+<svg aria-label="Diagrama de arquitectura animado" viewbox="0 0 400 160" width="100%" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<filter height="180%" id="m23-glow2" width="180%" x="-40%" y="-40%">
+<fegaussianblur result="b" stddeviation="2"></fegaussianblur>
+<femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge>
+</filter>
+</defs>
+<!-- Connecting lines -->
+<path class="m23-line-path" d="M60,80 C100,80 120,40 180,40" fill="none" filter="url(#m23-glow2)" stroke="#60a5fa" stroke-width="2"></path>
+<path class="m23-line-path" d="M60,80 C100,80 120,80 180,80" fill="none" filter="url(#m23-glow2)" stroke="#38bdf8" stroke-width="2" style="animation-delay:0.3s"></path>
+<path class="m23-line-path" d="M60,80 C100,80 120,120 180,120" fill="none" filter="url(#m23-glow2)" stroke="#60a5fa" stroke-width="2" style="animation-delay:0.6s"></path>
+<path class="m23-line-path" d="M240,40 L310,80" fill="none" stroke="#60a5fa" stroke-width="1.5" style="animation-delay:0.9s"></path>
+<path class="m23-line-path" d="M240,80 L310,80" fill="none" stroke="#38bdf8" stroke-width="1.5" style="animation-delay:1.1s"></path>
+<path class="m23-line-path" d="M240,120 L310,80" fill="none" stroke="#60a5fa" stroke-width="1.5" style="animation-delay:1.3s"></path>
+<!-- Nodes -->
+<circle class="m23-node-pop" cx="60" cy="80" fill="#1e3a5f" r="18" stroke="#3b82f6" stroke-width="2"></circle>
+<text fill="#60a5fa" font-family="Inter,sans-serif" font-size="9" font-weight="600" text-anchor="middle" x="60" y="85">Client</text>
+<circle class="m23-node-pop" cx="210" cy="40" fill="#1e3a5f" r="16" stroke="#38bdf8" stroke-width="1.5"></circle>
+<text fill="#38bdf8" font-family="Inter,sans-serif" font-size="8" text-anchor="middle" x="210" y="44">Auth</text>
+<circle class="m23-node-pop" cx="210" cy="80" fill="#1e3a5f" r="16" stroke="#3b82f6" stroke-width="1.5"></circle>
+<text fill="#60a5fa" font-family="Inter,sans-serif" font-size="8" text-anchor="middle" x="210" y="84">API</text>
+<circle class="m23-node-pop" cx="210" cy="120" fill="#1e3a5f" r="16" stroke="#38bdf8" stroke-width="1.5"></circle>
+<text fill="#38bdf8" font-family="Inter,sans-serif" font-size="8" text-anchor="middle" x="210" y="124">DB</text>
+<circle class="m23-node-pop" cx="340" cy="80" fill="#1e3a5f" r="20" stroke="#3b82f6" stroke-width="2"></circle>
+<text fill="#60a5fa" font-family="Inter,sans-serif" font-size="9" font-weight="600" text-anchor="middle" x="340" y="85">Server</text>
+</svg>
+</div>
+<p class="text-xs text-neutral-500 mt-3">↑ Los nodos aparecen uno a uno; las líneas se dibujan mediante un stroke-dashoffset animado</p>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-2 flex items-center"><span class="mr-2">💡</span> Técnica stroke-dashoffset</h3>
+<p class="text-neutral-300 mb-2">Define <code class="text-blue-400">stroke-dasharray: PATH_LENGTH</code> y anima <code class="text-blue-400">stroke-dashoffset</code> de <code>PATH_LENGTH</code> hasta <code>0</code>. La línea parece dibujarse en tiempo real. En Remotion, usa <code>interpolate(frame, [0, totalFrames], [pathLen, 0])</code>.</p>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">dasharray</div><div class="text-xs text-neutral-400">Longitud total</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">dashoffset</div><div class="text-xs text-neutral-400">Cuánto está oculto</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">getLength()</div><div class="text-xs text-neutral-400">Longitud real del path</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">sequential</div><div class="text-xs text-neutral-400">Un nodo a la vez</div></div>
+</div>
+</section>
+<!-- TÓPICO 4 — fluxo dado → Claude → animação -->
+<section class="mb-16" id="topico-4">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold">🤖 Datos limpios + descripción clara = Claude hace el resto</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">No necesitas saber D3 para usar D3. Necesitas saber <strong class="text-blue-400">lo que quieres mostrar</strong>. El flujo es: limpiar el dato → describir el aspecto visual → Claude genera el componente Remotion completo con D3.</p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Prompt sin contexto de datos</h4>
+<p class="text-sm text-neutral-300 font-mono bg-dark-800 rounded-lg p-3">"Crea un gráfico animado de ventas"</p>
+<p class="text-xs text-neutral-400 mt-3">Claude va a inventar datos ficticios, elegir el tipo de chart al azar y probablemente usar la biblioteca equivocada.</p>
+</div>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6">
+<h4 class="font-bold text-blue-400 mb-4">✓ Prompt con datos reales</h4>
+<p class="text-sm text-neutral-300 font-mono bg-dark-800 rounded-lg p-3 text-xs">"Remotion + D3. Datos: [{mes:'Jan',valor:42},{mes:'Fev',valor:78}...]. Bar race vertical. La barra crece del frame 0 al 60. Color: #3b82f6."</p>
+<p class="text-xs text-neutral-400 mt-3">Resultado exacto, medible y editable.</p>
+</div>
+</div>
+<!-- Timeline do fluxo -->
+<div class="space-y-4 mb-6">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-500/20 border border-blue-500/30 flex items-center justify-center text-blue-400 font-bold">1</div>
+<div class="bg-dark-800 rounded-xl p-4 flex-1 border border-dark-600">
+<h4 class="font-semibold text-blue-400 mb-1">Limpiar el dato</h4>
+<p class="text-sm text-neutral-400">CSV → JSON, eliminar nulos, normalizar nombres de columnas. Claude también lo hace si pegas la hoja de cálculo.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-500/20 border border-blue-500/30 flex items-center justify-center text-blue-400 font-bold">2</div>
+<div class="bg-dark-800 rounded-xl p-4 flex-1 border border-dark-600">
+<h4 class="font-semibold text-blue-400 mb-1">Describir el aspecto visual</h4>
+<p class="text-sm text-neutral-400">Tipo de gráfico, paleta de colores, duración, transiciones. Cuanto más específico, más preciso será el resultado.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-500/20 border border-blue-500/30 flex items-center justify-center text-blue-400 font-bold">3</div>
+<div class="bg-dark-800 rounded-xl p-4 flex-1 border border-dark-600">
+<h4 class="font-semibold text-blue-400 mb-1">Claude genera el componente</h4>
+<p class="text-sm text-neutral-400">Remotion + D3 + escalas + animación + seek sincronizado. Listo para ejecutarse con <code class="font-mono">npx remotion dev</code>.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-500/20 border border-blue-500/30 flex items-center justify-center text-blue-400 font-bold">4</div>
+<div class="bg-dark-800 rounded-xl p-4 flex-1 border border-dark-600">
+<h4 class="font-semibold text-blue-400 mb-1">Iterar en la conversación</h4>
+<p class="text-sm text-neutral-400">"Aumenta el tamaño de fuente del label", "cambia el color de la barra de Brasil a azul", "agrega una línea de promedio". Cada pedido refina el componente.</p>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">CSV/JSON</div><div class="text-xs text-neutral-400">Proporciona el dato</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Especificación</div><div class="text-xs text-neutral-400">Visual + duración</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Iteración</div><div class="text-xs text-neutral-400">Ajuste rápido</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Resultado</div><div class="text-xs text-neutral-400">MP4 exportable</div></div>
+</div>
+</section>
+<!-- TÓPICO 5 — tipos de charts -->
+<section class="mb-16" id="topico-5">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold">🗃️ Casos de uso basados en datos</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">D3 no se limita a las barras. La biblioteca abarca cualquier tipo de visualización, desde mapas geográficos hasta árboles jerárquicos. La clave es identificar cuál <strong class="text-blue-400">tipo de dato</strong> tienes y qué forma visual lo comunica mejor.</p>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+<div class="bg-dark-800 rounded-xl border border-blue-500/30 p-5">
+<div class="text-2xl mb-2">📊</div>
+<h4 class="font-bold text-blue-400 mb-1">Bar race / gráficos</h4>
+<p class="text-xs text-neutral-400">Comparaciones temporales, rankings, métricas de negocio. Datos: series temporales categóricas.</p>
+</div>
+<div class="bg-dark-800 rounded-xl border border-blue-500/30 p-5">
+<div class="text-2xl mb-2">🏗️</div>
+<h4 class="font-bold text-blue-400 mb-1">Diagramas de arquitectura</h4>
+<p class="text-xs text-neutral-400">Nodos y aristas. Force layout o posicionamiento manual. Datos: grafo/topología de un sistema.</p>
+</div>
+<div class="bg-dark-800 rounded-xl border border-blue-500/30 p-5">
+<div class="text-2xl mb-2">🗺️</div>
+<h4 class="font-bold text-blue-400 mb-1">Mapas geográficos</h4>
+<p class="text-xs text-neutral-400">Rutas, choropleth (mapa de calor), puntos de interés. Datos: GeoJSON + topojson.</p>
+</div>
+<div class="bg-dark-800 rounded-xl border border-blue-500/30 p-5">
+<div class="text-2xl mb-2">🌲</div>
+<h4 class="font-bold text-blue-400 mb-1">Jerarquías / treemaps</h4>
+<p class="text-xs text-neutral-400">Estructuras padre-hijo, presupuestos, taxonomías. Datos: árbol JSON con parent/children.</p>
+</div>
+<div class="bg-dark-800 rounded-xl border border-blue-500/30 p-5">
+<div class="text-2xl mb-2">📈</div>
+<h4 class="font-bold text-blue-400 mb-1">Líneas de tendencia</h4>
+<p class="text-xs text-neutral-400">Crecimiento a lo largo del tiempo, comparaciones de curvas. Datos: series continuas.</p>
+</div>
+<div class="bg-dark-800 rounded-xl border border-blue-500/30 p-5">
+<div class="text-2xl mb-2">🌐</div>
+<h4 class="font-bold text-blue-400 mb-1">Network graphs</h4>
+<p class="text-xs text-neutral-400">Conexiones entre entidades, flujos de datos y redes sociales. Datos: nodes + edges.</p>
+</div>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Temporal</div><div class="text-xs text-neutral-400">Bar race / líneas</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Geo</div><div class="text-xs text-neutral-400">Mapas + GeoJSON</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Jerárquico</div><div class="text-xs text-neutral-400">Treemap / sunburst</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Relacional</div><div class="text-xs text-neutral-400">Force graph</div></div>
+</div>
+</section>
+<!-- TÓPICO 6 — erros comuns -->
+<section class="mb-16" id="topico-6">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold">⚠️ Errores comunes con D3 + Remotion</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">D3 se creó para el navegador: manipula el DOM directamente. Remotion renderiza del lado del servidor (headless). Esta combinación tiene <strong class="text-blue-400">trampas específicas</strong> que necesitas conocer.</p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Errores frecuentes</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Usar <code>d3.transition()</code> — provoca una animación basada en clock, no en frame.</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Seleccionar el DOM en la función de renderizado — D3 manipula el DOM, React administra el DOM. Conflicto.</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Calcular scales dentro del render: se recalculan en cada frame y perjudica el rendimiento.</span></li>
+</ul>
+</div>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6">
+<h4 class="font-bold text-blue-400 mb-4">✓ El enfoque correcto</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span>Usar D3 solo para <strong>cálculos</strong> (scales, paths, layouts): deja que React renderice.</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span>Interpolación manual mediante <code>interpolate(frame, ...)</code> de Remotion.</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span>Escala en <code>useMemo</code> — calcula una vez por composición.</span></li>
+</ul>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-2 flex items-center"><span class="mr-2">💡</span> Regla D3+Remotion</h3>
+<p class="text-neutral-300">Usa D3 como <strong>calculadora matemática</strong>, no como animador. D3 calcula dónde deben estar las cosas; React renderiza; Remotion captura el frame. Cuando le pidas a Claude, especifica: <em>"Usa D3 solo para scales y generadores de paths, no para animación directa"</em>.</p>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">escalas</div><div class="text-xs text-neutral-400">D3 calcula</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">trayectorias</div><div class="text-xs text-neutral-400">D3 genera SVG path</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">animación</div><div class="text-xs text-neutral-400">Remotion interpola</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">render</div><div class="text-xs text-neutral-400">React se encarga</div></div>
+</div>
+</section>
+<!-- RESUMO -->
+<section class="bg-dark-800 rounded-2xl border border-blue-500/30 p-8 mb-12">
+<h2 class="text-2xl font-bold mb-6">📋 Resumen del módulo</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div>
+<h3 class="font-semibold text-blue-400 mb-3">Lo que aprendimos</h3>
+<ul class="space-y-2 text-sm text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-0.5">✓</span><span>D3 vincula datos con elementos visuales: no es una biblioteca de gráficos</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-0.5">✓</span><span>Bar race = interpolación entre snapshots de datos a lo largo del tiempo</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-0.5">✓</span><span>stroke-dashoffset anima el «dibujo» de líneas SVG</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-0.5">✓</span><span>Datos limpios + descripción visual = Claude genera todo</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-0.5">✓</span><span>D3 como calculadora matemática, no como animador directo</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-0.5">✓</span><span>Evitar d3.transition() — usar interpolate() de Remotion</span></li>
+</ul>
+</div>
+<div>
+<h3 class="font-semibold text-blue-400 mb-3">Siguiente módulo</h3>
+<div class="bg-dark-700 rounded-xl p-4 border border-dark-600">
+<div class="text-blue-400 font-bold mb-1">🧊 2.4 — Three.js</div>
+<p class="text-sm text-neutral-400">Escenas 3D renderizadas fotograma a fotograma. Materiales, cámaras y geometría procedural para motion graphics 3D con WebGL.</p>
+</div>
+</div>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex items-center space-x-2 bg-dark-700 hover:bg-dark-600 border border-dark-600 rounded-xl px-5 py-3 transition-colors" href="modulo-2-2.html">
+<span>← 2.2 GSAP × Framer</span>
+</a>
+<a class="flex items-center space-x-2 bg-blue-600 hover:bg-blue-500 text-white rounded-xl px-5 py-3 transition-colors font-semibold" href="modulo-2-4.html">
+<span>Siguiente: 🧊 Three.js →</span>
+</a>
+</div>
+</section>
+</main>
+<script>
+    const themeToggle=document.getElementById('theme-toggle'),themeToggleDarkIcon=document.getElementById('theme-toggle-dark-icon'),themeToggleLightIcon=document.getElementById('theme-toggle-light-icon'),html=document.documentElement;
+    if(localStorage.getItem('theme')==='light'||(!localStorage.getItem('theme')&&!html.classList.contains('dark'))){themeToggleDarkIcon.classList.remove('hidden');html.classList.remove('dark');}else{themeToggleLightIcon.classList.remove('hidden');}
+    themeToggle.addEventListener('click',()=>{themeToggleDarkIcon.classList.toggle('hidden');themeToggleLightIcon.classList.toggle('hidden');html.classList.toggle('dark');localStorage.setItem('theme',html.classList.contains('dark')?'dark':'light');});
+  </script>
+</body>
+</html>

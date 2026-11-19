@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Módulo 2.1 · GSAP — timeline frame-perfect | CC × Remotion</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#FACC15', dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' } } } } }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    code, .font-mono { font-family: 'JetBrains Mono', monospace; }
+
+    /* Light mode base */
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+    /* Blue accent */
+    html:not(.dark) .text-blue-400 { color: #2563eb; }
+    html:not(.dark) .bg-blue-500\/20 { background: rgba(37,99,235,.12); }
+    html:not(.dark) .bg-blue-500\/10 { background: rgba(37,99,235,.08); }
+    html:not(.dark) .border-blue-500\/30 { border-color: rgba(37,99,235,.25); }
+    html:not(.dark) .hover\:bg-blue-500\/30:hover { background: rgba(37,99,235,.18); }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #2563eb; }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background: rgba(37,99,235,.08); }
+    /* Other trilha nav hovers */
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #059669; }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(5,150,105,0.08); }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #7c3aed; }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(124,58,237,0.08); }
+    html:not(.dark) .hover\:text-amber-400:hover { color: #92400e; }
+    html:not(.dark) .hover\:bg-amber-500\/10:hover { background-color: rgba(217,119,6,0.08); }
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161,98,7,0.08); }
+    html:not(.dark) .border-primary\/30 { border-color: rgba(161,98,7,0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255,255,255,0.95); }
+    html:not(.dark) .bg-dark-900\/40 { background-color: rgba(255,255,255,0.7); }
+    html:not(.dark) .text-red-400 { color: #b91c1c; }
+    html:not(.dark) .border-red-500\/30 { border-color: rgba(185,28,28,0.25); }
+    html:not(.dark) .bg-red-900\/20 { background-color: rgba(185,28,28,0.08); }
+    html:not(.dark) .bg-emerald-900\/20 { background-color: rgba(5,150,105,0.08); }
+    html:not(.dark) .border-emerald-500\/30 { border-color: rgba(5,150,105,0.25); }
+    html:not(.dark) .text-emerald-400 { color: #059669; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #92400e; }
+
+    /* ===== DEMOS ===== */
+    /* Demo 1: stagger card entrance */
+    @keyframes m21-cardIn {
+      from { opacity: 0; transform: translateY(22px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .m21-stagger-card { opacity: 0; animation: m21-cardIn 0.55s ease-out forwards; }
+    .m21-stagger-card:nth-child(1) { animation-delay: 0.1s; }
+    .m21-stagger-card:nth-child(2) { animation-delay: 0.35s; }
+    .m21-stagger-card:nth-child(3) { animation-delay: 0.6s; }
+    .m21-stagger-card:nth-child(4) { animation-delay: 0.85s; }
+
+    /* Demo 2: easing comparison ball */
+    @keyframes m21-linear   { from { transform: translateX(0) } to { transform: translateX(240px) } }
+    @keyframes m21-easeOut  { from { transform: translateX(0) } to { transform: translateX(240px) } }
+    @keyframes m21-easeInOut{ from { transform: translateX(0) } to { transform: translateX(240px) } }
+    .m21-ball-linear    { animation: m21-linear    2s linear     infinite alternate; }
+    .m21-ball-easeout   { animation: m21-easeOut   2s ease-out   infinite alternate; }
+    .m21-ball-easeinout { animation: m21-easeInOut 2s ease-in-out infinite alternate; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .m21-stagger-card { animation: none; opacity: 1; }
+      .m21-ball-linear, .m21-ball-easeout, .m21-ball-easeinout { animation: none; }
+    }
+  </style>
+<link href="https://inematds.github.io/claude-remotion-motion/curso/trilha2/modulo-2-1.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/claude-remotion-motion/en/curso/trilha2/modulo-2-1.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/claude-remotion-motion/es/curso/trilha2/modulo-2-1.html" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha2/modulo-2-1.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="../../../en/curso/trilha2/modulo-2-1.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">EN</a><a href="modulo-2-1.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">ES</a></div>
+<!-- NAV -->
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14">
+<div class="flex items-center space-x-4">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🎞️</span>
+<span class="font-bold text-lg hidden sm:inline">CC × Remotion</span>
+</a>
+<span class="text-neutral-600">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+</div>
+<div class="flex items-center space-x-1 sm:space-x-2">
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors" href="../trilha1/index.html">
+<span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentos</span>
+</a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-blue-400 bg-blue-500/10" href="index.html">
+<span class="sm:hidden">T2</span><span class="hidden sm:inline">Bibliotecas</span>
+</a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors" href="../trilha3/index.html">
+<span class="sm:hidden">T3</span><span class="hidden sm:inline">Proyectos</span>
+</a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors" href="../trilha4/index.html">
+<span class="sm:hidden">T4</span><span class="hidden sm:inline">Producción</span>
+</a>
+<button class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path></svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<!-- BREADCRUMB -->
+<nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-blue-400" href="../../index.html">Inicio</a>
+<span>/</span>
+<a class="hover:text-blue-400" href="index.html">Ruta 2</a>
+<span>/</span>
+<span class="text-blue-400">Módulo 2.1</span>
+</div>
+</nav>
+<!-- MODULE HEADER -->
+<header class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-10">
+<div class="inline-flex items-center space-x-2 bg-blue-500/10 border border-blue-500/30 rounded-full px-4 py-1.5 mb-4">
+<span class="text-blue-400 text-sm font-semibold">MÓDULO 2.1</span>
+</div>
+<h1 class="text-3xl sm:text-4xl font-extrabold mb-3">🟢 GSAP — timeline perfecto a nivel de frame</h1>
+<p class="text-neutral-300 text-lg mb-6 max-w-2xl">La biblioteca estándar de animación web. Coreografía de timelines, stagger y easing profesional para crear videos estilo slide-deck con secuencias impecables.</p>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center">
+<div class="text-xl font-extrabold text-blue-400">6</div>
+<div class="text-xs text-neutral-400 mt-1">Temas</div>
+</div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center">
+<div class="text-xl font-extrabold text-blue-400">~40</div>
+<div class="text-xs text-neutral-400 mt-1">Minutos</div>
+</div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center">
+<div class="text-xl font-extrabold text-blue-400">⚡</div>
+<div class="text-xs text-neutral-400 mt-1">Intermedio</div>
+</div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center">
+<div class="text-xl font-extrabold text-blue-400">🎬</div>
+<div class="text-xs text-neutral-400 mt-1">Práctico</div>
+</div>
+</div>
+</header>
+<main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
+<!-- TÓPICO 1 -->
+<section class="mb-16" id="topico-1">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold">😩 El problema antes de GSAP</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">Animar elementos con CSS puro para video es <strong class="text-blue-400">doloroso</strong>: keyframes manuales, temporización a ojo e imposibilidad de coreografiar secuencias complejas. GSAP lo resuelve con una API clara y precisa.</p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ CSS puro para animación de video</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Temporización manual de cada keyframe: propensa a errores.</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Las secuencias encadenadas requieren calcular los delays manualmente.</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Sin control programático: no puedes "pausar a la mitad".</span></li>
+</ul>
+</div>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6">
+<h4 class="font-bold text-blue-400 mb-4">✓ GSAP para animación de video</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span>Línea de tiempo declarativa: cada elemento aparece en el momento adecuado.</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span>Posicionamiento relativo: "&lt;0.3" = 300ms después del anterior.</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span>Seek en cualquier frame: integración natural con Remotion.</span></li>
+</ul>
+</div>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Tipo</div><div class="text-xs text-neutral-400">Biblioteca JS</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Tamaño</div><div class="text-xs text-neutral-400">~27 KB gzipped</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Licencia</div><div class="text-xs text-neutral-400">Gratis para web</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Adopción</div><div class="text-xs text-neutral-400">Estándar de la industria</div></div>
+</div>
+</section>
+<!-- TÓPICO 2 — DEMO stagger -->
+<section class="mb-16" id="topico-2">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold">⌛ Stagger — tarjetas que entran en secuencia</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">O <strong class="text-blue-400">stagger</strong> es el delay progresivo entre elementos de un grupo. En vez de entrar todos al mismo tiempo, cada uno espera un poco al anterior — creando una sensación de "cascada" profesional.</p>
+<!-- DEMO 1: stagger animado -->
+<div class="rounded-2xl border border-blue-500/30 bg-dark-900/40 p-6 mb-6">
+<div class="text-xs font-semibold text-neutral-400 uppercase tracking-wide mb-4">demostración en vivo — entrada escalonada</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4">
+<div class="m21-stagger-card bg-blue-500/10 border border-blue-500/30 rounded-xl p-4 text-center">
+<div class="text-2xl mb-1">🟢</div>
+<div class="text-sm font-semibold text-blue-400">Tarjeta A</div>
+<div class="text-xs text-neutral-400">delay: 0.1s</div>
+</div>
+<div class="m21-stagger-card bg-blue-500/10 border border-blue-500/30 rounded-xl p-4 text-center">
+<div class="text-2xl mb-1">📊</div>
+<div class="text-sm font-semibold text-blue-400">Tarjeta B</div>
+<div class="text-xs text-neutral-400">delay: 0.35s</div>
+</div>
+<div class="m21-stagger-card bg-blue-500/10 border border-blue-500/30 rounded-xl p-4 text-center">
+<div class="text-2xl mb-1">🧊</div>
+<div class="text-sm font-semibold text-blue-400">Tarjeta C</div>
+<div class="text-xs text-neutral-400">delay: 0.6s</div>
+</div>
+<div class="m21-stagger-card bg-blue-500/10 border border-blue-500/30 rounded-xl p-4 text-center">
+<div class="text-2xl mb-1">✨</div>
+<div class="text-sm font-semibold text-blue-400">Tarjeta D</div>
+<div class="text-xs text-neutral-400">delay: 0.85s</div>
+</div>
+</div>
+<p class="text-xs text-neutral-500">↑ Cada card entra 250ms después de la anterior. En GSAP: <code class="text-blue-400">stagger: 0.25</code></p>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-5 mb-6 overflow-x-auto">
+<div class="text-xs font-semibold text-neutral-400 uppercase tracking-wide mb-3">código GSAP equivalente</div>
+<pre class="font-mono text-sm text-neutral-300 leading-relaxed"><code><span class="text-blue-400">gsap</span>.from(<span class="text-yellow-400">".card"</span>, {
+  y: 22,
+  opacity: 0,
+  duration: 0.55,
+  ease: <span class="text-yellow-400">"power2.out"</span>,
+  stagger: <span class="text-yellow-400">0.25</span>   <span class="text-neutral-500">// 250ms entre cada card</span>
+});</code></pre>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">stagger</div><div class="text-xs text-neutral-400">Retraso entre elementos</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">from</div><div class="text-xs text-neutral-400">Estado inicial</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">duration</div><div class="text-xs text-neutral-400">Tiempo por elemento</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">ease</div><div class="text-xs text-neutral-400">Curva de velocidad</div></div>
+</div>
+</section>
+<!-- TÓPICO 3 — easing demo -->
+<section class="mb-16" id="topico-3">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold">🎯 Easing — la curva que define el tono</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed"><strong class="text-blue-400">Linear parece robótico.</strong> Ease-out parece natural. Elastic parece juguetón. La elección del easing es tan importante como el movimiento en sí: comunica la personalidad de la animación.</p>
+<!-- DEMO 2: easing comparison -->
+<div class="rounded-2xl border border-blue-500/30 bg-dark-900/40 p-6 mb-6">
+<div class="text-xs font-semibold text-neutral-400 uppercase tracking-wide mb-5">demostración en vivo — comparación de easing</div>
+<div class="space-y-5">
+<div>
+<div class="flex items-center justify-between mb-2">
+<span class="text-xs font-mono text-neutral-400">linear</span>
+<span class="text-xs text-neutral-500">velocidad constante — parece robótico</span>
+</div>
+<div class="relative h-8 bg-dark-700 rounded-full overflow-hidden">
+<div class="m21-ball-linear absolute top-1 left-1 w-6 h-6 rounded-full bg-red-400 flex items-center justify-center text-xs">⚡</div>
+</div>
+</div>
+<div>
+<div class="flex items-center justify-between mb-2">
+<span class="text-xs font-mono text-blue-400">ease-out</span>
+<span class="text-xs text-neutral-500">empieza rápido y luego desacelera: parece natural</span>
+</div>
+<div class="relative h-8 bg-dark-700 rounded-full overflow-hidden">
+<div class="m21-ball-easeout absolute top-1 left-1 w-6 h-6 rounded-full bg-blue-400 flex items-center justify-center text-xs">✨</div>
+</div>
+</div>
+<div>
+<div class="flex items-center justify-between mb-2">
+<span class="text-xs font-mono text-neutral-400">ease-in-out</span>
+<span class="text-xs text-neutral-500">suave en ambos extremos — elegante</span>
+</div>
+<div class="relative h-8 bg-dark-700 rounded-full overflow-hidden">
+<div class="m21-ball-easeinout absolute top-1 left-1 w-6 h-6 rounded-full bg-cyan-400 flex items-center justify-center text-xs">🎬</div>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Consejo de oro</h3>
+<p class="text-neutral-300">Para <strong>UIs y diapositivas</strong> use <code class="text-blue-400">power2.out</code> — entra rápido y se estabiliza. Para <strong>elementos que salen</strong> use <code class="text-blue-400">power2.in</code> — empieza suave y termina con velocidad. Reserva <code class="text-blue-400">elastic</code> para momentos puntuales de énfasis.</p>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">power1-4</div><div class="text-xs text-neutral-400">De suave a intenso</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">back</div><div class="text-xs text-neutral-400">Overshoot leve</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">elastic</div><div class="text-xs text-neutral-400">Resorte — úsalo con moderación</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">CustomEase</div><div class="text-xs text-neutral-400">Curva libre mediante Bezier</div></div>
+</div>
+</section>
+<!-- TÓPICO 4 — SVG + Timeline coreografada -->
+<section class="mb-16" id="topico-4">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold">🎼 Timeline coreografiada</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">A <strong class="text-blue-400">Línea de tiempo</strong> de GSAP es un director de animaciones: defines cuándo entra cada elemento con respecto al anterior, creando coreografías complejas con código sencillo.</p>
+<!-- SVG diagram: timeline track -->
+<div class="mb-6 overflow-x-auto">
+<svg aria-label="Diagrama de timeline de GSAP" viewbox="0 0 560 140" width="100%" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<lineargradient id="m21-tl-grad" x1="0" x2="1" y1="0" y2="0">
+<stop offset="0" stop-color="#3b82f6" stop-opacity="0.8"></stop>
+<stop offset="1" stop-color="#38bdf8" stop-opacity="0.5"></stop>
+</lineargradient>
+</defs>
+<!-- Track line -->
+<line stroke="#374151" stroke-width="2" x1="40" x2="520" y1="30" y2="30"></line>
+<text fill="#6b7280" font-family="Inter,sans-serif" font-size="10" x="40" y="20">0s</text>
+<text fill="#6b7280" font-family="Inter,sans-serif" font-size="10" x="195" y="20">0.5s</text>
+<text fill="#6b7280" font-family="Inter,sans-serif" font-size="10" x="350" y="20">1.0s</text>
+<text fill="#6b7280" font-family="Inter,sans-serif" font-size="10" x="500" y="20">1.5s</text>
+<!-- Block A -->
+<rect fill="#3b82f6" height="28" opacity="0.75" rx="6" width="150" x="40" y="40"></rect>
+<text fill="white" font-family="Inter,sans-serif" font-size="12" font-weight="600" text-anchor="middle" x="115" y="59">Elemento A</text>
+<!-- Block B (starts at 0.4s = +120px, overlaps) -->
+<rect fill="#38bdf8" height="28" opacity="0.75" rx="6" width="150" x="165" y="76"></rect>
+<text fill="#0e1622" font-family="Inter,sans-serif" font-size="12" font-weight="600" text-anchor="middle" x="240" y="95">Elemento B</text>
+<!-- Block C (starts at 0.9s = +270px) -->
+<rect fill="#60a5fa" height="28" opacity="0.75" rx="6" width="170" x="310" y="40"></rect>
+<text fill="white" font-family="Inter,sans-serif" font-size="12" font-weight="600" text-anchor="middle" x="395" y="59">Elemento C</text>
+<!-- Markers -->
+<line stroke="#4b5563" stroke-dasharray="4 2" stroke-width="1" x1="165" x2="165" y1="30" y2="110"></line>
+<line stroke="#4b5563" stroke-dasharray="4 2" stroke-width="1" x1="310" x2="310" y1="30" y2="110"></line>
+<text fill="#60a5fa" font-family="Inter,sans-serif" font-size="9" text-anchor="middle" x="250" y="128">B empieza 0.3s antes del final de A ("&lt;0.3")</text>
+</svg>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-5 mb-6 overflow-x-auto">
+<div class="text-xs font-semibold text-neutral-400 uppercase tracking-wide mb-3">código de la timeline de arriba</div>
+<pre class="font-mono text-sm text-neutral-300 leading-relaxed"><code><span class="text-blue-400">const</span> tl = <span class="text-blue-400">gsap</span>.timeline();
+
+tl.<span class="text-cyan-400">from</span>(<span class="text-yellow-400">"#elem-a"</span>, { x: -40, opacity: 0, duration: 0.6 })
+  .<span class="text-cyan-400">from</span>(<span class="text-yellow-400">"#elem-b"</span>, { y: 20, opacity: 0, duration: 0.5 }, <span class="text-yellow-400">"&lt;0.3"</span>)
+  .<span class="text-cyan-400">from</span>(<span class="text-yellow-400">"#elem-c"</span>, { x: 40, opacity: 0, duration: 0.7 }, <span class="text-yellow-400">"&lt;"</span>);</code></pre>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">"&lt;"</div><div class="text-xs text-neutral-400">Inicia junto con el anterior</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">"&lt;0.3"</div><div class="text-xs text-neutral-400">0.3s antes del final</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">"+0.5"</div><div class="text-xs text-neutral-400">0.5s después del final</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">label</div><div class="text-xs text-neutral-400">Punto con nombre</div></div>
+</div>
+</section>
+<!-- TÓPICO 5 — GSAP + Remotion -->
+<section class="mb-16" id="topico-5">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold">🔗 GSAP + Remotion — integración frame-perfect</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">Remotion renderiza cada frame de forma <strong class="text-blue-400">determinista</strong> — para el mismo número de frame, siempre el mismo aspecto visual. GSAP lo respeta mediante <code>seek()</code>: en vez de ejecutar la animación en tiempo real, «saltas» al frame exacto.</p>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-3">🧠 Concepto central</h3>
+<p class="text-neutral-300 mb-3">En Remotion, <code class="text-blue-400">useCurrentFrame()</code> devuelve el fotograma actual (p. ej., 60 en 30fps = 2 segundos). Conviertes este fotograma en "segundos" y llamas a <code class="text-blue-400">tl.seek(seconds)</code> — GSAP posiciona todos los elementos en el estado correcto para ese instante.</p>
+<div class="bg-dark-800 rounded-lg p-4 font-mono text-sm overflow-x-auto">
+<span class="text-blue-400">const</span> frame = <span class="text-cyan-400">useCurrentFrame</span>();<br/>
+<span class="text-blue-400">const</span> { fps } = <span class="text-cyan-400">useVideoConfig</span>();<br/>
+<span class="text-neutral-500">// Seek al segundo exacto de este frame</span><br/>
+          tl.<span class="text-cyan-400">seek</span>(frame / fps);
+        </div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-2 flex items-center"><span class="mr-2">💡</span> ¿Por qué no usar animaciones CSS?</h3>
+<p class="text-neutral-300">Las animaciones CSS no tienen <code>seek()</code>. Remotion toma capturas frame por frame: sin seek, la animación siempre aparecería en el estado t=0. GSAP lo resuelve de forma nativa.</p>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">seek()</div><div class="text-xs text-neutral-400">Salta al tiempo X</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">frame/fps</div><div class="text-xs text-neutral-400">Frame → segundos</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">globalTimeline</div><div class="text-xs text-neutral-400">Todas las animaciones juntas</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">determinismo</div><div class="text-xs text-neutral-400">El mismo frame = el mismo píxel</div></div>
+</div>
+</section>
+<!-- TÓPICO 6 — Landing page → vídeo -->
+<section class="mb-16" id="topico-6">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold">🚀 De la landing page al video — el flujo con Claude</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">El enfoque más productivo: pedirle a Claude una <strong class="text-blue-400">landing page estática</strong> primero — componentes visuales listos, tipografía, colores, espaciado. Luego, en una segunda conversación, pedir que lo transforme en animación GSAP para Remotion.</p>
+<!-- Timeline de passos -->
+<div class="space-y-4 mb-6">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-500/20 border border-blue-500/30 flex items-center justify-center text-blue-400 font-bold">1</div>
+<div class="bg-dark-800 rounded-xl p-4 flex-1 border border-dark-600">
+<h4 class="font-semibold text-blue-400 mb-1">Prompt de diseño</h4>
+<p class="text-sm text-neutral-400">"Crea una landing page en React para un SaaS con hero, 3 características y CTA. Sin animaciones todavía."</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-500/20 border border-blue-500/30 flex items-center justify-center text-blue-400 font-bold">2</div>
+<div class="bg-dark-800 rounded-xl p-4 flex-1 border border-dark-600">
+<h4 class="font-semibold text-blue-400 mb-1">Revisión visual</h4>
+<p class="text-sm text-neutral-400">Ajusta los colores, la tipografía y los espacios. Asegúrate de que el aspecto visual sea correcto antes de animar.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-500/20 border border-blue-500/30 flex items-center justify-center text-blue-400 font-bold">3</div>
+<div class="bg-dark-800 rounded-xl p-4 flex-1 border border-dark-600">
+<h4 class="font-semibold text-blue-400 mb-1">Prompt de transformación</h4>
+<p class="text-sm text-neutral-400">"Ahora conviértelo en una composición de Remotion con GSAP. La sección Hero aparece con fade-up, las características entran en stagger de 0.2s y el CTA con bounce."</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-500/20 border border-blue-500/30 flex items-center justify-center text-blue-400 font-bold">4</div>
+<div class="bg-dark-800 rounded-xl p-4 flex-1 border border-dark-600">
+<h4 class="font-semibold text-blue-400 mb-1">Renderizar y exportar</h4>
+<p class="text-sm text-neutral-400"><code class="font-mono text-blue-400">npx remotion render</code> — MP4 listo para publicar.</p>
+</div>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-2 flex items-center"><span class="mr-2">🎯</span> Ideal para</h3>
+<p class="text-neutral-300">Introducciones a SaaS, videos de lanzamiento, recorridos de producto, diapositivas de presentación — cualquier contenido con estructura de secciones y revelación progresiva.</p>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Introducciones a SaaS</div><div class="text-xs text-neutral-400">Presentación de producto</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Launch videos</div><div class="text-xs text-neutral-400">Lanzamientos</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Recorridos guiados</div><div class="text-xs text-neutral-400">Tutoriales estructurados</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Diapositivas de presentación</div><div class="text-xs text-neutral-400">Presentaciones animadas</div></div>
+</div>
+</section>
+<!-- RESUMO -->
+<section class="bg-dark-800 rounded-2xl border border-blue-500/30 p-8 mb-12">
+<h2 class="text-2xl font-bold mb-6">📋 Resumen del módulo</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div>
+<h3 class="font-semibold text-blue-400 mb-3">Lo que aprendimos</h3>
+<ul class="space-y-2 text-sm text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-0.5">✓</span><span>GSAP es el estándar de animación web por su precisión y API clara</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-0.5">✓</span><span>Stagger crea cascadas profesionales con una línea de código</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-0.5">✓</span><span>El easing define la personalidad de la animación</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-0.5">✓</span><span>La línea de tiempo coreografía secuencias complejas con posicionamiento relativo</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-0.5">✓</span><span>seek() integra GSAP con el rendering determinístico de Remotion</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-0.5">✓</span><span>El flujo landing → video maximiza la velocidad de producción</span></li>
+</ul>
+</div>
+<div>
+<h3 class="font-semibold text-blue-400 mb-3">Siguiente módulo</h3>
+<div class="bg-dark-700 rounded-xl p-4 border border-dark-600">
+<div class="text-blue-400 font-bold mb-1">⚖️ 2.2 — GSAP × Framer Motion</div>
+<p class="text-sm text-neutral-400">Comparación detallada: cuándo destaca cada herramienta y por qué GSAP gana en el contexto del video renderizado.</p>
+</div>
+</div>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex items-center space-x-2 bg-dark-700 hover:bg-dark-600 border border-dark-600 rounded-xl px-5 py-3 transition-colors" href="index.html">
+<span>← Ruta 2</span>
+</a>
+<a class="flex items-center space-x-2 bg-blue-600 hover:bg-blue-500 text-white rounded-xl px-5 py-3 transition-colors font-semibold" href="modulo-2-2.html">
+<span>Siguiente: ⚖️ GSAP × Framer Motion →</span>
+</a>
+</div>
+</section>
+</main>
+<script>
+    const themeToggle=document.getElementById('theme-toggle'),themeToggleDarkIcon=document.getElementById('theme-toggle-dark-icon'),themeToggleLightIcon=document.getElementById('theme-toggle-light-icon'),html=document.documentElement;
+    if(localStorage.getItem('theme')==='light'||(!localStorage.getItem('theme')&&!html.classList.contains('dark'))){themeToggleDarkIcon.classList.remove('hidden');html.classList.remove('dark');}else{themeToggleLightIcon.classList.remove('hidden');}
+    themeToggle.addEventListener('click',()=>{themeToggleDarkIcon.classList.toggle('hidden');themeToggleLightIcon.classList.toggle('hidden');html.classList.toggle('dark');localStorage.setItem('theme',html.classList.contains('dark')?'dark':'light');});
+  </script>
+</body>
+</html>

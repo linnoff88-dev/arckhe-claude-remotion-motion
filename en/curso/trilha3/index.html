@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Track 3 · Hands-on Projects | CC × Remotion</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#FACC15', dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' } } } } }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    code, .font-mono { font-family: 'JetBrains Mono', monospace; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+    html:not(.dark) .text-purple-400 { color: #7c3aed; }
+    html:not(.dark) .bg-purple-500\/20 { background-color: rgba(124,58,237,0.12); }
+    html:not(.dark) .bg-purple-500\/10 { background-color: rgba(124,58,237,0.08); }
+    html:not(.dark) .border-purple-500\/30 { border-color: rgba(124,58,237,0.25); }
+    html:not(.dark) .hover\:bg-purple-500\/30:hover { background-color: rgba(124,58,237,0.18); }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(124,58,237,0.08); }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #7c3aed; }
+    html:not(.dark) .group:hover .group-hover\:text-purple-400 { color: #7c3aed; }
+    html:not(.dark) .hover\:border-purple-500\/30:hover { border-color: rgba(124,58,237,0.25); }
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #059669; }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(5,150,105,0.08); }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #2563eb; }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(37,99,235,0.08); }
+    html:not(.dark) .hover\:text-amber-400:hover { color: #92400e; }
+    html:not(.dark) .hover\:bg-amber-500\/10:hover { background-color: rgba(217,119,6,0.08); }
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161,98,7,0.08); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161,98,7,0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255,255,255,0.95); }
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+    html:not(.dark) svg[role="img"] { filter: saturate(0.82) brightness(0.96); }
+  </style>
+<link href="https://inematds.github.io/claude-remotion-motion/curso/trilha3/" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/claude-remotion-motion/en/curso/trilha3/" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/claude-remotion-motion/es/curso/trilha3/" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha3/" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="./" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">EN</a><a href="../../../es/curso/trilha3/" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">ES</a></div>
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14">
+<div class="flex items-center space-x-4">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html"><span class="text-2xl">🎞️</span><span class="font-bold text-lg hidden sm:inline">CC × Remotion</span></a>
+<span class="text-neutral-600">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+</div>
+<div class="flex items-center space-x-1 sm:space-x-2">
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors" href="../trilha1/index.html"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentals</span></a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors" href="../trilha2/index.html"><span class="sm:hidden">T2</span><span class="hidden sm:inline">Libraries</span></a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-purple-400 bg-purple-500/10" href="index.html"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Projects</span></a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors" href="../trilha4/index.html"><span class="sm:hidden">T4</span><span class="hidden sm:inline">Production</span></a>
+<button class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path></svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<header class="bg-gradient-to-br from-purple-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-purple-500/20 text-purple-400 text-xs font-semibold rounded-full mb-4">TRACK 3</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">🛠️ Practical Projects</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">Four complete pieces, one for each library — from <strong class="text-purple-400">real setting to deliverable</strong>. GSAP for storytelling, D3 for data, Three.js for cinematic 3D, Lottie for micro-interactions. Each module is an end-to-end project.</p>
+<div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">4</div><div class="text-xs text-neutral-400">Projects</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">24</div><div class="text-xs text-neutral-400">Topics</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">~3h</div><div class="text-xs text-neutral-400">Duration</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">Practical</div><div class="text-xs text-neutral-400">Level</div></div>
+</div>
+<!-- Hero SVG -->
+<div class="mt-8 rounded-2xl border border-purple-500/30 bg-dark-900/40 p-4 overflow-hidden">
+<svg aria-label="Four complete projects: SaaS with GSAP, Population with D3, Moto with Three.js, Banking with Lottie — each generates a final deliverable" class="w-full h-auto" role="img" viewbox="0 0 900 200">
+<defs>
+<lineargradient id="t3h-grad" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#c084fc"></stop><stop offset="1" stop-color="#a855f7"></stop></lineargradient>
+<filter height="180%" id="t3h-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<marker id="t3h-ah" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#c084fc"></path></marker>
+<marker id="t3h-ahc" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#38bdf8"></path></marker>
+</defs>
+<!-- Cenário -->
+<rect fill="#1a1230" height="48" rx="10" stroke="#a855f7" stroke-width="2" width="90" x="10" y="76"></rect>
+<text fill="#c084fc" font-family="Inter,sans-serif" font-size="11" font-weight="600" text-anchor="middle" x="55" y="97">Scenario</text>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="9.5" text-anchor="middle" x="55" y="113">+ Prompt</text>
+<!-- arrow -->
+<path d="M100,100 L130,100" fill="none" marker-end="url(#t3h-ah)" opacity="0.6" stroke="#a855f7" stroke-width="1.8"></path>
+<!-- 4 libs -->
+<g filter="url(#t3h-glow)">
+<rect fill="#1a1230" height="38" rx="9" stroke="url(#t3h-grad)" stroke-width="2" width="110" x="138" y="32"></rect>
+</g>
+<text fill="#c084fc" font-family="Inter,sans-serif" font-size="11" font-weight="600" text-anchor="middle" x="193" y="55">📒 GSAP</text>
+<rect fill="#0f1624" height="38" rx="9" stroke="#38bdf8" stroke-width="1.8" width="110" x="138" y="78"></rect>
+<text fill="#38bdf8" font-family="Inter,sans-serif" font-size="11" font-weight="600" text-anchor="middle" x="193" y="101">🌍 D3</text>
+<rect fill="#1a1230" height="38" rx="9" stroke="#a855f7" stroke-width="1.8" width="110" x="138" y="124"></rect>
+<text fill="#c084fc" font-family="Inter,sans-serif" font-size="11" font-weight="600" text-anchor="middle" x="193" y="147">🏍️ Three.js</text>
+<rect height="0" width="0" x="138" y="150"></rect>
+<!-- 4th lib below -->
+<rect height="0" rx="0" width="110" x="138" y="170"></rect>
+<!-- arrows to deliverable -->
+<path d="M248,51 L310,95" fill="none" marker-end="url(#t3h-ah)" opacity="0.5" stroke="#a855f7" stroke-width="1.5"></path>
+<path d="M248,97 L310,100" fill="none" marker-end="url(#t3h-ahc)" opacity="0.5" stroke="#38bdf8" stroke-width="1.5"></path>
+<path d="M248,143 L310,106" fill="none" marker-end="url(#t3h-ah)" opacity="0.5" stroke="#a855f7" stroke-width="1.5"></path>
+<!-- Lottie -->
+<rect height="0" rx="0" width="110" x="138" y="168"></rect>
+<rect height="0" width="0" x="260" y="0"></rect>
+<!-- redraw cleanly -->
+<!-- Cenário node already drawn; now 4 lib boxes stacked at x=138 -->
+<!-- Lottie needs its own row — let's add it -->
+</svg>
+<!-- Cleaner version inline HTML -->
+<div class="grid grid-cols-4 gap-3 mt-2">
+<div class="bg-purple-500/10 border border-purple-500/30 rounded-lg p-3 text-center">
+<div class="text-purple-400 font-bold text-sm mb-1">📒 3-1</div>
+<div class="text-xs text-neutral-400">SaaS Walkthrough</div>
+<div class="text-xs text-neutral-500">GSAP</div>
+</div>
+<div class="bg-purple-500/10 border border-purple-500/30 rounded-lg p-3 text-center">
+<div class="text-purple-400 font-bold text-sm mb-1">🌍 3-2</div>
+<div class="text-xs text-neutral-400">Population Shift</div>
+<div class="text-xs text-neutral-500">D3</div>
+</div>
+<div class="bg-purple-500/10 border border-purple-500/30 rounded-lg p-3 text-center">
+<div class="text-purple-400 font-bold text-sm mb-1">🏍️ 3-3</div>
+<div class="text-xs text-neutral-400">Motorcycle Commercial</div>
+<div class="text-xs text-neutral-500">Three.js</div>
+</div>
+<div class="bg-purple-500/10 border border-purple-500/30 rounded-lg p-3 text-center">
+<div class="text-purple-400 font-bold text-sm mb-1">🏦 3-4</div>
+<div class="text-xs text-neutral-400">Banking Onboarding</div>
+<div class="text-xs text-neutral-500">Lottie</div>
+</div>
+</div>
+</div>
+</div>
+</header>
+<main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+<section class="mb-12">
+<h2 class="text-2xl font-bold mb-6">Trail map</h2>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<a class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-purple-500/30 p-5 transition-all" href="#modulo-3-1">
+<div class="flex items-center justify-between mb-2"><span class="text-purple-400 font-bold text-sm">3.1</span><span class="text-xs text-neutral-500">~45 min</span></div>
+<h3 class="font-semibold mb-1 group-hover:text-purple-400 transition-colors">📒 SaaS Walkthrough</h3>
+<p class="text-xs text-neutral-400">Storytelling through motion</p>
+</a>
+<a class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-purple-500/30 p-5 transition-all" href="#modulo-3-2">
+<div class="flex items-center justify-between mb-2"><span class="text-purple-400 font-bold text-sm">3.2</span><span class="text-xs text-neutral-500">~45 min</span></div>
+<h3 class="font-semibold mb-1 group-hover:text-purple-400 transition-colors">🌍 Population Shift</h3>
+<p class="text-xs text-neutral-400">Numbers become a story</p>
+</a>
+<a class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-purple-500/30 p-5 transition-all" href="#modulo-3-3">
+<div class="flex items-center justify-between mb-2"><span class="text-purple-400 font-bold text-sm">3.3</span><span class="text-xs text-neutral-500">~45 min</span></div>
+<h3 class="font-semibold mb-1 group-hover:text-purple-400 transition-colors">🏍️ Motorcycle Commercial</h3>
+<p class="text-xs text-neutral-400">cinematic 3D</p>
+</a>
+<a class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-purple-500/30 p-5 transition-all" href="#modulo-3-4">
+<div class="flex items-center justify-between mb-2"><span class="text-purple-400 font-bold text-sm">3.4</span><span class="text-xs text-neutral-500">~45 min</span></div>
+<h3 class="font-semibold mb-1 group-hover:text-purple-400 transition-colors">🏦 Banking Onboarding</h3>
+<p class="text-xs text-neutral-400">Ready-made micro-interactions</p>
+</a>
+</div>
+</section>
+<h2 class="text-2xl font-bold mb-6">Detailed content</h2>
+<!-- MÓDULO 3.1 -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 mb-6" id="modulo-3-1">
+<div class="p-6 border-b border-dark-600">
+<div class="flex items-center justify-between mb-2"><span class="text-purple-400 font-bold">3.1</span><span class="text-xs text-neutral-500">~45 min</span></div>
+<h3 class="text-2xl font-bold mb-2">📒 SaaS Walkthrough (GSAP)</h3>
+<p class="text-neutral-400 text-sm">A startup launches an AI note-taking app: a 45-second video of the landing page showing Problem → Solution → Features → CTA. GSAP coordinates the timeline choreography like an art director.</p>
+</div>
+<div class="divide-y divide-dark-600">
+<div class="topic-item"><button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)"><span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span><span class="text-lg">🎬</span><div><span class="font-medium">Scenario and why GSAP</span><span class="text-neutral-500 text-sm ml-2">- the perfect fit</span></div></button><div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-purple-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">45s SaaS launch video: headline → subhead → staggered features → dashboard → stats → CTA. GSAP shines in choreographies with many elements.</p></div><div><span class="text-purple-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">Understanding the fit between the library and the project saves rework; GSAP is motion-driven storytelling.</p></div><div><span class="text-purple-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">GSAP timeline · narrative sequence · motion hierarchy.</p></div></div></div></div>
+<div class="topic-item"><button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)"><span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span><span class="text-lg">📝</span><div><span class="font-medium">Scenes 1–2: Headline and subhead</span><span class="text-neutral-500 text-sm ml-2">- enter and fade</span></div></button><div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-purple-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">The headline rises from below with a spring; the subheading fades in after a respectful delay. They anchor the visual hierarchy.</p></div><div><span class="text-purple-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">The first scenes set the emotional tone for the entire video.</p></div><div><span class="text-purple-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">fromBelow · spring easing · delay offset.</p></div></div></div></div>
+<div class="topic-item"><button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)"><span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span><span class="text-lg">🃏</span><div><span class="font-medium">Scenes 3–4: Cards and dashboard</span><span class="text-neutral-500 text-sm ml-2">- stagger and slide</span></div></button><div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-purple-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">Three feature cards enter in a stagger (~0.15s between each); the dashboard mockup slides in from the right. The staggered rhythm is GSAP's visual signature.</p></div><div><span class="text-purple-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">Stagger turns identical elements into a sequence with personality.</p></div><div><span class="text-purple-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">gsap.stagger · slideInRight · sequential reveal.</p></div></div></div></div>
+<div class="topic-item"><button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)"><span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span><span class="text-lg">🔢</span><div><span class="font-medium">Scene 5: Statistics counter</span><span class="text-neutral-500 text-sm ml-2">- rising numbers</span></div></button><div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-purple-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">Numbers animate from zero to the actual value with power2 easing. “10,000 users” counting up builds credibility visually.</p></div><div><span class="text-purple-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">Animated counters are proven to be more persuasive than static numbers.</p></div><div><span class="text-purple-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">counter animation · interpolateValue · power2.out.</p></div></div></div></div>
+<div class="topic-item"><button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)"><span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span><span class="text-lg">📣</span><div><span class="font-medium">Scene 6: CTA and closing</span><span class="text-neutral-500 text-sm ml-2">- the final pop</span></div></button><div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-purple-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">CTA button scales from 0.8 to 1 with a slight overshoot, drawing the eye after the stats climax.</p></div><div><span class="text-purple-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">The CTA is the only action the video wants the viewer to take—the motion should underscore that.</p></div><div><span class="text-purple-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">scale pop · back.out · motion punctuation.</p></div></div></div></div>
+<div class="topic-item"><button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)"><span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span><span class="text-lg">📦</span><div><span class="font-medium">Assembly and deliverable</span><span class="text-neutral-500 text-sm ml-2">- ready to ship</span></div></button><div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-purple-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">Final composition: 6 scenes in sequence, 1920×1080 render, MP4 for Product Hunt, pitch deck, and landing page.</p></div><div><span class="text-purple-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">Knowing the final destination determines resolution, duration, and codec from the first prompt.</p></div><div><span class="text-purple-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">render target · final composition · distribution.</p></div></div></div></div>
+</div>
+<div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+<button class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors" onclick="openModal('modal-3-1')">View in Modal</button>
+<a class="px-4 py-2 text-sm bg-purple-600 hover:bg-purple-500 text-white rounded-lg transition-colors" href="modulo-3-1.html">View Full</a>
+</div>
+</div>
+<!-- MÓDULO 3.2 -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 mb-6" id="modulo-3-2">
+<div class="p-6 border-b border-dark-600">
+<div class="flex items-center justify-between mb-2"><span class="text-purple-400 font-bold">3.2</span><span class="text-xs text-neutral-500">~45 min</span></div>
+<h3 class="text-2xl font-bold mb-2">🌍 World Population Shift (D3)</h3>
+<p class="text-neutral-400 text-sm">Animated bar race showing the 10 most populous countries from 1990 to 2030. D3 turns a spreadsheet into a documentary—each bar reorder tells a story.</p>
+</div>
+<div class="divide-y divide-dark-600">
+<div class="topic-item"><button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)"><span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span><span class="text-lg">📊</span><div><span class="font-medium">Scenario and why D3</span><span class="text-neutral-500 text-sm ml-2">- data with a story</span></div></button><div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-purple-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">A documentary about population growth from 1990–2030. Without D3, you have numbers; with D3, you have a story that unfolds over time.</p></div><div><span class="text-purple-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">D3 is the only library in the list with native scales, axes, and data transitions.</p></div><div><span class="text-purple-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">data storytelling · linear scale · dynamic axis.</p></div></div></div></div>
+<div class="topic-item"><button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)"><span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span><span class="text-lg">📐</span><div><span class="font-medium">Data structure and scale</span><span class="text-neutral-500 text-sm ml-2">- the foundation for everything</span></div></button><div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-purple-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">Country × year × population dataset. A linear scale maps values to pixels; a band scale distributes bars with uniform gaps.</p></div><div><span class="text-purple-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">Wrong scale = bars that overflow or disappear. It’s the foundation.</p></div><div><span class="text-purple-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">scaleLinear · scaleBand · domain/range.</p></div></div></div></div>
+<div class="topic-item"><button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)"><span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span><span class="text-lg">🏃</span><div><span class="font-medium">Bar race: transition and ranking</span><span class="text-neutral-500 text-sm ml-2">- real-time order</span></div></button><div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-purple-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">On each Remotion frame, the ranking is recalculated. Bars smoothly interpolate their Y position and width; leadership changes are marked with a brief pause.</p></div><div><span class="text-purple-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">The ranking transition is the dramatic moment in a bar race—it’s where the viewer reacts.</p></div><div><span class="text-purple-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">dynamic sorting · position interpolation · dramatic pause.</p></div></div></div></div>
+<div class="topic-item"><button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)"><span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span><span class="text-lg">🏷️</span><div><span class="font-medium">Dynamic labels and year</span><span class="text-neutral-500 text-sm ml-2">- context in motion</span></div></button><div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-purple-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">Country and value labels follow the bars. The year counter in the corner displays 1990 → 2030 in real time, anchored to the Remotion frame.</p></div><div><span class="text-purple-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">Labels that “stick” to the bars are what make the bar race readable at high speed.</p></div><div><span class="text-purple-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">text follow · year counter · readability motion.</p></div></div></div></div>
+<div class="topic-item"><button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)"><span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span><span class="text-lg">🎨</span><div><span class="font-medium">Color by country and aesthetic</span><span class="text-neutral-500 text-sm ml-2">- visual identity</span></div></button><div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-purple-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">Persistent country color map (same color regardless of ranking). Dark background, bars with a gradient from the country's color to a lighter shade.</p></div><div><span class="text-purple-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">Color consistency is what lets viewers follow a country throughout the video.</p></div><div><span class="text-purple-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">colorMap · persistent identity · documentary aesthetic.</p></div></div></div></div>
+<div class="topic-item"><button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)"><span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span><span class="text-lg">♻️</span><div><span class="font-medium">Reuse: Finance, Sports, Politics</span><span class="text-neutral-500 text-sm ml-2">- timeless template</span></div></button><div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-purple-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">The same bar race component, with only the dataset changed, becomes an infographic about revenue, a team ranking, or presidential approval.</p></div><div><span class="text-purple-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">A well-parameterized template pays for itself across dozens of videos.</p></div><div><span class="text-purple-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">generic component · dataset props · content multiplication.</p></div></div></div></div>
+</div>
+<div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+<button class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors" onclick="openModal('modal-3-2')">View in Modal</button>
+<a class="px-4 py-2 text-sm bg-purple-600 hover:bg-purple-500 text-white rounded-lg transition-colors" href="modulo-3-2.html">View Full</a>
+</div>
+</div>
+<!-- MÓDULO 3.3 -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 mb-6" id="modulo-3-3">
+<div class="p-6 border-b border-dark-600">
+<div class="flex items-center justify-between mb-2"><span class="text-purple-400 font-bold">3.3</span><span class="text-xs text-neutral-500">~45 min</span></div>
+<h3 class="text-2xl font-bold mb-2">🏍️ Motorcycle Commercial (Three.js)</h3>
+<p class="text-neutral-400 text-sm">Cinematic showcase: the camera orbits as lights reflect off the metallic bodywork. Nothing else on the list creates convincing 3D scenes — Three.js is the obvious choice.</p>
+</div>
+<div class="divide-y divide-dark-600">
+<div class="topic-item"><button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)"><span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span><span class="text-lg">🎥</span><div><span class="font-medium">Scenario and why Three.js</span><span class="text-neutral-500 text-sm ml-2">- 3D with no alternative</span></div></button><div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-purple-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">Premium automotive commercial: orbiting camera, studio lights, metallic reflections, dark background. No other library here renders 3D.</p></div><div><span class="text-purple-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">Choosing the right tool for the right job is the most valuable meta-skill in any project.</p></div><div><span class="text-purple-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">scene · camera · renderer · WebGL.</p></div></div></div></div>
+<div class="topic-item"><button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)"><span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span><span class="text-lg">💡</span><div><span class="font-medium">Studio lighting</span><span class="text-neutral-500 text-sm ml-2">- lighting that sells</span></div></button><div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-purple-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">Key light, fill light, and rim light simulate a photo studio. PointLight and SpotLight with calibrated intensity reveal the object’s shape.</p></div><div><span class="text-purple-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">Lighting distinguishes an amateur scene from a premium product more than any mesh.</p></div><div><span class="text-purple-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">three-point lighting · PointLight · rim light.</p></div></div></div></div>
+<div class="topic-item"><button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)"><span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span><span class="text-lg">🪞</span><div><span class="font-medium">Metallic material and reflection</span><span class="text-neutral-500 text-sm ml-2">- the lacquer finish</span></div></button><div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-purple-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">MeshStandardMaterial with metalness=0.9 and roughness=0.1. A cubic EnvMap simulates environmental reflection — the "car dealership shine".</p></div><div><span class="text-purple-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">The right material turns a cube into a desirable product.</p></div><div><span class="text-purple-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">metalness · roughness · envMap.</p></div></div></div></div>
+<div class="topic-item"><button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)"><span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span><span class="text-lg">🌀</span><div><span class="font-medium">Camera orbit</span><span class="text-neutral-500 text-sm ml-2">- dramatic motion</span></div></button><div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-purple-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">The camera moves in an arc around the object via Math.sin/cos of the current frame. Slow, deliberate movement, like a high-end cinema camera.</p></div><div><span class="text-purple-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">Camera movement is where viewers feel the brand's character.</p></div><div><span class="text-purple-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">camera orbit · sin/cos path · dramatic pacing.</p></div></div></div></div>
+<div class="topic-item"><button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)"><span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span><span class="text-lg">🏗️</span><div><span class="font-medium">Scene composition</span><span class="text-neutral-500 text-sm ml-2">- staging</span></div></button><div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-purple-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">Floor with a subtle reflective plane, #0a0a0a background, exponential fog that darkens the edges. Photographic product composition principles applied to 3D.</p></div><div><span class="text-purple-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">Composition guides the eye even without movement.</p></div><div><span class="text-purple-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">FogExp2 · reflective plane · framing.</p></div></div></div></div>
+<div class="topic-item"><button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)"><span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span><span class="text-lg">🏆</span><div><span class="font-medium">Render and premium deliverable</span><span class="text-neutral-500 text-sm ml-2">- automotive quality</span></div></button><div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-purple-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">Render in 4K with antialiasing; MP4 output for Instagram, YouTube, and out-of-home media. The result looks like professional automotive marketing.</p></div><div><span class="text-purple-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">Knowing how far the stack can go defines what you can sell.</p></div><div><span class="text-purple-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">antialias · 4K render · premium product.</p></div></div></div></div>
+</div>
+<div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+<button class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors" onclick="openModal('modal-3-3')">View in Modal</button>
+<a class="px-4 py-2 text-sm bg-purple-600 hover:bg-purple-500 text-white rounded-lg transition-colors" href="modulo-3-3.html">View Full</a>
+</div>
+</div>
+<!-- MÓDULO 3.4 -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 mb-6" id="modulo-3-4">
+<div class="p-6 border-b border-dark-600">
+<div class="flex items-center justify-between mb-2"><span class="text-purple-400 font-bold">3.4</span><span class="text-xs text-neutral-500">~45 min</span></div>
+<h3 class="text-2xl font-bold mb-2">🏦 Banking Onboarding (Lottie)</h3>
+<p class="text-neutral-400 text-sm">Fintech needs onboarding animations: create account → deposit → transfer → confirmation. Lottie delivers a small scope, fast, and extremely reliably — the right choice.</p>
+</div>
+<div class="divide-y divide-dark-600">
+<div class="topic-item"><button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)"><span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span><span class="text-lg">🏦</span><div><span class="font-medium">Scenario and why Lottie</span><span class="text-neutral-500 text-sm ml-2">- simple, reliable</span></div></button><div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-purple-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">Four mobile onboarding micro-animations. Lottie = lightweight JSON, infinitely scalable, runs in React Native without recompilation.</p></div><div><span class="text-purple-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">For micro-interaction scope, Lottie is faster and more reliable than any programmatic animation library.</p></div><div><span class="text-purple-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">JSON animation · vector · cross-platform.</p></div></div></div></div>
+<div class="topic-item"><button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)"><span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span><span class="text-lg">📱</span><div><span class="font-medium">Scene 1: App opening</span><span class="text-neutral-500 text-sm ml-2">- first impression</span></div></button><div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-purple-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">The app logo scales up from the center, the background transitions from dark to white, and the UI elements appear in a smooth cascade.</p></div><div><span class="text-purple-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">The splash screen is the product’s first emotional impression.</p></div><div><span class="text-purple-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">logo reveal · UI cascade · brand moment.</p></div></div></div></div>
+<div class="topic-item"><button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)"><span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span><span class="text-lg">💰</span><div><span class="font-medium">Scenes 2–3: Deposit and transfer</span><span class="text-neutral-500 text-sm ml-2">- money in motion</span></div></button><div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-purple-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">A coin icon falls and lands in a wallet; a transfer arrow travels from A to B. Both use Lottie path animation.</p></div><div><span class="text-purple-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">Path animations are Lottie's strong suit — SVG fluidity at runtime.</p></div><div><span class="text-purple-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">path animation · follow path · transaction UX.</p></div></div></div></div>
+<div class="topic-item"><button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)"><span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span><span class="text-lg">✅</span><div><span class="font-medium">Scene 4: Success checkmark</span><span class="text-neutral-500 text-sm ml-2">- the moment of relief</span></div></button><div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-purple-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">Green circle draws via stroke-dashoffset; checkmark reveals inside; slight final bounce. The sequence’s emotional payoff.</p></div><div><span class="text-purple-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">The success confirmation is where the user decides whether to trust the app.</p></div><div><span class="text-purple-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">stroke-dashoffset · reveal · success state UX.</p></div></div></div></div>
+<div class="topic-item"><button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)"><span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span><span class="text-lg">🎛️</span><div><span class="font-medium">Sync Lottie with Remotion</span><span class="text-neutral-500 text-sm ml-2">- perfect frame</span></div></button><div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-purple-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">The hook <code>useLottie</code> with <code>currentFrame</code> Remotion ensures the JSON animation advances on exactly the right frame of the render.</p></div><div><span class="text-purple-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">Without frame synchronization, the render gets out of sync between the preview and the final MP4.</p></div><div><span class="text-purple-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">frame sync · useLottie · deterministic render.</p></div></div></div></div>
+<div class="topic-item"><button class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)"><span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span><span class="text-lg">🚀</span><div><span class="font-medium">Deliverable: production-ready app</span><span class="text-neutral-500 text-sm ml-2">- ship in weeks</span></div></button><div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-purple-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">Four exported JSONs + reusable React component. It can be integrated into React Native or a web app without code changes.</p></div><div><span class="text-purple-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">Lottie is the only animation format that goes from prototype to production app without friction.</p></div><div><span class="text-purple-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">JSON export · React Native · production-ready.</p></div></div></div></div>
+</div>
+<div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+<button class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors" onclick="openModal('modal-3-4')">View in Modal</button>
+<a class="px-4 py-2 text-sm bg-purple-600 hover:bg-purple-500 text-white rounded-lg transition-colors" href="modulo-3-4.html">View Full</a>
+</div>
+</div>
+<div class="flex flex-col sm:flex-row gap-4 mt-10">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="../trilha2/index.html">← Previous: Libraries</a>
+<a class="flex-1 text-center px-6 py-3 bg-amber-600 text-white rounded-lg font-semibold hover:bg-amber-500 transition-colors" href="../trilha4/index.html">Next: Production →</a>
+</div>
+</main>
+<div class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" id="modal-3-1" onclick="if(event.target === this) closeModal()"><div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600"><div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0"><div class="flex items-center space-x-3"><span class="text-purple-400 font-bold">3.1</span><span class="font-semibold">SaaS Walkthrough (GSAP)</span></div><button class="text-neutral-400 hover:text-white text-2xl leading-none" onclick="closeModal()">×</button></div><iframe class="flex-1 w-full rounded-b-xl" src="modulo-3-1.html"></iframe></div></div>
+<div class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" id="modal-3-2" onclick="if(event.target === this) closeModal()"><div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600"><div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0"><div class="flex items-center space-x-3"><span class="text-purple-400 font-bold">3.2</span><span class="font-semibold">World Population Shift (D3)</span></div><button class="text-neutral-400 hover:text-white text-2xl leading-none" onclick="closeModal()">×</button></div><iframe class="flex-1 w-full rounded-b-xl" src="modulo-3-2.html"></iframe></div></div>
+<div class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" id="modal-3-3" onclick="if(event.target === this) closeModal()"><div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600"><div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0"><div class="flex items-center space-x-3"><span class="text-purple-400 font-bold">3.3</span><span class="font-semibold">Motorcycle Commercial (Three.js)</span></div><button class="text-neutral-400 hover:text-white text-2xl leading-none" onclick="closeModal()">×</button></div><iframe class="flex-1 w-full rounded-b-xl" src="modulo-3-3.html"></iframe></div></div>
+<div class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" id="modal-3-4" onclick="if(event.target === this) closeModal()"><div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600"><div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0"><div class="flex items-center space-x-3"><span class="text-purple-400 font-bold">3.4</span><span class="font-semibold">Banking Onboarding (Lottie)</span></div><button class="text-neutral-400 hover:text-white text-2xl leading-none" onclick="closeModal()">×</button></div><iframe class="flex-1 w-full rounded-b-xl" src="modulo-3-4.html"></iframe></div></div>
+<footer class="border-t border-dark-600 py-8 mt-8"><div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm"><p>Claude Code × Remotion · Track 3 · 2026 · <a class="text-sky-400 hover:text-sky-300" href="https://inema.club" target="_blank">INEMA.CLUB</a></p></div></footer>
+<script>
+    function toggleTopic(button) { const t=button.closest('.topic-item'); const e=t.querySelector('.topic-explanation'); const m=button.closest('.bg-dark-800'); m.querySelectorAll('.topic-explanation.active').forEach(x=>{if(x!==e)x.classList.remove('active')}); e.classList.toggle('active'); }
+    function openModal(id){ const m=document.getElementById(id); if(m){ m.classList.remove('hidden'); document.body.style.overflow='hidden'; } }
+    function closeModal(){ document.querySelectorAll('.modal').forEach(m=>m.classList.add('hidden')); document.body.style.overflow='auto'; }
+    document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeModal(); });
+    const themeToggle=document.getElementById('theme-toggle'),themeToggleDarkIcon=document.getElementById('theme-toggle-dark-icon'),themeToggleLightIcon=document.getElementById('theme-toggle-light-icon'),html=document.documentElement;
+    if(localStorage.getItem('theme')==='light'||(!localStorage.getItem('theme')&&!html.classList.contains('dark'))){themeToggleDarkIcon.classList.remove('hidden');html.classList.remove('dark');}else{themeToggleLightIcon.classList.remove('hidden');}
+    themeToggle.addEventListener('click',()=>{themeToggleDarkIcon.classList.toggle('hidden');themeToggleLightIcon.classList.toggle('hidden');html.classList.toggle('dark');localStorage.setItem('theme',html.classList.contains('dark')?'dark':'light');});
+  </script>
+</body>
+</html>

@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Track 4: Production &amp; Delivery | CC × Remotion</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#FACC15',
+            dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' }
+          }
+        }
+      }
+    }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+
+    /* Light mode overrides - OBRIGATORIO */
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    /* Light mode - cores de acento (trilha amber) */
+    html:not(.dark) .text-amber-400 { color: #92400e; }
+    html:not(.dark) .bg-amber-500\/20 { background: rgba(217,119,6,.12); }
+    html:not(.dark) .bg-amber-500\/10 { background: rgba(217,119,6,.08); }
+    html:not(.dark) .border-amber-500\/30 { border-color: rgba(217,119,6,.25); }
+    html:not(.dark) .hover\:bg-amber-500\/30:hover { background: rgba(217,119,6,.18); }
+
+    /* Light mode - outras trilhas (hover nav) */
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #059669; }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(5,150,105,.08); }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #2563eb; }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(37,99,235,.08); }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #7c3aed; }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(124,58,237,.08); }
+    html:not(.dark) .hover\:text-amber-400:hover { color: #92400e; }
+    html:not(.dark) .hover\:bg-amber-500\/10:hover { background: rgba(217,119,6,.08); }
+
+    /* Light mode - primary */
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161,98,7,.08); }
+    html:not(.dark) .border-primary\/30 { border-color: rgba(161,98,7,.25); }
+
+    /* Light mode - sky */
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+
+    /* Light mode - remove gradient header */
+    html:not(.dark) .from-amber-900\/30 { --tw-gradient-from: transparent; }
+    html:not(.dark) .bg-gradient-to-br { background: #f9fafb; }
+
+    /* Navbar light */
+    html:not(.dark) nav { background-color: rgba(255,255,255,.95) !important; border-color: #e5e7eb; }
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255,255,255,.95); }
+
+    /* Dark mode border suavizado */
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+
+    /* Hero SVG animation */
+    @media (prefers-reduced-motion: no-preference) {
+      @keyframes heroFloat { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)} }
+      @keyframes heroPulse { 0%,100%{opacity:.6} 50%{opacity:1} }
+      @keyframes heroSpin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+      .hero-float { animation: heroFloat 4s ease-in-out infinite; }
+      .hero-pulse { animation: heroPulse 3s ease-in-out infinite; }
+      .hero-spin { transform-origin: 200px 100px; animation: heroSpin 12s linear infinite; }
+    }
+  </style>
+<link href="https://inematds.github.io/claude-remotion-motion/curso/trilha4/" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/claude-remotion-motion/en/curso/trilha4/" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/claude-remotion-motion/es/curso/trilha4/" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha4/" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="./" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">EN</a><a href="../../../es/curso/trilha4/" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">ES</a></div>
+<!-- NAV -->
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14">
+<div class="flex items-center space-x-4">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🎞️</span>
+<span class="font-bold text-lg hidden sm:inline">CC × Remotion</span>
+</a>
+<span class="text-neutral-600">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+</div>
+<div class="flex items-center space-x-1 sm:space-x-2">
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors" href="../trilha1/index.html"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentals</span></a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors" href="../trilha2/index.html"><span class="sm:hidden">T2</span><span class="hidden sm:inline">Libraries</span></a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors" href="../trilha3/index.html"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Projects</span></a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-amber-400 bg-amber-500/10" href="index.html"><span class="sm:hidden">T4</span><span class="hidden sm:inline">Production</span></a>
+<button class="p-2 rounded-lg text-neutral-400 hover:text-white hover:bg-dark-700 transition-colors ml-2" id="theme-toggle">
+<svg class="hidden w-5 h-5" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+<svg class="hidden w-5 h-5" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path></svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<!-- HERO HEADER -->
+<header class="bg-gradient-to-br from-amber-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex flex-col lg:flex-row gap-10 items-center">
+<div class="flex-1">
+<span class="inline-block px-3 py-1 bg-amber-500/20 text-amber-400 text-xs font-semibold rounded-full mb-4">TRACK 4</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">🎬 Production &amp; Delivery</h1>
+<p class="text-lg text-neutral-400 max-w-2xl mb-8">The tricks that separate amateurs from professionals—precise trajectories, transparent rendering, and the art of iterating until polished.</p>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-amber-400">3</div>
+<div class="text-xs text-neutral-400">Modules</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-amber-400">16</div>
+<div class="text-xs text-neutral-400">Topics</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-amber-400">~1.5h</div>
+<div class="text-xs text-neutral-400">Duration</div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600">
+<div class="text-xl font-bold text-amber-400">Advanced</div>
+<div class="text-xs text-neutral-400">Level</div>
+</div>
+</div>
+</div>
+<!-- HERO SVG -->
+<div class="w-full lg:w-80 flex-shrink-0">
+<div class="rounded-2xl border border-amber-500/30 bg-dark-900/40 p-4">
+<svg aria-label="Production diagram: trajectory → render → iteration → delivery" class="w-full h-auto hero-float" font-family="Inter,sans-serif" role="img" viewbox="0 0 320 200" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<filter id="t4-glow">
+<fegaussianblur result="blur" stddeviation="1.8"></fegaussianblur>
+<femerge><femergenode in="blur"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge>
+</filter>
+<pattern height="16" id="t4-grid" patternunits="userSpaceOnUse" width="16">
+<path d="M 16 0 L 0 0 0 16" fill="none" opacity=".25" stroke="#fbbf24" stroke-width=".15"></path>
+</pattern>
+</defs>
+<!-- grid bg -->
+<rect fill="url(#t4-grid)" height="200" width="320"></rect>
+<!-- Node: Trajetória -->
+<rect fill="#1f1604" filter="url(#t4-glow)" height="40" rx="8" stroke="#fbbf24" stroke-width="1.5" width="80" x="20" y="70"></rect>
+<text fill="#fbbf24" font-size="9" font-weight="600" text-anchor="middle" x="60" y="86">🖊️ Trajectory</text>
+<text fill="#d97706" font-size="7" text-anchor="middle" x="60" y="100">motion path</text>
+<!-- Arrow 1 -->
+<path d="M100 90 L130 90" marker-end="url(#t4-arr)" stroke="#fbbf24" stroke-width="1.5"></path>
+<!-- Node: Render α -->
+<rect fill="#1f1604" filter="url(#t4-glow)" height="40" rx="8" stroke="#f59e0b" stroke-width="1.5" width="80" x="130" y="70"></rect>
+<text fill="#f59e0b" font-size="9" font-weight="600" text-anchor="middle" x="170" y="86">🎥 Render α</text>
+<text fill="#d97706" font-size="7" text-anchor="middle" x="170" y="100">ProRes 4444 XQ</text>
+<!-- Arrow 2 -->
+<path d="M210 90 L240 90" marker-end="url(#t4-arr-c)" stroke="#38bdf8" stroke-width="1.5"></path>
+<!-- Node: Iteração -->
+<rect fill="#0e1b26" filter="url(#t4-glow)" height="40" rx="8" stroke="#38bdf8" stroke-width="1.5" width="62" x="240" y="70"></rect>
+<text fill="#38bdf8" font-size="9" font-weight="600" text-anchor="middle" x="271" y="86">🔁 Iterate</text>
+<text fill="#7dd3fc" font-size="7" text-anchor="middle" x="271" y="100">4 turns</text>
+<!-- Arrow loop back -->
+<path d="M271 110 Q271 145 170 145 Q 130 145 130 115" fill="none" stroke="#38bdf8" stroke-dasharray="4 3" stroke-width="1"></path>
+<!-- Label loop -->
+<text fill="#7dd3fc" font-size="7" text-anchor="middle" x="200" y="158">refinement</text>
+<!-- Bottom row: libs recap -->
+<rect fill="#1f1604" height="26" rx="5" stroke="#fbbf24" stroke-width="1" width="52" x="30" y="22"></rect>
+<text fill="#fbbf24" font-size="7" font-weight="600" text-anchor="middle" x="56" y="33">GSAP</text>
+<text fill="#d97706" font-size="6" text-anchor="middle" x="56" y="43">timeline</text>
+<rect fill="#1f1604" height="26" rx="5" stroke="#fbbf24" stroke-width="1" width="52" x="96" y="22"></rect>
+<text fill="#fbbf24" font-size="7" font-weight="600" text-anchor="middle" x="122" y="33">D3</text>
+<text fill="#d97706" font-size="6" text-anchor="middle" x="122" y="43">data</text>
+<rect fill="#0e1b26" height="26" rx="5" stroke="#38bdf8" stroke-width="1" width="52" x="162" y="22"></rect>
+<text fill="#38bdf8" font-size="7" font-weight="600" text-anchor="middle" x="188" y="33">Three.js</text>
+<text fill="#7dd3fc" font-size="6" text-anchor="middle" x="188" y="43">3D</text>
+<rect fill="#0e1b26" height="26" rx="5" stroke="#38bdf8" stroke-width="1" width="52" x="228" y="22"></rect>
+<text fill="#38bdf8" font-size="7" font-weight="600" text-anchor="middle" x="254" y="33">Lottie</text>
+<text fill="#7dd3fc" font-size="6" text-anchor="middle" x="254" y="43">lightweight</text>
+<!-- arrow markers -->
+<defs>
+<marker id="t4-arr" markerheight="8" markerwidth="8" orient="auto" refx="6" refy="3">
+<path d="M0,0 L0,6 L8,3 z" fill="#fbbf24"></path>
+</marker>
+<marker id="t4-arr-c" markerheight="8" markerwidth="8" orient="auto" refx="6" refy="3">
+<path d="M0,0 L0,6 L8,3 z" fill="#38bdf8"></path>
+</marker>
+</defs>
+<!-- Label bottom -->
+<text fill="#9ca3af" font-size="7" text-anchor="middle" x="160" y="190">Claude Code × Remotion — production workflow</text>
+</svg>
+</div>
+</div>
+</div>
+</div>
+</header>
+<main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+<!-- MAPA DA TRILHA -->
+<section class="mb-12">
+<h2 class="text-2xl font-bold mb-6">Trail map</h2>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+<a class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-amber-500/30 p-5 transition-all" href="#modulo-4-1">
+<div class="flex items-center justify-between mb-2">
+<span class="text-amber-400 font-bold text-sm">4.1</span>
+<span class="text-xs text-neutral-500">~30 min</span>
+</div>
+<h3 class="font-semibold mb-1 group-hover:text-amber-400 transition-colors">🎯 Production tricks</h3>
+<p class="text-xs text-neutral-400">Perfect trajectory + alpha</p>
+</a>
+<a class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-amber-500/30 p-5 transition-all" href="#modulo-4-2">
+<div class="flex items-center justify-between mb-2">
+<span class="text-amber-400 font-bold text-sm">4.2</span>
+<span class="text-xs text-neutral-500">~30 min</span>
+</div>
+<h3 class="font-semibold mb-1 group-hover:text-amber-400 transition-colors">🔁 Iteration That Builds</h3>
+<p class="text-xs text-neutral-400">4 turns, cumulative quality</p>
+</a>
+<a class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-amber-500/30 p-5 transition-all" href="#modulo-4-3">
+<div class="flex items-center justify-between mb-2">
+<span class="text-amber-400 font-bold text-sm">4.3</span>
+<span class="text-xs text-neutral-500">~30 min</span>
+</div>
+<h3 class="font-semibold mb-1 group-hover:text-amber-400 transition-colors">🗺️ Recap &amp; final map</h3>
+<p class="text-xs text-neutral-400">Matrix + 4 universal rules</p>
+</a>
+</div>
+</section>
+<h2 class="text-2xl font-bold mb-6">Detailed content</h2>
+<!-- MODULO 4-1 -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 mb-6" id="modulo-4-1">
+<div class="p-6 border-b border-dark-600">
+<div class="flex items-center justify-between mb-2">
+<span class="text-amber-400 font-bold">4.1</span>
+<span class="text-sm text-neutral-500">~30 min</span>
+</div>
+<h2 class="text-2xl font-bold mb-2">🎯 Production tricks</h2>
+<p class="text-neutral-400">Two professional tricks: motion path via image and rendering with the correct alpha channel.</p>
+</div>
+<div class="p-6 space-y-2">
+<!-- Tópico 1 -->
+<div class="topic-item border border-dark-600 rounded-lg overflow-hidden">
+<button class="w-full flex items-center justify-start space-x-3 p-4 hover:bg-dark-700 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center text-xs font-bold flex-shrink-0">1</span>
+<span class="font-medium">🗺️ Overview: two production tricks</span>
+</button>
+<div class="topic-explanation px-4 pb-4 border-t border-dark-600">
+<p class="text-neutral-400 text-sm mt-3 mb-2">Two common problems solved with a visual approach: trajectory control and rendering with transparency.</p>
+<div class="grid grid-cols-2 gap-3 mt-3">
+<div class="bg-dark-900/40 rounded-lg p-3 text-xs text-amber-400 font-semibold">Motion Path Control</div>
+<div class="bg-dark-900/40 rounded-lg p-3 text-xs text-amber-400 font-semibold">Transparent Render</div>
+<div class="bg-dark-900/40 rounded-lg p-3 text-xs text-neutral-400">Draw the curve</div>
+<div class="bg-dark-900/40 rounded-lg p-3 text-xs text-neutral-400">ProRes 4444 XQ</div>
+</div>
+</div>
+</div>
+<!-- Tópico 2 -->
+<div class="topic-item border border-dark-600 rounded-lg overflow-hidden">
+<button class="w-full flex items-center justify-start space-x-3 p-4 hover:bg-dark-700 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center text-xs font-bold flex-shrink-0">2</span>
+<span class="font-medium">✏️ Draw the trajectory: image as input</span>
+</button>
+<div class="topic-explanation px-4 pb-4 border-t border-dark-600">
+<p class="text-neutral-400 text-sm mt-3">Draw the desired line on paper or in a simple app, save it as an image, and give it to Claude. It extracts the path and generates the animation.</p>
+<div class="grid grid-cols-2 gap-3 mt-3">
+<div class="bg-dark-900/40 rounded-lg p-3 text-xs text-amber-400 font-semibold">Visual → precise</div>
+<div class="bg-dark-900/40 rounded-lg p-3 text-xs text-amber-400 font-semibold">Any curve</div>
+<div class="bg-dark-900/40 rounded-lg p-3 text-xs text-neutral-400">White background</div>
+<div class="bg-dark-900/40 rounded-lg p-3 text-xs text-neutral-400">One line, dark tone</div>
+</div>
+</div>
+</div>
+<!-- Tópico 3 -->
+<div class="topic-item border border-dark-600 rounded-lg overflow-hidden">
+<button class="w-full flex items-center justify-start space-x-3 p-4 hover:bg-dark-700 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center text-xs font-bold flex-shrink-0">3</span>
+<span class="font-medium">💡 Why It’s More Precise Than Words</span>
+</button>
+<div class="topic-explanation px-4 pb-4 border-t border-dark-600">
+<p class="text-neutral-400 text-sm mt-3">Language is ambiguous when describing shapes. “A smooth curve to the right” produces unpredictable results; an image removes the ambiguity.</p>
+<div class="grid grid-cols-2 gap-3 mt-3">
+<div class="bg-dark-900/40 rounded-lg p-3 text-xs text-amber-400 font-semibold">Zero ambiguity</div>
+<div class="bg-dark-900/40 rounded-lg p-3 text-xs text-amber-400 font-semibold">Claude reads the SVG path</div>
+<div class="bg-dark-900/40 rounded-lg p-3 text-xs text-neutral-400">Words = interpretation</div>
+<div class="bg-dark-900/40 rounded-lg p-3 text-xs text-neutral-400">Image = exact data</div>
+</div>
+</div>
+</div>
+<!-- Tópico 4 -->
+<div class="topic-item border border-dark-600 rounded-lg overflow-hidden">
+<button class="w-full flex items-center justify-start space-x-3 p-4 hover:bg-dark-700 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center text-xs font-bold flex-shrink-0">4</span>
+<span class="font-medium">🎬 When to use transparent rendering</span>
+</button>
+<div class="topic-explanation px-4 pb-4 border-t border-dark-600">
+<p class="text-neutral-400 text-sm mt-3">Title cards, lower thirds, and overlays to be composited over existing footage — whenever the Remotion background is not the final background.</p>
+<div class="grid grid-cols-2 gap-3 mt-3">
+<div class="bg-dark-900/40 rounded-lg p-3 text-xs text-amber-400 font-semibold">Title cards</div>
+<div class="bg-dark-900/40 rounded-lg p-3 text-xs text-amber-400 font-semibold">Lower thirds</div>
+<div class="bg-dark-900/40 rounded-lg p-3 text-xs text-neutral-400">NLE composition</div>
+<div class="bg-dark-900/40 rounded-lg p-3 text-xs text-neutral-400">Animated overlays</div>
+</div>
+</div>
+</div>
+<!-- Tópico 5 -->
+<div class="topic-item border border-dark-600 rounded-lg overflow-hidden">
+<button class="w-full flex items-center justify-start space-x-3 p-4 hover:bg-dark-700 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center text-xs font-bold flex-shrink-0">5</span>
+<span class="font-medium">⚙️ The exact settings: ProRes 4444 XQ</span>
+</button>
+<div class="topic-explanation px-4 pb-4 border-t border-dark-600">
+<p class="text-neutral-400 text-sm mt-3">Three fields in Remotion's render panel. Without these settings, the alpha channel gets flattened and you lose transparency.</p>
+<div class="grid grid-cols-2 gap-3 mt-3">
+<div class="bg-dark-900/40 rounded-lg p-3 text-xs text-amber-400 font-semibold">Codec: ProRes 4444 XQ</div>
+<div class="bg-dark-900/40 rounded-lg p-3 text-xs text-amber-400 font-semibold">Picture: PNG</div>
+<div class="bg-dark-900/40 rounded-lg p-3 text-xs text-neutral-400">Format: last option</div>
+<div class="bg-dark-900/40 rounded-lg p-3 text-xs text-neutral-400">Alpha: preserved</div>
+</div>
+</div>
+</div>
+<!-- Tópico 6 -->
+<div class="topic-item border border-dark-600 rounded-lg overflow-hidden">
+<button class="w-full flex items-center justify-start space-x-3 p-4 hover:bg-dark-700 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center text-xs font-bold flex-shrink-0">6</span>
+<span class="font-medium">❌ Common mistakes and how to avoid them</span>
+</button>
+<div class="topic-explanation px-4 pb-4 border-t border-dark-600">
+<p class="text-neutral-400 text-sm mt-3">Alpha gets flattened, the image confuses the path, the wrong codec—the three most common mistakes when producing with transparency.</p>
+<div class="grid grid-cols-2 gap-3 mt-3">
+<div class="bg-dark-900/40 rounded-lg p-3 text-xs text-red-400 font-semibold">H.264 codec (no alpha)</div>
+<div class="bg-dark-900/40 rounded-lg p-3 text-xs text-red-400 font-semibold">Cluttered line image</div>
+<div class="bg-dark-900/40 rounded-lg p-3 text-xs text-neutral-400">PNG flattens the black background</div>
+<div class="bg-dark-900/40 rounded-lg p-3 text-xs text-neutral-400">Wrong format in dropdown</div>
+</div>
+</div>
+</div>
+</div>
+<div class="px-6 pb-6 flex flex-wrap gap-3 justify-start">
+<button class="px-4 py-2 bg-dark-700 hover:bg-dark-600 rounded-lg text-sm font-medium transition-colors" onclick="openModal('modal-4-1')">View in Modal</button>
+<a class="px-4 py-2 bg-amber-600 hover:bg-amber-500 text-white rounded-lg text-sm font-medium transition-colors" href="modulo-4-1.html">View Full</a>
+</div>
+</div>
+<!-- MODULO 4-2 -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 mb-6" id="modulo-4-2">
+<div class="p-6 border-b border-dark-600">
+<div class="flex items-center justify-between mb-2">
+<span class="text-amber-400 font-bold">4.2</span>
+<span class="text-sm text-neutral-500">~30 min</span>
+</div>
+<h2 class="text-2xl font-bold mb-2">🔁 Iteration That Builds Quality</h2>
+<p class="text-neutral-400">The best Remotion outputs don’t come from the first prompt—they’re skeletons refined 3-4 times in the same conversation.</p>
+</div>
+<div class="p-6 space-y-2">
+<div class="topic-item border border-dark-600 rounded-lg overflow-hidden">
+<button class="w-full flex items-center justify-start space-x-3 p-4 hover:bg-dark-700 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center text-xs font-bold flex-shrink-0">1</span>
+<span class="font-medium">🦴 Turn 1: the basic skeleton</span>
+</button>
+<div class="topic-explanation px-4 pb-4 border-t border-dark-600">
+<p class="text-neutral-400 text-sm mt-3">Ask for just the structure — elements in the right place, without refined timing. Validate the composition before any refinement.</p>
+<div class="grid grid-cols-2 gap-3 mt-3">
+<div class="bg-dark-900/40 rounded-lg p-3 text-xs text-amber-400 font-semibold">No timing</div>
+<div class="bg-dark-900/40 rounded-lg p-3 text-xs text-amber-400 font-semibold">Composition first</div>
+<div class="bg-dark-900/40 rounded-lg p-3 text-xs text-neutral-400">Short prompt</div>
+<div class="bg-dark-900/40 rounded-lg p-3 text-xs text-neutral-400">Validate the layout</div>
+</div>
+</div>
+</div>
+<div class="topic-item border border-dark-600 rounded-lg overflow-hidden">
+<button class="w-full flex items-center justify-start space-x-3 p-4 hover:bg-dark-700 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center text-xs font-bold flex-shrink-0">2</span>
+<span class="font-medium">⏱️ Turn 2: adds timing</span>
+</button>
+<div class="topic-explanation px-4 pb-4 border-t border-dark-600">
+<p class="text-neutral-400 text-sm mt-3">With the structure approved, add durations, easing, and the entrance/exit sequence. Still in the same session—Claude remembers the context.</p>
+<div class="grid grid-cols-2 gap-3 mt-3">
+<div class="bg-dark-900/40 rounded-lg p-3 text-xs text-amber-400 font-semibold">Durations</div>
+<div class="bg-dark-900/40 rounded-lg p-3 text-xs text-amber-400 font-semibold">Easing curves</div>
+<div class="bg-dark-900/40 rounded-lg p-3 text-xs text-neutral-400">Enter / exit</div>
+<div class="bg-dark-900/40 rounded-lg p-3 text-xs text-neutral-400">Same session</div>
+</div>
+</div>
+</div>
+<div class="topic-item border border-dark-600 rounded-lg overflow-hidden">
+<button class="w-full flex items-center justify-start space-x-3 p-4 hover:bg-dark-700 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center text-xs font-bold flex-shrink-0">3</span>
+<span class="font-medium">🎨 Turn 3: refine the motion</span>
+</button>
+<div class="topic-explanation px-4 pb-4 border-t border-dark-600">
+<p class="text-neutral-400 text-sm mt-3">With the timing approved, focus on subtleties: overshoot, spring, stagger between elements. Expressive movement starts here.</p>
+<div class="grid grid-cols-2 gap-3 mt-3">
+<div class="bg-dark-900/40 rounded-lg p-3 text-xs text-amber-400 font-semibold">Overshoot</div>
+<div class="bg-dark-900/40 rounded-lg p-3 text-xs text-amber-400 font-semibold">Spring physics</div>
+<div class="bg-dark-900/40 rounded-lg p-3 text-xs text-neutral-400">Stagger</div>
+<div class="bg-dark-900/40 rounded-lg p-3 text-xs text-neutral-400">Micro details</div>
+</div>
+</div>
+</div>
+<div class="topic-item border border-dark-600 rounded-lg overflow-hidden">
+<button class="w-full flex items-center justify-start space-x-3 p-4 hover:bg-dark-700 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center text-xs font-bold flex-shrink-0">4</span>
+<span class="font-medium">✨ Turn 4: final polish</span>
+</button>
+<div class="topic-explanation px-4 pb-4 border-t border-dark-600">
+<p class="text-neutral-400 text-sm mt-3">Colors, typography, gradient, shadow. Polish is what turns “it works” into “it impresses.” It only makes sense once the motion is right.</p>
+<div class="grid grid-cols-2 gap-3 mt-3">
+<div class="bg-dark-900/40 rounded-lg p-3 text-xs text-amber-400 font-semibold">Final colors</div>
+<div class="bg-dark-900/40 rounded-lg p-3 text-xs text-amber-400 font-semibold">Typography</div>
+<div class="bg-dark-900/40 rounded-lg p-3 text-xs text-neutral-400">Shadows / glow</div>
+<div class="bg-dark-900/40 rounded-lg p-3 text-xs text-neutral-400">Gradients</div>
+</div>
+</div>
+</div>
+<div class="topic-item border border-dark-600 rounded-lg overflow-hidden">
+<button class="w-full flex items-center justify-start space-x-3 p-4 hover:bg-dark-700 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center text-xs font-bold flex-shrink-0">5</span>
+<span class="font-medium">🚫 The “don’t one-shot it” rule</span>
+</button>
+<div class="topic-explanation px-4 pb-4 border-t border-dark-600">
+<p class="text-neutral-400 text-sm mt-3">A single long prompt rarely beats 4 incremental prompts. Always start with the minimum viable version and build on what was approved.</p>
+<div class="grid grid-cols-2 gap-3 mt-3">
+<div class="bg-dark-900/40 rounded-lg p-3 text-xs text-red-400 font-semibold">One-shot = medium result</div>
+<div class="bg-dark-900/40 rounded-lg p-3 text-xs text-amber-400 font-semibold">Iteration = great results</div>
+<div class="bg-dark-900/40 rounded-lg p-3 text-xs text-neutral-400">Accumulated context</div>
+<div class="bg-dark-900/40 rounded-lg p-3 text-xs text-neutral-400">Same conversation</div>
+</div>
+</div>
+</div>
+<div class="topic-item border border-dark-600 rounded-lg overflow-hidden">
+<button class="w-full flex items-center justify-start space-x-3 p-4 hover:bg-dark-700 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center text-xs font-bold flex-shrink-0">6</span>
+<span class="font-medium">🧠 Context that compounds quality</span>
+</button>
+<div class="topic-explanation px-4 pb-4 border-t border-dark-600">
+<p class="text-neutral-400 text-sm mt-3">Claude remembers all the code in the session. Each turn builds on what was approved—it doesn’t start over. Quality accumulates instead of being replaced.</p>
+<div class="grid grid-cols-2 gap-3 mt-3">
+<div class="bg-dark-900/40 rounded-lg p-3 text-xs text-amber-400 font-semibold">Persistent context</div>
+<div class="bg-dark-900/40 rounded-lg p-3 text-xs text-amber-400 font-semibold">Cumulative quality</div>
+<div class="bg-dark-900/40 rounded-lg p-3 text-xs text-neutral-400">Doesn’t start over from scratch</div>
+<div class="bg-dark-900/40 rounded-lg p-3 text-xs text-neutral-400">Each turn supports the next</div>
+</div>
+</div>
+</div>
+</div>
+<div class="px-6 pb-6 flex flex-wrap gap-3 justify-start">
+<button class="px-4 py-2 bg-dark-700 hover:bg-dark-600 rounded-lg text-sm font-medium transition-colors" onclick="openModal('modal-4-2')">View in Modal</button>
+<a class="px-4 py-2 bg-amber-600 hover:bg-amber-500 text-white rounded-lg text-sm font-medium transition-colors" href="modulo-4-2.html">View Full</a>
+</div>
+</div>
+<!-- MODULO 4-3 -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 mb-6" id="modulo-4-3">
+<div class="p-6 border-b border-dark-600">
+<div class="flex items-center justify-between mb-2">
+<span class="text-amber-400 font-bold">4.3</span>
+<span class="text-sm text-neutral-500">~30 min</span>
+</div>
+<h2 class="text-2xl font-bold mb-2">🗺️ Recap &amp; final map</h2>
+<p class="text-neutral-400">Everything recapped: the library matrix, the 4 universal rules, and why this is production now.</p>
+</div>
+<div class="p-6 space-y-2">
+<div class="topic-item border border-dark-600 rounded-lg overflow-hidden">
+<button class="w-full flex items-center justify-start space-x-3 p-4 hover:bg-dark-700 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center text-xs font-bold flex-shrink-0">1</span>
+<span class="font-medium">📊 The Matrix of the 4 Libraries</span>
+</button>
+<div class="topic-explanation px-4 pb-4 border-t border-dark-600">
+<p class="text-neutral-400 text-sm mt-3">GSAP = fixed choreography; D3 = animated data; Three.js = 3D; Lottie = lightweight/fast. Each has a clear domain.</p>
+<div class="grid grid-cols-2 gap-3 mt-3">
+<div class="bg-dark-900/40 rounded-lg p-3 text-xs text-amber-400 font-semibold">GSAP → choreography</div>
+<div class="bg-dark-900/40 rounded-lg p-3 text-xs text-amber-400 font-semibold">D3 → data</div>
+<div class="bg-dark-900/40 rounded-lg p-3 text-xs text-neutral-400">Three.js → 3D</div>
+<div class="bg-dark-900/40 rounded-lg p-3 text-xs text-neutral-400">Lottie → social / micro</div>
+</div>
+</div>
+</div>
+<div class="topic-item border border-dark-600 rounded-lg overflow-hidden">
+<button class="w-full flex items-center justify-start space-x-3 p-4 hover:bg-dark-700 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center text-xs font-bold flex-shrink-0">2</span>
+<span class="font-medium">⚡ GSAP × Framer revisited</span>
+</button>
+<div class="topic-explanation px-4 pb-4 border-t border-dark-600">
+<p class="text-neutral-400 text-sm mt-3">GSAP for video and deterministic choreography; Framer Motion for responsive UI and physics. They aren’t competitors—they serve different domains.</p>
+<div class="grid grid-cols-2 gap-3 mt-3">
+<div class="bg-dark-900/40 rounded-lg p-3 text-xs text-amber-400 font-semibold">GSAP = video</div>
+<div class="bg-dark-900/40 rounded-lg p-3 text-xs text-amber-400 font-semibold">Framer = physical UI</div>
+<div class="bg-dark-900/40 rounded-lg p-3 text-xs text-neutral-400">Fixed choreography</div>
+<div class="bg-dark-900/40 rounded-lg p-3 text-xs text-neutral-400">Reactive spring</div>
+</div>
+</div>
+</div>
+<div class="topic-item border border-dark-600 rounded-lg overflow-hidden">
+<button class="w-full flex items-center justify-start space-x-3 p-4 hover:bg-dark-700 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center text-xs font-bold flex-shrink-0">3</span>
+<span class="font-medium">🧊 Vanilla Three.js × R3F revisited</span>
+</button>
+<div class="topic-explanation px-4 pb-4 border-t border-dark-600">
+<p class="text-neutral-400 text-sm mt-3">Vanilla Three.js for simple 3D scenes; React Three Fiber (R3F) when the scene needs to be composed with other React components.</p>
+<div class="grid grid-cols-2 gap-3 mt-3">
+<div class="bg-dark-900/40 rounded-lg p-3 text-xs text-amber-400 font-semibold">Vanilla = simple</div>
+<div class="bg-dark-900/40 rounded-lg p-3 text-xs text-amber-400 font-semibold">R3F = composition</div>
+<div class="bg-dark-900/40 rounded-lg p-3 text-xs text-neutral-400">No React overhead</div>
+<div class="bg-dark-900/40 rounded-lg p-3 text-xs text-neutral-400">Along with the DOM</div>
+</div>
+</div>
+</div>
+<div class="topic-item border border-dark-600 rounded-lg overflow-hidden">
+<button class="w-full flex items-center justify-start space-x-3 p-4 hover:bg-dark-700 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center text-xs font-bold flex-shrink-0">4</span>
+<span class="font-medium">📋 The 4 Universal Rules</span>
+</button>
+<div class="topic-explanation px-4 pb-4 border-t border-dark-600">
+<p class="text-neutral-400 text-sm mt-3">Install the skill, start simple, iterate in the same session, and render with the right settings. This applies to any library and any project.</p>
+<div class="grid grid-cols-2 gap-3 mt-3">
+<div class="bg-dark-900/40 rounded-lg p-3 text-xs text-amber-400 font-semibold">1. Install the skill</div>
+<div class="bg-dark-900/40 rounded-lg p-3 text-xs text-amber-400 font-semibold">2. Start simple</div>
+<div class="bg-dark-900/40 rounded-lg p-3 text-xs text-neutral-400">3. Iterate in the session</div>
+<div class="bg-dark-900/40 rounded-lg p-3 text-xs text-neutral-400">4. Correct render</div>
+</div>
+</div>
+</div>
+<div class="topic-item border border-dark-600 rounded-lg overflow-hidden">
+<button class="w-full flex items-center justify-start space-x-3 p-4 hover:bg-dark-700 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center text-xs font-bold flex-shrink-0">5</span>
+<span class="font-medium">🚀 It’s production-ready now / practically free</span>
+</button>
+<div class="topic-explanation px-4 pb-4 border-t border-dark-600">
+<p class="text-neutral-400 text-sm mt-3">Claude Code + Remotion isn't a prototype — it's a real production tool. And each combo costs pennies. Quality scales with your approach.</p>
+<div class="grid grid-cols-2 gap-3 mt-3">
+<div class="bg-dark-900/40 rounded-lg p-3 text-xs text-amber-400 font-semibold">Real production</div>
+<div class="bg-dark-900/40 rounded-lg p-3 text-xs text-amber-400 font-semibold">Cost = pennies</div>
+<div class="bg-dark-900/40 rounded-lg p-3 text-xs text-neutral-400">Quality = approach</div>
+<div class="bg-dark-900/40 rounded-lg p-3 text-xs text-neutral-400">Now, not tomorrow</div>
+</div>
+</div>
+</div>
+<div class="topic-item border border-dark-600 rounded-lg overflow-hidden">
+<button class="w-full flex items-center justify-start space-x-3 p-4 hover:bg-dark-700 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center text-xs font-bold flex-shrink-0">6</span>
+<span class="font-medium">🎓 Next steps</span>
+</button>
+<div class="topic-explanation px-4 pb-4 border-t border-dark-600">
+<p class="text-neutral-400 text-sm mt-3">Practice with the 4 projects in Track 3, explore each library’s official documentation, and build your first production video.</p>
+<div class="grid grid-cols-2 gap-3 mt-3">
+<div class="bg-dark-900/40 rounded-lg p-3 text-xs text-amber-400 font-semibold">4 T3 projects</div>
+<div class="bg-dark-900/40 rounded-lg p-3 text-xs text-amber-400 font-semibold">Official docs</div>
+<div class="bg-dark-900/40 rounded-lg p-3 text-xs text-neutral-400">First real video</div>
+<div class="bg-dark-900/40 rounded-lg p-3 text-xs text-neutral-400">Iterate until it’s polished</div>
+</div>
+</div>
+</div>
+</div>
+<div class="px-6 pb-6 flex flex-wrap gap-3 justify-start">
+<button class="px-4 py-2 bg-dark-700 hover:bg-dark-600 rounded-lg text-sm font-medium transition-colors" onclick="openModal('modal-4-3')">View in Modal</button>
+<a class="px-4 py-2 bg-amber-600 hover:bg-amber-500 text-white rounded-lg text-sm font-medium transition-colors" href="modulo-4-3.html">View Full</a>
+</div>
+</div>
+<!-- BOTTOM NAV -->
+<div class="flex flex-col sm:flex-row gap-4 mt-12">
+<a class="flex-1 flex items-center justify-center gap-2 px-6 py-4 bg-dark-800 hover:bg-dark-700 rounded-xl border border-dark-600 transition-colors" href="../trilha3/index.html">
+<span>←</span>
+<span class="font-medium">Previous: Projects</span>
+</a>
+<a class="flex-1 flex items-center justify-center gap-2 px-6 py-4 bg-dark-700 hover:bg-dark-600 rounded-xl border border-dark-600 transition-colors" href="../../index.html">
+<span class="font-medium">Return to the beginning of the course</span>
+<span>→</span>
+</a>
+</div>
+</main>
+<!-- MODALS -->
+<div class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" id="modal-4-1" onclick="if(event.target===this)closeModal()">
+<div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+<div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+<div class="flex items-center space-x-3">
+<span class="text-amber-400 font-bold">4.1</span>
+<span class="font-semibold">🎯 Production tricks</span>
+</div>
+<button class="text-neutral-400 hover:text-white text-2xl leading-none" onclick="closeModal()">×</button>
+</div>
+<iframe class="flex-1 w-full rounded-b-xl" src="modulo-4-1.html"></iframe>
+</div>
+</div>
+<div class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" id="modal-4-2" onclick="if(event.target===this)closeModal()">
+<div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+<div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+<div class="flex items-center space-x-3">
+<span class="text-amber-400 font-bold">4.2</span>
+<span class="font-semibold">🔁 Iteration That Builds Quality</span>
+</div>
+<button class="text-neutral-400 hover:text-white text-2xl leading-none" onclick="closeModal()">×</button>
+</div>
+<iframe class="flex-1 w-full rounded-b-xl" src="modulo-4-2.html"></iframe>
+</div>
+</div>
+<div class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" id="modal-4-3" onclick="if(event.target===this)closeModal()">
+<div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+<div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0">
+<div class="flex items-center space-x-3">
+<span class="text-amber-400 font-bold">4.3</span>
+<span class="font-semibold">🗺️ Recap &amp; final map</span>
+</div>
+<button class="text-neutral-400 hover:text-white text-2xl leading-none" onclick="closeModal()">×</button>
+</div>
+<iframe class="flex-1 w-full rounded-b-xl" src="modulo-4-3.html"></iframe>
+</div>
+</div>
+<footer class="border-t border-dark-600 py-8 mt-16">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>Claude Code × Remotion — <a class="text-sky-400 hover:text-sky-300" href="https://inema.club" target="_blank">INEMA.CLUB</a> — 2025</p>
+</div>
+</footer>
+<script>
+    function toggleTopic(button) { const t=button.closest('.topic-item'); const e=t.querySelector('.topic-explanation'); const m=button.closest('.bg-dark-800'); m.querySelectorAll('.topic-explanation.active').forEach(x=>{if(x!==e)x.classList.remove('active')}); e.classList.toggle('active'); }
+    function openModal(id){ const m=document.getElementById(id); if(m){ m.classList.remove('hidden'); document.body.style.overflow='hidden'; } }
+    function closeModal(){ document.querySelectorAll('.modal').forEach(m=>m.classList.add('hidden')); document.body.style.overflow='auto'; }
+    document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeModal(); });
+    const themeToggle=document.getElementById('theme-toggle'),themeToggleDarkIcon=document.getElementById('theme-toggle-dark-icon'),themeToggleLightIcon=document.getElementById('theme-toggle-light-icon'),html=document.documentElement;
+    if(localStorage.getItem('theme')==='light'||(!localStorage.getItem('theme')&&!html.classList.contains('dark'))){themeToggleDarkIcon.classList.remove('hidden');html.classList.remove('dark');}else{themeToggleLightIcon.classList.remove('hidden');}
+    themeToggle.addEventListener('click',()=>{themeToggleDarkIcon.classList.toggle('hidden');themeToggleLightIcon.classList.toggle('hidden');html.classList.toggle('dark');localStorage.setItem('theme',html.classList.contains('dark')?'dark':'light');});
+  </script>
+</body>
+</html>

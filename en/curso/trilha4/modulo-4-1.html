@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Module 4.1: Production Tricks | CC × Remotion</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#FACC15',
+            dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' }
+          }
+        }
+      }
+    }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+
+    /* Light mode - base */
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    /* Light mode - amber accent */
+    html:not(.dark) .text-amber-400 { color: #92400e; }
+    html:not(.dark) .bg-amber-500\/20 { background: rgba(217,119,6,.12); }
+    html:not(.dark) .bg-amber-500\/10 { background: rgba(217,119,6,.08); }
+    html:not(.dark) .border-amber-500\/30 { border-color: rgba(217,119,6,.25); }
+    html:not(.dark) .hover\:bg-amber-500\/30:hover { background: rgba(217,119,6,.18); }
+
+    /* Light mode - outras trilhas nav */
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #059669; }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(5,150,105,.08); }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #2563eb; }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(37,99,235,.08); }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #7c3aed; }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(124,58,237,.08); }
+    html:not(.dark) .hover\:text-amber-400:hover { color: #92400e; }
+    html:not(.dark) .hover\:bg-amber-500\/10:hover { background: rgba(217,119,6,.08); }
+
+    /* Light mode - primary / sky */
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161,98,7,.08); }
+    html:not(.dark) .border-primary\/30 { border-color: rgba(161,98,7,.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+
+    /* Light mode - sem gradiente */
+    html:not(.dark) .from-amber-900\/30 { --tw-gradient-from: transparent; }
+    html:not(.dark) .bg-gradient-to-br { background: #f9fafb; }
+
+    /* Nav light */
+    html:not(.dark) nav { background-color: rgba(255,255,255,.95) !important; border-color: #e5e7eb; }
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255,255,255,.95); }
+
+    /* SVG light */
+    html:not(.dark) svg[role="img"] { filter: saturate(0.82) brightness(0.96); }
+
+    /* Dark borders */
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+
+    /* === DEMOS === */
+    @keyframes m41-pathMove {
+      0% { offset-distance: 0%; opacity: 0; }
+      5% { opacity: 1; }
+      95% { opacity: 1; }
+      100% { offset-distance: 100%; opacity: 0; }
+    }
+    @keyframes m41-alphaBlink {
+      0%,100% { opacity: 0.4; box-shadow: 0 0 0 rgba(251,191,36,0); }
+      50% { opacity: 1; box-shadow: 0 0 8px rgba(251,191,36,0.6); }
+    }
+    @keyframes m41-dot {
+      0% { offset-distance: 0%; }
+      100% { offset-distance: 100%; }
+    }
+    @media (prefers-reduced-motion: no-preference) {
+      .m41-dot {
+        offset-path: path('M 30 110 Q 80 30 150 80 Q 220 130 270 50');
+        animation: m41-dot 3s ease-in-out infinite;
+        position: absolute;
+      }
+      .m41-alpha-on {
+        animation: m41-alphaBlink 2s ease-in-out infinite;
+      }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .m41-dot { left: 150px; top: 80px; position: absolute; }
+      .m41-alpha-on { opacity: 1; }
+    }
+  </style>
+<link href="https://inematds.github.io/claude-remotion-motion/curso/trilha4/modulo-4-1.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/claude-remotion-motion/en/curso/trilha4/modulo-4-1.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/claude-remotion-motion/es/curso/trilha4/modulo-4-1.html" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha4/modulo-4-1.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="modulo-4-1.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">EN</a><a href="../../../es/curso/trilha4/modulo-4-1.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">ES</a></div>
+<!-- NAV -->
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14">
+<div class="flex items-center space-x-4">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🎞️</span>
+<span class="font-bold text-lg hidden sm:inline">CC × Remotion</span>
+</a>
+<span class="text-neutral-600">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+</div>
+<div class="flex items-center space-x-1 sm:space-x-2">
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors" href="../trilha1/index.html"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentals</span></a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors" href="../trilha2/index.html"><span class="sm:hidden">T2</span><span class="hidden sm:inline">Libraries</span></a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors" href="../trilha3/index.html"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Projects</span></a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-amber-400 bg-amber-500/10" href="index.html"><span class="sm:hidden">T4</span><span class="hidden sm:inline">Production</span></a>
+<button class="p-2 rounded-lg text-neutral-400 hover:text-white hover:bg-dark-700 transition-colors ml-2" id="theme-toggle">
+<svg class="hidden w-5 h-5" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+<svg class="hidden w-5 h-5" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path></svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<!-- BREADCRUMB -->
+<nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-amber-400" href="../../index.html">Start</a><span>/</span>
+<a class="hover:text-amber-400" href="index.html">Track 4</a><span>/</span>
+<span class="text-amber-400">Module 4.1</span>
+</div>
+</nav>
+<!-- HEADER -->
+<header class="bg-gradient-to-br from-amber-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-amber-500/20 text-amber-400 text-xs font-semibold rounded-full mb-4">MODULE 4.1</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">🎯 Production tricks</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">Two tricks that separate amateurs from professionals: trajectory control via image and rendering with the correct alpha channel. A drawn line is worth a thousand words.</p>
+<div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">6</div><div class="text-xs text-neutral-400">Topics</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">30</div><div class="text-xs text-neutral-400">Minutes</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">Advanced</div><div class="text-xs text-neutral-400">Level</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">Practice</div><div class="text-xs text-neutral-400">Type</div></div>
+</div>
+</div>
+</header>
+<main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+<!-- TÓPICO 1 -->
+<section class="mb-16" id="topico-1">
+<div class="flex items-center space-x-4 mb-6">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-amber-500/20 flex items-center justify-center">
+<span class="text-amber-400 font-bold text-lg">1</span>
+</div>
+<h2 class="text-2xl font-bold">Overview: two production tricks</h2>
+</div>
+<p class="text-neutral-300 mb-6">Two classic problems for anyone producing motion with Claude Code + Remotion have elegant, counterintuitive solutions. Both start from the same principle: <strong class="text-amber-400">show, don't tell</strong>.</p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+<div class="bg-dark-800/50 rounded-xl border border-amber-500/30 p-6">
+<div class="text-2xl mb-3">🖊️</div>
+<h3 class="font-semibold text-amber-400 mb-2">Motion Path Control</h3>
+<p class="text-sm text-neutral-400">Draw the trajectory on paper or in an app, and give the image to Claude. It reads the path and generates an animation that follows that exact curve.</p>
+</div>
+<div class="bg-dark-800/50 rounded-xl border border-amber-500/30 p-6">
+<div class="text-2xl mb-3">🎥</div>
+<h3 class="font-semibold text-amber-400 mb-2">Transparent Render</h3>
+<p class="text-sm text-neutral-400">For compositing over footage, three specific settings ensure the alpha channel is preserved. Without them, transparency disappears.</p>
+</div>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600 text-center"><span class="text-xs font-semibold text-amber-400">Visual → Precise</span></div>
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600 text-center"><span class="text-xs font-semibold text-neutral-400">Alpha = ProRes</span></div>
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600 text-center"><span class="text-xs font-semibold text-neutral-400">Show, don't tell</span></div>
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600 text-center"><span class="text-xs font-semibold text-neutral-400">3 exact configs</span></div>
+</div>
+</section>
+<!-- TÓPICO 2 -->
+<section class="mb-16" id="topico-2">
+<div class="flex items-center space-x-4 mb-6">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-amber-500/20 flex items-center justify-center">
+<span class="text-amber-400 font-bold text-lg">2</span>
+</div>
+<h2 class="text-2xl font-bold">Draw the trajectory: image as input</h2>
+</div>
+<p class="text-neutral-300 mb-6">The workflow is simple: open a notes app, Word, Paint—anything. Draw <strong class="text-amber-400">a line on a white background</strong>. It can be freehand, drawn with a pen, mouse, or finger. Save it as an image and send it to Claude with a prompt like "trace this path and generate an animation in Remotion that follows this trajectory exactly".</p>
+<!-- DEMO 1: objeto seguindo trajetória -->
+<div class="rounded-2xl border border-amber-500/30 bg-dark-900/40 p-5 mb-8 overflow-hidden">
+<div class="flex items-center justify-between mb-4">
+<span class="text-xs font-semibold text-neutral-400 uppercase tracking-wide">live demo</span>
+<span class="text-xs text-amber-400 font-mono">motion path → CSS offset-path</span>
+</div>
+<div class="relative bg-dark-800 rounded-xl border border-dark-600 overflow-hidden" style="height:140px;">
+<!-- SVG path de fundo -->
+<svg class="absolute inset-0 w-full h-full" preserveaspectratio="none" viewbox="0 0 300 140">
+<path d="M 30 110 Q 80 30 150 80 Q 220 130 270 50" fill="none" opacity="0.4" stroke="#fbbf24" stroke-dasharray="6 3" stroke-width="1.5"></path>
+<!-- marcadores de início e fim -->
+<circle cx="30" cy="110" fill="#fbbf24" opacity="0.6" r="4"></circle>
+<circle cx="270" cy="50" fill="#38bdf8" opacity="0.6" r="4"></circle>
+<text fill="#fbbf24" font-family="Inter,sans-serif" font-size="8" opacity="0.7" x="18" y="128">start</text>
+<text fill="#38bdf8" font-family="Inter,sans-serif" font-size="8" opacity="0.7" x="256" y="46">end</text>
+</svg>
+<!-- objeto animado -->
+<div class="m41-dot w-4 h-4 rounded-full bg-amber-400" style="top:0;left:0;"></div>
+</div>
+<p class="text-xs text-neutral-500 mt-3 text-center">Amber point following the drawn path — exactly what Claude generates from your image.</p>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Tip: image quality</h3>
+<p class="text-neutral-300 text-sm">A single dark line on a white background. No decorations or text around the path. The cleaner the image, the more accurately the path can be extracted.</p>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600 text-center"><span class="text-xs font-semibold text-amber-400">White background</span></div>
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600 text-center"><span class="text-xs font-semibold text-amber-400">Single dark line</span></div>
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600 text-center"><span class="text-xs font-semibold text-neutral-400">Any tool</span></div>
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600 text-center"><span class="text-xs font-semibold text-neutral-400">PNG or JPEG</span></div>
+</div>
+</section>
+<!-- TÓPICO 3 -->
+<section class="mb-16" id="topico-3">
+<div class="flex items-center space-x-4 mb-6">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-amber-500/20 flex items-center justify-center">
+<span class="text-amber-400 font-bold text-lg">3</span>
+</div>
+<h2 class="text-2xl font-bold">Why it’s more precise than words</h2>
+</div>
+<p class="text-neutral-300 mb-6">Natural language is ambiguous when describing shapes. “A smooth curve to the right that rises gradually” can produce dozens of different interpretations. An image is unambiguous — there’s no room for interpretation.</p>
+<!-- SVG ilustrativo: palavras vs imagem -->
+<div class="rounded-2xl border border-amber-500/30 bg-dark-900/40 p-4 mb-8">
+<svg aria-label="Comparison: words generate multiple curves; an image generates one exact curve" class="w-full h-auto" font-family="Inter,sans-serif" role="img" viewbox="0 0 400 160" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<filter id="m41-glow"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<pattern height="12" id="m41-grid" patternunits="userSpaceOnUse" width="12">
+<path d="M 12 0 L 0 0 0 12" fill="none" opacity=".2" stroke="#fbbf24" stroke-width=".1"></path>
+</pattern>
+</defs>
+<rect fill="url(#m41-grid)" height="160" width="400"></rect>
+<!-- Lado esquerdo: palavras → várias curvas -->
+<rect fill="#1f1604" height="140" opacity=".5" rx="8" stroke="#fbbf24" stroke-width="1" width="180" x="10" y="10"></rect>
+<text fill="#fbbf24" font-size="9" font-weight="600" text-anchor="middle" x="100" y="28">"smooth curve to the right"</text>
+<!-- múltiplas curvas -->
+<path d="M 25 120 Q 70 60 165 100" fill="none" opacity=".4" stroke="#fbbf24" stroke-dasharray="3 3" stroke-width="1"></path>
+<path d="M 25 120 Q 80 80 165 80" fill="none" opacity=".4" stroke="#fbbf24" stroke-dasharray="3 3" stroke-width="1"></path>
+<path d="M 25 120 Q 60 70 165 60" fill="none" opacity=".4" stroke="#fbbf24" stroke-dasharray="3 3" stroke-width="1"></path>
+<path d="M 25 120 Q 100 50 165 115" fill="none" opacity=".4" stroke="#fbbf24" stroke-dasharray="3 3" stroke-width="1"></path>
+<text fill="#d97706" font-size="8" text-anchor="middle" x="100" y="148">4 possible interpretations</text>
+<!-- Divisor -->
+<text fill="#9ca3af" font-size="14" text-anchor="middle" x="200" y="84">→</text>
+<!-- Lado direito: imagem → uma curva -->
+<rect fill="#0e1b26" height="140" opacity=".7" rx="8" stroke="#38bdf8" stroke-width="1" width="180" x="210" y="10"></rect>
+<text fill="#38bdf8" font-size="9" font-weight="600" text-anchor="middle" x="300" y="28">trajectory image</text>
+<path d="M 225 120 Q 270 50 385 80" fill="none" filter="url(#m41-glow)" stroke="#38bdf8" stroke-width="2"></path>
+<circle cx="225" cy="120" fill="#fbbf24" r="4"></circle>
+<circle cx="385" cy="80" fill="#38bdf8" r="4"></circle>
+<text fill="#7dd3fc" font-size="8" text-anchor="middle" x="300" y="148">1 exact result</text>
+</svg>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-4">
+<h4 class="font-semibold text-red-400 mb-2 flex items-center"><span class="mr-2">✗</span> Words</h4>
+<ul class="space-y-1 text-sm text-neutral-400">
+<li>"smooth curve" — how smooth?</li>
+<li>"to the right" — what exact angle?</li>
+<li>"rises gradually" — at what slope?</li>
+<li>Result: may need 5+ attempts</li>
+</ul>
+</div>
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-4">
+<h4 class="font-semibold text-emerald-400 mb-2 flex items-center"><span class="mr-2">✓</span> Image</h4>
+<ul class="space-y-1 text-sm text-neutral-400">
+<li>Exact shape, no ambiguity</li>
+<li>Claude reads the path coordinates</li>
+<li>The first attempt is already right</li>
+<li>Result: right on the first try</li>
+</ul>
+</div>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600 text-center"><span class="text-xs font-semibold text-amber-400">Zero ambiguity</span></div>
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600 text-center"><span class="text-xs font-semibold text-amber-400">Exact coordinates</span></div>
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600 text-center"><span class="text-xs font-semibold text-neutral-400">First attempt</span></div>
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600 text-center"><span class="text-xs font-semibold text-neutral-400">Claude reads the SVG path</span></div>
+</div>
+</section>
+<!-- TÓPICO 4 -->
+<section class="mb-16" id="topico-4">
+<div class="flex items-center space-x-4 mb-6">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-amber-500/20 flex items-center justify-center">
+<span class="text-amber-400 font-bold text-lg">4</span>
+</div>
+<h2 class="text-2xl font-bold">When to use transparent rendering</h2>
+</div>
+<p class="text-neutral-300 mb-6">Whenever the Remotion background <strong class="text-amber-400">isn't the final video background</strong>. You’re creating an element that will be placed over another video or image in a video editor (Premiere, DaVinci, Final Cut).</p>
+<!-- Timeline de casos de uso -->
+<div class="space-y-4 mb-8">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center">
+<span class="text-amber-400 font-bold text-sm">A</span>
+</div>
+<div class="flex-1 bg-dark-800 rounded-xl p-4 border border-dark-600">
+<h4 class="font-semibold text-white mb-1">Title Cards</h4>
+<p class="text-sm text-neutral-400">An animated title that appears over opening images. The Remotion background must be transparent so the NLE video shows through underneath.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center">
+<span class="text-amber-400 font-bold text-sm">B</span>
+</div>
+<div class="flex-1 bg-dark-800 rounded-xl p-4 border border-dark-600">
+<h4 class="font-semibold text-white mb-1">Lower Thirds</h4>
+<p class="text-sm text-neutral-400">The interviewee’s name and title animate over the footage. The overlay needs an alpha channel so it doesn’t cover the background image.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center">
+<span class="text-amber-400 font-bold text-sm">C</span>
+</div>
+<div class="flex-1 bg-dark-800 rounded-xl p-4 border border-dark-600">
+<h4 class="font-semibold text-white mb-1">Data overlays</h4>
+<p class="text-sm text-neutral-400">Animated charts and numbers over screencasts or product footage. Transparency is what makes natural compositing possible.</p>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600 text-center"><span class="text-xs font-semibold text-amber-400">Title cards</span></div>
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600 text-center"><span class="text-xs font-semibold text-amber-400">Lower thirds</span></div>
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600 text-center"><span class="text-xs font-semibold text-neutral-400">Data overlays</span></div>
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600 text-center"><span class="text-xs font-semibold text-neutral-400">NLE composition</span></div>
+</div>
+</section>
+<!-- TÓPICO 5 -->
+<section class="mb-16" id="topico-5">
+<div class="flex items-center space-x-4 mb-6">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-amber-500/20 flex items-center justify-center">
+<span class="text-amber-400 font-bold text-lg">5</span>
+</div>
+<h2 class="text-2xl font-bold">The exact settings: ProRes 4444 XQ</h2>
+</div>
+<p class="text-neutral-300 mb-6">Three fields in Remotion's render panel. <strong class="text-amber-400">All three must be configured</strong>. Changing just one or two isn’t enough—the alpha channel is preserved only when all three are correct together.</p>
+<!-- DEMO 2: mock painel de render -->
+<div class="rounded-2xl border border-amber-500/30 bg-dark-900/40 p-5 mb-8">
+<div class="flex items-center justify-between mb-4">
+<span class="text-xs font-semibold text-neutral-400 uppercase tracking-wide">live demo</span>
+<span class="text-xs text-amber-400 font-mono">render panel — alpha settings</span>
+</div>
+<!-- Mock window -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 overflow-hidden max-w-md mx-auto">
+<!-- window chrome -->
+<div class="flex items-center gap-2 px-4 py-2 bg-dark-700 border-b border-dark-600">
+<div class="w-3 h-3 rounded-full bg-red-400"></div>
+<div class="w-3 h-3 rounded-full bg-yellow-400"></div>
+<div class="w-3 h-3 rounded-full bg-green-400"></div>
+<span class="text-xs text-neutral-500 ml-2 font-mono">Remotion — Render</span>
+</div>
+<!-- fields -->
+<div class="p-5 space-y-4">
+<div class="flex items-center justify-between">
+<span class="text-sm text-neutral-400">Codec</span>
+<span class="font-mono text-sm bg-amber-500/20 text-amber-400 px-3 py-1 rounded border border-amber-500/30 font-semibold">ProRes 4444 XQ</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-sm text-neutral-400">Picture</span>
+<span class="font-mono text-sm bg-amber-500/20 text-amber-400 px-3 py-1 rounded border border-amber-500/30 font-semibold">PNG</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-sm text-neutral-400">Format</span>
+<span class="font-mono text-sm bg-amber-500/20 text-amber-400 px-3 py-1 rounded border border-amber-500/30 font-semibold">last option ↓</span>
+</div>
+<div class="flex items-center justify-between border-t border-dark-600 pt-3">
+<span class="text-sm text-neutral-400">Alpha Channel</span>
+<span class="font-mono text-xs px-3 py-1 rounded border font-bold m41-alpha-on bg-emerald-900/30 text-emerald-400 border-emerald-500/40">ON ✓</span>
+</div>
+</div>
+</div>
+<p class="text-xs text-neutral-500 mt-3 text-center">The “Alpha Channel” field flashes to indicate that it’s active — the result of configuring all three fields correctly.</p>
+</div>
+<!-- Code/settings box -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-5 mb-6 font-mono text-sm">
+<div class="flex items-center justify-between mb-3">
+<span class="text-xs font-semibold text-neutral-400 uppercase tracking-wide">render settings — copy exactly</span>
+</div>
+<div class="space-y-2">
+<div class="flex gap-4">
+<span class="text-neutral-500 w-24">Codec:</span>
+<span class="text-amber-400">ProRes 4444 XQ</span>
+</div>
+<div class="flex gap-4">
+<span class="text-neutral-500 w-24">Picture:</span>
+<span class="text-amber-400">PNG</span>
+</div>
+<div class="flex gap-4">
+<span class="text-neutral-500 w-24">Format:</span>
+<span class="text-amber-400">last option in the dropdown</span>
+</div>
+<div class="mt-3 pt-3 border-t border-dark-600 text-xs text-neutral-500">
+            # result: alpha channel preserved, composition without a black background
+          </div>
+</div>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600 text-center"><span class="text-xs font-semibold text-amber-400">ProRes 4444 XQ</span></div>
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600 text-center"><span class="text-xs font-semibold text-amber-400">Picture = PNG</span></div>
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600 text-center"><span class="text-xs font-semibold text-neutral-400">Format = last option</span></div>
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600 text-center"><span class="text-xs font-semibold text-neutral-400">Three together</span></div>
+</div>
+</section>
+<!-- TÓPICO 6 -->
+<section class="mb-16" id="topico-6">
+<div class="flex items-center space-x-4 mb-6">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-amber-500/20 flex items-center justify-center">
+<span class="text-amber-400 font-bold text-lg">6</span>
+</div>
+<h2 class="text-2xl font-bold">Common mistakes and how to avoid them</h2>
+</div>
+<p class="text-neutral-300 mb-6">The three most common mistakes that make the alpha channel disappear or the trajectory come out wrong. Save these patterns—they show up every time you try compositing for the first time.</p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-5">
+<h4 class="font-semibold text-red-400 mb-3 flex items-center"><span class="mr-2">✗</span> Mistakes that destroy the alpha</h4>
+<ul class="space-y-2 text-sm text-neutral-300">
+<li class="flex items-start gap-2"><span class="text-red-400 mt-0.5">•</span><span><strong>H.264 codec</strong> — doesn't support an alpha channel. The background turns black.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400 mt-0.5">•</span><span><strong>Picture = JPEG</strong> — JPEG doesn't have an alpha channel. Use PNG.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400 mt-0.5">•</span><span><strong>Wrong format</strong> — if it isn’t the last option, alpha flattens.</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-5">
+<h4 class="font-semibold text-red-400 mb-3 flex items-center"><span class="mr-2">✗</span> Mistakes that confuse the path</h4>
+<ul class="space-y-2 text-sm text-neutral-300">
+<li class="flex items-start gap-2"><span class="text-red-400 mt-0.5">•</span><span><strong>Cluttered image</strong> — text, decorations, and multiple lines confuse the extraction.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400 mt-0.5">•</span><span><strong>Very thin line</strong> — it may not be detected. Use a medium or thick pen.</span></li>
+<li class="flex items-start gap-2"><span class="text-red-400 mt-0.5">•</span><span><strong>Colored background</strong> — hurts contrast. Always use a white background.</span></li>
+</ul>
+</div>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-red-400 mb-3 flex items-center"><span class="mr-2">⚠️</span> Attention: all three fields are required</h3>
+<p class="text-neutral-300 text-sm">Configuring only Codec without changing Picture or Format does not preserve alpha. All three fields need to be changed together — they depend on each other in Remotion's render pipeline.</p>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600 text-center"><span class="text-xs font-semibold text-red-400">H.264 = no alpha</span></div>
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600 text-center"><span class="text-xs font-semibold text-red-400">JPEG = no alpha</span></div>
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600 text-center"><span class="text-xs font-semibold text-neutral-400">Clean image</span></div>
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600 text-center"><span class="text-xs font-semibold text-neutral-400">Three together</span></div>
+</div>
+</section>
+<!-- RESUMO -->
+<section class="bg-dark-800 rounded-2xl border border-amber-500/30 p-8 mb-12">
+<h2 class="text-2xl font-bold mb-6">Module summary</h2>
+<div class="space-y-3 mb-8">
+<div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-white">Motion Path Control</strong><span class="text-neutral-400"> — draw the trajectory in an image and give it to Claude; much more precise than describing it in words.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-white">Image = precise input</strong><span class="text-neutral-400"> — white background, single dark line, any drawing tool.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-white">Transparent render</strong><span class="text-neutral-400"> — for title cards, lower thirds, and overlays on existing footage.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-white">Three required settings</strong><span class="text-neutral-400"> — Codec: ProRes 4444 XQ / Picture: PNG / Format: last option in the dropdown.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-white">H.264 won't work</strong><span class="text-neutral-400"> — doesn't support alpha. Always use ProRes 4444 XQ for compositing.</span></div></div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-4 mb-8 border border-dark-600">
+<h3 class="font-semibold text-amber-400 mb-2">Next module:</h3>
+<p class="text-neutral-300">4.2 — Iteration that builds quality: the 4 turns that transform a skeleton into a polished piece.</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4 justify-start">
+<a class="px-6 py-3 bg-dark-700 hover:bg-dark-600 rounded-xl text-sm font-medium transition-colors" href="index.html">← Track 4 Index</a>
+<a class="px-6 py-3 bg-amber-600 hover:bg-amber-500 text-white rounded-xl text-sm font-medium transition-colors" href="modulo-4-2.html">Next: 4.2 Iteration →</a>
+</div>
+</section>
+</main>
+<footer class="border-t border-dark-600 py-8">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>Claude Code × Remotion — <a class="text-sky-400 hover:text-sky-300" href="https://inema.club" target="_blank">INEMA.CLUB</a> — 2025</p>
+</div>
+</footer>
+<script>
+    const themeToggle=document.getElementById('theme-toggle'),themeToggleDarkIcon=document.getElementById('theme-toggle-dark-icon'),themeToggleLightIcon=document.getElementById('theme-toggle-light-icon'),html=document.documentElement;
+    if(localStorage.getItem('theme')==='light'||(!localStorage.getItem('theme')&&!html.classList.contains('dark'))){themeToggleDarkIcon.classList.remove('hidden');html.classList.remove('dark');}else{themeToggleLightIcon.classList.remove('hidden');}
+    themeToggle.addEventListener('click',()=>{themeToggleDarkIcon.classList.toggle('hidden');themeToggleLightIcon.classList.toggle('hidden');html.classList.toggle('dark');localStorage.setItem('theme',html.classList.contains('dark')?'dark':'light');});
+  </script>
+</body>
+</html>

@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Claude Code × Remotion — Motion Graphics with Code | INEMA.CLUB Course</title>
+<meta content="Create production-ready motion graphics with code: Claude Code + Remotion + GSAP, D3, Three.js, and Lottie. Free course with live visual demos." name="description"/>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: { extend: { colors: { primary: '#FACC15', dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' } } } }
+    }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    code, .font-mono { font-family: 'JetBrains Mono', monospace; }
+
+    /* Light mode - base */
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    /* Light mode - acentos das 4 trilhas */
+    html:not(.dark) .text-emerald-400 { color: #059669; }
+    html:not(.dark) .bg-emerald-500\/20 { background-color: rgba(5,150,105,0.12); }
+    html:not(.dark) .bg-emerald-500\/10 { background-color: rgba(5,150,105,0.08); }
+    html:not(.dark) .border-emerald-500\/30 { border-color: rgba(5,150,105,0.25); }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(5,150,105,0.08); }
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #059669; }
+    html:not(.dark) .group:hover .group-hover\:text-emerald-400 { color: #059669; }
+    html:not(.dark) .hover\:border-emerald-500\/30:hover { border-color: rgba(5,150,105,0.25); }
+    html:not(.dark) .text-blue-400 { color: #2563eb; }
+    html:not(.dark) .bg-blue-500\/20 { background-color: rgba(37,99,235,0.12); }
+    html:not(.dark) .bg-blue-500\/10 { background-color: rgba(37,99,235,0.08); }
+    html:not(.dark) .border-blue-500\/30 { border-color: rgba(37,99,235,0.25); }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(37,99,235,0.08); }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #2563eb; }
+    html:not(.dark) .group:hover .group-hover\:text-blue-400 { color: #2563eb; }
+    html:not(.dark) .hover\:border-blue-500\/30:hover { border-color: rgba(37,99,235,0.25); }
+    html:not(.dark) .text-purple-400 { color: #7c3aed; }
+    html:not(.dark) .bg-purple-500\/20 { background-color: rgba(124,58,237,0.12); }
+    html:not(.dark) .bg-purple-500\/10 { background-color: rgba(124,58,237,0.08); }
+    html:not(.dark) .border-purple-500\/30 { border-color: rgba(124,58,237,0.25); }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(124,58,237,0.08); }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #7c3aed; }
+    html:not(.dark) .group:hover .group-hover\:text-purple-400 { color: #7c3aed; }
+    html:not(.dark) .hover\:border-purple-500\/30:hover { border-color: rgba(124,58,237,0.25); }
+    html:not(.dark) .text-amber-400 { color: #92400e; }
+    html:not(.dark) .bg-amber-500\/20 { background-color: rgba(217,119,6,0.12); }
+    html:not(.dark) .bg-amber-500\/10 { background-color: rgba(217,119,6,0.08); }
+    html:not(.dark) .border-amber-500\/30 { border-color: rgba(217,119,6,0.25); }
+    html:not(.dark) .hover\:bg-amber-500\/10:hover { background-color: rgba(217,119,6,0.08); }
+    html:not(.dark) .hover\:text-amber-400:hover { color: #92400e; }
+    html:not(.dark) .group:hover .group-hover\:text-amber-400 { color: #92400e; }
+    html:not(.dark) .hover\:border-amber-500\/30:hover { border-color: rgba(217,119,6,0.25); }
+
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161,98,7,0.08); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161,98,7,0.25); }
+    html:not(.dark) .border-primary\/30 { border-color: rgba(161,98,7,0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255,255,255,0.95); }
+
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+    html:not(.dark) svg[role="img"] { filter: saturate(0.82) brightness(0.96); }
+
+    /* ===== DEMOS ANIMADAS (mini-animações ao vivo) ===== */
+    .demo-stage { position: relative; overflow: hidden; }
+    @keyframes stagIn { 0%,8% { opacity:0; transform: translateY(18px) scale(.96); } 22%,72% { opacity:1; transform: translateY(0) scale(1); } 86%,100% { opacity:0; transform: translateY(-10px) scale(.98); } }
+    @keyframes springPop { 0%,10% { transform: scale(.4); opacity:0 } 45% { transform: scale(1.12); opacity:1 } 60% { transform: scale(.97) } 72% { transform: scale(1.02) } 80%,92% { transform: scale(1); opacity:1 } 100% { transform: scale(1); opacity:0 } }
+    @keyframes jank { 0%,12% { opacity:0; transform: translateY(20px) } 13% { opacity:1; transform: translateY(0) } 40% { transform: translateY(0) } 41% { transform: translateY(-6px) } 42% { transform: translateY(0) } 80% { opacity:1 } 100% { opacity:0 } }
+    @keyframes barGrow { from { height: 6%; } to { height: var(--h, 60%); } }
+    @keyframes spinY { from { transform: rotateY(0deg); } to { transform: rotateY(360deg); } }
+    @keyframes drawCheck { to { stroke-dashoffset: 0; } }
+    .hero-card { animation: stagIn 4.5s ease-in-out infinite; }
+    .hero-card:nth-child(2){ animation-delay:.5s } .hero-card:nth-child(3){ animation-delay:1s }
+    @media (prefers-reduced-motion: reduce) {
+      .hero-card, [class*="demo-"] * { animation: none !important; opacity:1 !important; transform:none !important; }
+    }
+  </style>
+<link href="https://inematds.github.io/claude-remotion-motion/" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/claude-remotion-motion/en/" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/claude-remotion-motion/es/" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="./" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">EN</a><a href="../es/" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">ES</a></div>
+<!-- NAV -->
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14">
+<div class="flex items-center space-x-4">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="index.html">
+<span class="text-2xl">🎞️</span>
+<span class="font-bold text-lg hidden sm:inline">CC × Remotion</span>
+</a>
+<span class="text-neutral-600">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+</div>
+<div class="flex items-center space-x-1 sm:space-x-2">
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors" href="curso/trilha1/index.html"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentals</span></a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors" href="curso/trilha2/index.html"><span class="sm:hidden">T2</span><span class="hidden sm:inline">Libraries</span></a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors" href="curso/trilha3/index.html"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Projects</span></a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors" href="curso/trilha4/index.html"><span class="sm:hidden">T4</span><span class="hidden sm:inline">Production</span></a>
+<button class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path></svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<!-- HERO -->
+<header class="bg-gradient-to-br from-dark-800 via-dark-900 to-dark-900 border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 grid lg:grid-cols-2 gap-10 items-center">
+<div>
+<span class="inline-block px-3 py-1 bg-primary/10 text-primary text-xs font-semibold rounded-full mb-5 border border-primary/40">FREE COURSE · LIVE DEMOS</span>
+<h1 class="text-4xl sm:text-5xl font-bold mb-5 leading-tight">Motion graphics with <span class="text-sky-400">code</span>, not with keyframes</h1>
+<p class="text-lg text-neutral-400 mb-8">Before: opening After Effects and wrestling with panels and endless keyframes. Now: <strong class="text-neutral-200">Claude Code + Remotion</strong> + the right libraries (GSAP, D3, Three.js, Lottie). You describe it, Claude generates it, Remotion renders it.</p>
+<div class="flex flex-col sm:flex-row gap-4 max-w-lg">
+<a class="flex-1 text-center px-6 py-3 bg-primary text-dark-900 rounded-lg font-bold hover:bg-yellow-300 transition-colors" href="curso/trilha1/index.html">Start with the Fundamentals →</a>
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-200 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="curso/trilha3/index.html">View Projects</a>
+</div>
+</div>
+<!-- DEMO AO VIVO: stagger de cards -->
+<div class="rounded-2xl border border-blue-500/30 bg-dark-900/40 p-5 overflow-hidden">
+<div class="flex items-center justify-between mb-4">
+<span class="text-xs font-semibold text-neutral-400 uppercase tracking-wide">live demo</span>
+<span class="text-xs text-blue-400 font-mono">stagger + spring</span>
+</div>
+<div class="demo-stage h-56 rounded-xl bg-dark-800 border border-dark-600 flex flex-col items-center justify-center gap-3 p-4">
+<div class="hero-card w-4/5 h-12 rounded-lg bg-gradient-to-r from-blue-500/30 to-blue-400/10 border border-blue-500/30 flex items-center px-4 text-sm font-semibold text-blue-300">Headline enters from below</div>
+<div class="hero-card w-4/5 h-12 rounded-lg bg-gradient-to-r from-purple-500/30 to-purple-400/10 border border-purple-500/30 flex items-center px-4 text-sm font-semibold text-purple-300">Cards appear in sequence</div>
+<div class="hero-card w-4/5 h-12 rounded-lg bg-gradient-to-r from-emerald-500/30 to-emerald-400/10 border border-emerald-500/30 flex items-center px-4 text-sm font-semibold text-emerald-300">CTA pops with a spring</div>
+</div>
+<p class="text-xs text-neutral-500 mt-3 text-center">This is a real animation running on the page—the course is full of them.</p>
+</div>
+</div>
+</header>
+<main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+<!-- 3 níveis -->
+<section class="mb-16">
+<h2 class="text-2xl font-bold mb-6">How the course is organized</h2>
+<p class="text-neutral-400 max-w-3xl mb-8">From setup to render. You install the skill, understand <strong class="text-emerald-400">how to think</strong>, dominates <strong class="text-blue-400">each library</strong>, builds <strong class="text-purple-400">real projects</strong> e <strong class="text-amber-400">renders</strong> with the right settings.</p>
+<div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6"><div class="text-3xl mb-3">⚙️</div><h3 class="font-bold text-lg mb-2">Setup</h3><p class="text-sm text-neutral-400">2 commands install the skill. Why it changes everything, and how to talk with Claude.</p></div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6"><div class="text-3xl mb-3">🧩</div><h3 class="font-bold text-lg mb-2">Libraries</h3><p class="text-sm text-neutral-400">GSAP, D3, Three.js, Lottie, Framer—what each does best and when to use it.</p></div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6"><div class="text-3xl mb-3">🛠️</div><h3 class="font-bold text-lg mb-2">Projects</h3><p class="text-sm text-neutral-400">4 complete pieces: SaaS, data story, 3D commercial, and app onboarding.</p></div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6"><div class="text-3xl mb-3">🎬</div><h3 class="font-bold text-lg mb-2">Production</h3><p class="text-sm text-neutral-400">Motion path, transparent (alpha) render, and iteration that build quality.</p></div>
+</div>
+</section>
+<!-- Trilhas -->
+<section class="mb-16">
+<h2 class="text-2xl font-bold mb-6">The 4 tracks</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<a class="group bg-gradient-to-br from-emerald-900/30 to-dark-800 rounded-xl border border-dark-600 hover:border-emerald-500/30 p-6 transition-all" href="curso/trilha1/index.html">
+<div class="flex items-center justify-between mb-3"><span class="px-3 py-1 bg-emerald-500/20 text-emerald-400 text-xs font-semibold rounded-full">TRACK 1</span><span class="text-xs text-neutral-500">3 modules</span></div>
+<h3 class="text-2xl font-bold mb-2 group-hover:text-emerald-400 transition-colors">⚙️ Fundamentals &amp; Setup</h3>
+<p class="text-neutral-400 text-sm mb-4">Install the skill, understand why it changes everything, and learn the right way to prompt: start simple and iterate.</p>
+<span class="text-emerald-400 text-sm font-semibold">Start here →</span>
+</a>
+<a class="group bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-dark-600 hover:border-blue-500/30 p-6 transition-all" href="curso/trilha2/index.html">
+<div class="flex items-center justify-between mb-3"><span class="px-3 py-1 bg-blue-500/20 text-blue-400 text-xs font-semibold rounded-full">TRACK 2</span><span class="text-xs text-neutral-500">6 modules</span></div>
+<h3 class="text-2xl font-bold mb-2 group-hover:text-blue-400 transition-colors">🧩 The Libraries</h3>
+<p class="text-neutral-400 text-sm mb-4">GSAP, D3, Three.js, Lottie, and Framer Motion—what each does best, when to use it, and how to ask Claude.</p>
+<span class="text-blue-400 text-sm font-semibold">Explore libraries →</span>
+</a>
+<a class="group bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-dark-600 hover:border-purple-500/30 p-6 transition-all" href="curso/trilha3/index.html">
+<div class="flex items-center justify-between mb-3"><span class="px-3 py-1 bg-purple-500/20 text-purple-400 text-xs font-semibold rounded-full">TRACK 3</span><span class="text-xs text-neutral-500">4 projects</span></div>
+<h3 class="text-2xl font-bold mb-2 group-hover:text-purple-400 transition-colors">🛠️ Practical Projects</h3>
+<p class="text-neutral-400 text-sm mb-4">SaaS walkthrough (GSAP), data story (D3), motorcycle commercial (Three.js), and banking onboarding (Lottie).</p>
+<span class="text-purple-400 text-sm font-semibold">Build →</span>
+</a>
+<a class="group bg-gradient-to-br from-amber-900/30 to-dark-800 rounded-xl border border-dark-600 hover:border-amber-500/30 p-6 transition-all" href="curso/trilha4/index.html">
+<div class="flex items-center justify-between mb-3"><span class="px-3 py-1 bg-amber-500/20 text-amber-400 text-xs font-semibold rounded-full">TRACK 4</span><span class="text-xs text-neutral-500">3 modules</span></div>
+<h3 class="text-2xl font-bold mb-2 group-hover:text-amber-400 transition-colors">🎬 Production &amp; Delivery</h3>
+<p class="text-neutral-400 text-sm mb-4">Trajectory control, rendering with an alpha channel (ProRes 4444 XQ / PNG), and the iteration cycle that shapes quality.</p>
+<span class="text-amber-400 text-sm font-semibold">Finish →</span>
+</a>
+</div>
+</section>
+<!-- Stats -->
+<section class="mb-16">
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-lg p-5 border border-dark-600 text-center"><div class="text-3xl font-bold text-emerald-400">4</div><div class="text-xs text-neutral-400 mt-1">Tracks</div></div>
+<div class="bg-dark-800 rounded-lg p-5 border border-dark-600 text-center"><div class="text-3xl font-bold text-blue-400">16</div><div class="text-xs text-neutral-400 mt-1">Modules</div></div>
+<div class="bg-dark-800 rounded-lg p-5 border border-dark-600 text-center"><div class="text-3xl font-bold text-purple-400">5</div><div class="text-xs text-neutral-400 mt-1">Libraries</div></div>
+<div class="bg-dark-800 rounded-lg p-5 border border-dark-600 text-center"><div class="text-3xl font-bold text-amber-400">4</div><div class="text-xs text-neutral-400 mt-1">Projects</div></div>
+</div>
+</section>
+<section class="mb-8">
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Before you start</h3>
+<p class="text-neutral-300 text-sm">It helps to have the <strong>Claude Code</strong> installed and the idea that, in Remotion, <strong>video is a function of the frame</strong>. If you want the basics, see the <a class="text-sky-400 hover:text-sky-300" href="https://inematds.github.io/remotion-templates/" target="_blank">Remotion course (81 templates)</a>. Here, the focus is combining Claude Code with web animation libraries.</p>
+</div>
+</section>
+</main>
+<footer class="border-t border-dark-600 py-8 mt-8">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>Claude Code × Remotion — Motion Graphics with Code · 2026 · <a class="text-sky-400 hover:text-sky-300" href="https://inema.club" target="_blank">INEMA.CLUB</a></p>
+</div>
+</footer>
+<script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const html = document.documentElement;
+    if (localStorage.getItem('theme') === 'light' || (!localStorage.getItem('theme') && !html.classList.contains('dark'))) {
+      themeToggleDarkIcon.classList.remove('hidden'); html.classList.remove('dark');
+    } else { themeToggleLightIcon.classList.remove('hidden'); }
+    themeToggle.addEventListener('click', () => {
+      themeToggleDarkIcon.classList.toggle('hidden'); themeToggleLightIcon.classList.toggle('hidden');
+      html.classList.toggle('dark'); localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+</body>
+</html>

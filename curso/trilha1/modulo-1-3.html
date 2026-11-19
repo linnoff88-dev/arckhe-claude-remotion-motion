@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Módulo 1.3 · Como conversar com o Claude | CC × Remotion</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#FACC15', dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' } } } } }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    code, .font-mono { font-family: 'JetBrains Mono', monospace; }
+
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+    html:not(.dark) .text-emerald-400 { color: #059669; }
+    html:not(.dark) .bg-emerald-500\/20 { background-color: rgba(5,150,105,0.12); }
+    html:not(.dark) .bg-emerald-500\/10 { background-color: rgba(5,150,105,0.08); }
+    html:not(.dark) .border-emerald-500\/30 { border-color: rgba(5,150,105,0.25); }
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #059669; }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #2563eb; }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(37,99,235,0.08); }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #7c3aed; }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(124,58,237,0.08); }
+    html:not(.dark) .hover\:text-amber-400:hover { color: #92400e; }
+    html:not(.dark) .hover\:bg-amber-500\/10:hover { background-color: rgba(217,119,6,0.08); }
+    html:not(.dark) .text-blue-400 { color: #2563eb; }
+    html:not(.dark) .text-red-400 { color: #b91c1c; }
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161,98,7,0.08); }
+    html:not(.dark) .border-primary\/30 { border-color: rgba(161,98,7,0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255,255,255,0.95); }
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+    html:not(.dark) svg[role="img"] { filter: saturate(0.82) brightness(0.96); }
+
+    /* ===== DEMOS ===== */
+    @keyframes turnFadeIn { 0% { opacity:0; transform: translateY(8px) } 100% { opacity:1; transform: translateY(0) } }
+    @keyframes slideIn { 0% { opacity:0; transform: translateX(-14px) } 100% { opacity:1; transform: translateX(0) } }
+    @keyframes springScale { 0% { opacity:0; transform: scale(.5) } 55% { transform: scale(1.08) } 80% { transform: scale(.97) } 100% { opacity:1; transform: scale(1) } }
+    @keyframes polishPulse { 0%,100% { box-shadow: 0 0 0 0 rgba(52,211,153,0) } 50% { box-shadow: 0 0 0 4px rgba(52,211,153,0.2) } }
+    .t1-frame { animation: turnFadeIn 0.6s ease-out both; }
+    .t2-frame { animation: slideIn 0.5s ease-out 0.3s both; }
+    .t3-frame { animation: slideIn 0.5s ease-out 0.6s both; }
+    .t4-frame { animation: springScale 0.7s cubic-bezier(.22,1.2,.36,1) 0.9s both; }
+    .card-simple { animation: turnFadeIn 1.2s ease-out infinite alternate; }
+    .card-polished { animation: springScale 1.4s cubic-bezier(.22,1.2,.36,1) infinite; animation-delay: 0.4s; }
+    @keyframes wf-pulse { 0%,100% { opacity:.55 } 50% { opacity:1 } }
+    @media (prefers-reduced-motion: no-preference) {
+      .wf-a { animation: wf-pulse 2.6s ease-in-out infinite; }
+      .wf-a:nth-child(2){animation-delay:.25s}.wf-a:nth-child(3){animation-delay:.5s}
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .t1-frame,.t2-frame,.t3-frame,.t4-frame,.card-simple,.card-polished,.wf-a {
+        animation: none; opacity:1; transform:none;
+      }
+    }
+  </style>
+<link href="https://inematds.github.io/claude-remotion-motion/curso/trilha1/modulo-1-3.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/claude-remotion-motion/en/curso/trilha1/modulo-1-3.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/claude-remotion-motion/es/curso/trilha1/modulo-1-3.html" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="modulo-1-3.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">PT</a><a href="../../en/curso/trilha1/modulo-1-3.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">EN</a><a href="../../es/curso/trilha1/modulo-1-3.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">ES</a></div>
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14">
+<div class="flex items-center space-x-4">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html"><span class="text-2xl">🎞️</span><span class="font-bold text-lg hidden sm:inline">CC × Remotion</span></a>
+<span class="text-neutral-600">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+</div>
+<div class="flex items-center space-x-1 sm:space-x-2">
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-emerald-400 bg-emerald-500/10" href="index.html"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentos</span></a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors" href="../trilha2/index.html"><span class="sm:hidden">T2</span><span class="hidden sm:inline">Bibliotecas</span></a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors" href="../trilha3/index.html"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Projetos</span></a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors" href="../trilha4/index.html"><span class="sm:hidden">T4</span><span class="hidden sm:inline">Produção</span></a>
+<button class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path></svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-emerald-400" href="../../index.html">Início</a><span>/</span>
+<a class="hover:text-emerald-400" href="index.html">Trilha 1</a><span>/</span>
+<span class="text-emerald-400">Módulo 1.3</span>
+</div>
+</nav>
+<header class="bg-gradient-to-br from-emerald-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-emerald-500/20 text-emerald-400 text-xs font-semibold rounded-full mb-4">MÓDULO 1.3</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">💬 Como conversar com o Claude</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">A qualidade da animação cresce a cada turno. Você não precisa do prompt perfeito logo de cara — precisa de um <strong class="text-emerald-400">esqueleto funcional</strong> no turn 1 e de refinamentos acumulativos nos turns seguintes.</p>
+<div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">6</div><div class="text-xs text-neutral-400">Tópicos</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">25</div><div class="text-xs text-neutral-400">Minutos</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">Básico</div><div class="text-xs text-neutral-400">Nível</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">Método</div><div class="text-xs text-neutral-400">Tipo</div></div>
+</div>
+</div>
+</header>
+<main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+<!-- DEMO 1: 4 turns lado a lado -->
+<div class="rounded-2xl border border-emerald-500/30 bg-dark-900/40 p-5 mb-12">
+<div class="flex items-center justify-between mb-4">
+<span class="text-xs font-semibold text-neutral-400 uppercase tracking-wide">demonstração ao vivo</span>
+<span class="text-xs text-emerald-400 font-mono">mesma animação evoluindo em 4 turns</span>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+<div class="t1-frame bg-dark-800 rounded-xl border border-dark-600 p-4 flex flex-col items-center gap-2">
+<span class="text-xs font-semibold text-neutral-500 uppercase tracking-wide">Turn 1</span>
+<div class="w-full h-16 bg-dark-700 rounded-lg flex items-center justify-center">
+<span class="text-2xl">📦</span>
+</div>
+<span class="text-xs text-neutral-500 text-center">estático · só renderiza</span>
+</div>
+<div class="t2-frame bg-dark-800 rounded-xl border border-emerald-500/10 p-4 flex flex-col items-center gap-2">
+<span class="text-xs font-semibold text-emerald-500 uppercase tracking-wide">Turn 2</span>
+<div class="w-full h-16 bg-dark-700 rounded-lg flex items-center justify-center opacity-70" style="animation: turnFadeIn 2s ease-out infinite alternate;">
+<span class="text-2xl">📦</span>
+</div>
+<span class="text-xs text-neutral-500 text-center">fade in · 30 frames</span>
+</div>
+<div class="t3-frame bg-dark-800 rounded-xl border border-emerald-500/20 p-4 flex flex-col items-center gap-2">
+<span class="text-xs font-semibold text-emerald-400 uppercase tracking-wide">Turn 3</span>
+<div class="w-full h-16 bg-dark-700 rounded-lg flex items-center justify-center" style="animation: slideIn 1.5s ease-out infinite alternate;">
+<span class="text-2xl">📦</span>
+</div>
+<span class="text-xs text-neutral-500 text-center">slide-up · easing</span>
+</div>
+<div class="t4-frame bg-dark-800 rounded-xl border border-emerald-500/30 p-4 flex flex-col items-center gap-2">
+<span class="text-xs font-semibold text-emerald-300 uppercase tracking-wide">Turn 4</span>
+<div class="w-full h-16 bg-emerald-900/20 rounded-lg border border-emerald-500/20 flex items-center justify-center" style="animation: springScale 1.8s cubic-bezier(.22,1.2,.36,1) infinite;">
+<span class="text-2xl">✨</span>
+</div>
+<span class="text-xs text-neutral-500 text-center">spring · polido</span>
+</div>
+</div>
+<p class="text-xs text-neutral-500 mt-3 text-center">Cada turno adiciona uma camada. O turn 1 nunca precisa ser perfeito — precisa funcionar.</p>
+</div>
+<!-- TÓPICO 1 -->
+<section class="mb-16" id="topico-1">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold">🦴 Esqueleto primeiro (turn 1, sem perfeição)</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">O objetivo do turn 1 é simples: <strong class="text-emerald-400">fazer o componente renderizar</strong>. Nada de timing preciso, nada de spring, nada de cores perfeitas. Você só quer ver algo na tela para confirmar que a estrutura faz sentido.</p>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-4 mb-6 font-mono text-sm">
+<div class="text-neutral-500 text-xs mb-2">// Turn 1 — prompt ideal</div>
+<div class="text-emerald-300">"Cria um componente Remotion chamado HeroCard.</div>
+<div class="text-emerald-300"> Um retângulo escuro com um título branco centralizado.</div>
+<div class="text-emerald-300"> Sem animação ainda — só quero ver renderizar."</div>
+</div>
+<div class="bg-primary/10 border border-primary/30 rounded-xl p-6 mb-6">
+<div class="flex items-start space-x-3">
+<span class="text-2xl">💡</span>
+<div>
+<h4 class="font-semibold text-primary mb-2">Por que pedir sem animação primeiro?</h4>
+<p class="text-sm text-neutral-300">Separar estrutura de movimento permite identificar problemas de layout antes de qualquer timing. Se o card tem o tamanho errado, você prefere descobrir no turn 1 do que depois de ajustar spring por meia hora.</p>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Erro comum no turn 1</h4>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-red-400 mt-0.5">✗</span><span>Pedir layout + animação + cores + responsividade tudo de vez.</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400 mt-0.5">✗</span><span>Descrever a animação final antes de ter a estrutura validada.</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400 mt-0.5">✗</span><span>Exigir perfeição na primeira resposta e desistir se não vier.</span></li>
+</ul>
+</div>
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">✓ Turn 1 bem feito</h4>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-emerald-400 mt-0.5">✓</span><span>Componente renderiza sem erros no studio.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400 mt-0.5">✓</span><span>Estrutura de elementos faz sentido visualmente.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400 mt-0.5">✓</span><span>Você consegue descrever o que quer mudar no turn 2.</span></li>
+</ul>
+</div>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Meta</div><div class="text-xs text-neutral-400">Renderizar</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Foco</div><div class="text-xs text-neutral-400">Só estrutura</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Duração</div><div class="text-xs text-neutral-400">1 prompt curto</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Critério</div><div class="text-xs text-neutral-400">Aparece na tela</div></div>
+</div>
+</section>
+<!-- TÓPICO 2 -->
+<section class="mb-16" id="topico-2">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold">⏱️ Adicione timing (turn 2)</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">Com a estrutura validada, o turn 2 define a <strong class="text-emerald-400">duração e o ritmo</strong>. Quando cada elemento entra, quanto tempo fica visível, quando sai. Ainda sem spring — use <code class="font-mono">interpolate()</code> ou fade simples.</p>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-4 mb-6 font-mono text-sm">
+<div class="text-neutral-500 text-xs mb-2">// Turn 2 — prompt de timing</div>
+<div class="text-emerald-300">"Agora adiciona animação básica:</div>
+<div class="text-emerald-300"> - O card faz fade-in do frame 0 ao 20</div>
+<div class="text-emerald-300"> - O título aparece do frame 15 ao 35</div>
+<div class="text-emerald-300"> - Duração total: 90 frames (3s a 30fps)"</div>
+</div>
+<div class="space-y-4 mb-6">
+<div class="flex items-start space-x-4">
+<div class="flex items-center justify-center w-10 h-10 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-sm flex-shrink-0">1</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-4 flex-1">
+<h4 class="font-semibold text-white mb-1">Defina FPS e duração total</h4>
+<p class="text-sm text-neutral-400">30fps é o padrão seguro. Duração em frames: 3s = 90 frames, 5s = 150 frames. Deixe explícito.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex items-center justify-center w-10 h-10 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-sm flex-shrink-0">2</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-4 flex-1">
+<h4 class="font-semibold text-white mb-1">Use intervalos de frame, não segundos</h4>
+<p class="text-sm text-neutral-400">O Remotion opera em frames. "Aparece em 0.5s" vira "frame 15 a 30fps". Pensar em frames dá controle fino.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex items-center justify-center w-10 h-10 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-sm flex-shrink-0">3</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-4 flex-1">
+<h4 class="font-semibold text-white mb-1">interpolate() é seu amigo aqui</h4>
+<p class="text-sm text-neutral-400"><code class="font-mono">interpolate(frame, [0,20], [0,1])</code> é um mapeamento linear simples e previsível — perfeito para validar timing antes de adicionar spring.</p>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">API</div><div class="text-xs text-neutral-400">interpolate()</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Unidade</div><div class="text-xs text-neutral-400">Frames (não s)</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Padrão</div><div class="text-xs text-neutral-400">30fps</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Foco</div><div class="text-xs text-neutral-400">Ritmo e entrada</div></div>
+</div>
+</section>
+<!-- TÓPICO 3 -->
+<section class="mb-16" id="topico-3">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold">🎨 Refine o movimento (turn 3, easing e spring)</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">Com timing validado, o turn 3 substitui o interpolate linear por <strong class="text-emerald-400">spring physics</strong>. Agora você tem base para pedir parâmetros específicos — porque já sabe que a estrutura e o ritmo estão certos.</p>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-4 mb-6 font-mono text-sm">
+<div class="text-neutral-500 text-xs mb-2">// Turn 3 — prompt de refinamento</div>
+<div class="text-emerald-300">"Substitui o interpolate do card por spring().</div>
+<div class="text-emerald-300"> Quero overshoot leve — damping 14, stiffness 100.</div>
+<div class="text-emerald-300"> O título continua com fade simples, sem spring."</div>
+</div>
+<!-- SVG futurista: escada de turnos -->
+<div class="rounded-2xl border border-emerald-500/30 bg-dark-900/40 p-5 mb-6">
+<svg aria-label="Diagrama em escada mostrando os 4 turnos de refinamento de animação Remotion" class="w-full h-auto" role="img" viewbox="0 0 520 180" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<lineargradient id="m13-grad" x1="0" x2="1" y1="1" y2="0">
+<stop offset="0" stop-color="#10b981"></stop><stop offset="1" stop-color="#34d399"></stop>
+</lineargradient>
+<filter height="180%" id="m13-glow" width="180%" x="-40%" y="-40%">
+<fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge>
+</filter>
+<pattern height="32" id="m13-grid" patternunits="userSpaceOnUse" width="32">
+<circle cx="1.3" cy="1.3" fill="#34d399" opacity="0.10" r="1.3"></circle>
+</pattern>
+<marker id="m13-ah" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5">
+<path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#34d399"></path>
+</marker>
+<marker id="m13-ahc" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5">
+<path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#38bdf8"></path>
+</marker>
+</defs>
+<rect fill="url(#m13-grid)" height="180" rx="12" width="520"></rect>
+<!-- Step 1 -->
+<rect fill="none" height="32" rx="8" stroke="#374151" stroke-width="2" width="90" x="30" y="130"></rect>
+<text fill="#9ca3af" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="75" y="149">T1 · estrutura</text>
+<!-- Step 2 -->
+<rect fill="none" height="32" opacity="0.5" rx="8" stroke="#34d399" stroke-width="2" width="90" x="150" y="100"></rect>
+<text fill="#34d399" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="195" y="119">T2 · timing</text>
+<!-- Step 3 -->
+<rect fill="none" height="32" opacity="0.75" rx="8" stroke="#34d399" stroke-width="2" width="90" x="270" y="68"></rect>
+<text fill="#34d399" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="315" y="87">T3 · spring</text>
+<!-- Step 4 -->
+<rect fill="#34d399" fill-opacity="0.15" filter="url(#m13-glow)" height="32" rx="8" stroke="#34d399" stroke-width="2" width="100" x="390" y="36"></rect>
+<text fill="#34d399" font-family="Inter,sans-serif" font-size="11" font-weight="600" text-anchor="middle" x="440" y="55">T4 · polido ✨</text>
+<!-- arrows -->
+<line marker-end="url(#m13-ahc)" stroke="#38bdf8" stroke-width="1.5" x1="120" x2="148" y1="146" y2="128"></line>
+<line marker-end="url(#m13-ahc)" stroke="#38bdf8" stroke-width="1.5" x1="240" x2="268" y1="116" y2="96"></line>
+<line marker-end="url(#m13-ahc)" stroke="#38bdf8" stroke-width="1.5" x1="360" x2="388" y1="84" y2="64"></line>
+<!-- quality label -->
+<line stroke="#374151" stroke-width="1.5" x1="20" x2="20" y1="162" y2="24"></line>
+<text fill="#6b7280" font-family="Inter,sans-serif" font-size="10" transform="rotate(-90,14,100)" x="14" y="100">qualidade</text>
+</svg>
+<p class="text-xs text-neutral-500 mt-2 text-center">Cada turno eleva a qualidade de forma incremental — nenhuma reescrita, só refinamento.</p>
+</div>
+<div class="bg-primary/10 border border-primary/30 rounded-xl p-6 mb-6">
+<div class="flex items-start space-x-3">
+<span class="text-2xl">💡</span>
+<div>
+<h4 class="font-semibold text-primary mb-2">Quando adicionar spring vs. manter interpolate?</h4>
+<p class="text-sm text-neutral-300">Use <code class="font-mono">spring()</code> para elementos que entram em cena ou mudam de estado. Use <code class="font-mono">interpolate()</code> para valores que precisam de controle linear exato — como progresso de uma barra ou fade de saída.</p>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">spring()</div><div class="text-xs text-neutral-400">Entradas e estados</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">interpolate()</div><div class="text-xs text-neutral-400">Valores lineares</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Damping</div><div class="text-xs text-neutral-400">14 é seguro</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Resultado</div><div class="text-xs text-neutral-400">Natural e orgânico</div></div>
+</div>
+</section>
+<!-- TÓPICO 4 — DEMO 2 -->
+<section class="mb-16" id="topico-4">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold">🧠 Contexto acumula — mesma sessão, qualidade compõe</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">O Claude não esquece. Cada turno na mesma sessão <strong class="text-emerald-400">acumula contexto</strong>: ele sabe o nome dos componentes, os parâmetros já definidos, o que você aprovou e o que pediu para mudar. Nunca recomece uma sessão no meio de uma animação.</p>
+<!-- DEMO 2: card simples evoluindo para polido -->
+<div class="rounded-2xl border border-emerald-500/30 bg-dark-900/40 p-5 mb-6">
+<div class="flex items-center justify-between mb-4">
+<span class="text-xs font-semibold text-neutral-400 uppercase tracking-wide">demonstração ao vivo</span>
+<span class="text-xs text-emerald-400 font-mono">card refinado em loop</span>
+</div>
+<div class="flex gap-6 items-center justify-center">
+<div class="flex flex-col items-center gap-2">
+<span class="text-xs text-neutral-500">simples</span>
+<div class="card-simple w-28 h-20 bg-dark-700 rounded-lg border border-dark-600 flex items-center justify-center">
+<span class="text-neutral-400 text-xs font-mono">card v1</span>
+</div>
+</div>
+<div class="text-emerald-400 text-xl">→</div>
+<div class="flex flex-col items-center gap-2">
+<span class="text-xs text-emerald-400">polido</span>
+<div class="card-polished w-28 h-20 bg-emerald-900/20 rounded-xl border border-emerald-500/30 flex items-center justify-center shadow-lg">
+<span class="text-emerald-300 text-xs font-mono">card v4 ✨</span>
+</div>
+</div>
+</div>
+<p class="text-xs text-neutral-500 mt-3 text-center">Mesma sessão. O card v4 foi construído sobre o v1 — sem reescrever, sem perder contexto.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Quebra de contexto</h4>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-red-400 mt-0.5">✗</span><span>Abrir nova janela no meio do fluxo — contexto zerado.</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400 mt-0.5">✗</span><span>Copiar o código para um novo chat para "fazer mais rápido".</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400 mt-0.5">✗</span><span>Repetir informações que o Claude já sabe — desperdiça tokens.</span></li>
+</ul>
+</div>
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">✓ Boas práticas de sessão</h4>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-emerald-400 mt-0.5">✓</span><span>Mantém a mesma sessão do início ao fim do componente.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400 mt-0.5">✓</span><span>Referencia elementos pelo nome que você deu: "o HeroCard", "o título animado".</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400 mt-0.5">✓</span><span>Ao retomar uma sessão antiga, recapitule o estado em 2 linhas.</span></li>
+</ul>
+</div>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Contexto</div><div class="text-xs text-neutral-400">Acumula por turno</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Sessão</div><div class="text-xs text-neutral-400">Não interrompa</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Referência</div><div class="text-xs text-neutral-400">Use nomes fixos</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Qualidade</div><div class="text-xs text-neutral-400">Cresce com turnos</div></div>
+</div>
+</section>
+<!-- TÓPICO 5 -->
+<section class="mb-16" id="topico-5">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold">📋 Descreva a sequência em lista numerada</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">Para animações com mais de um elemento ou cena, escreva a sequência como <strong class="text-emerald-400">lista numerada de eventos</strong>. Isso elimina ambiguidade e o Claude consegue mapear cada item para um intervalo de frames.</p>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-4 mb-6 font-mono text-sm">
+<div class="text-neutral-500 text-xs mb-2">// Prompt com sequência numerada — modelo</div>
+<div class="text-emerald-300">"Animação de intro para um tutorial:</div>
+<div class="text-emerald-300"> 1. Frame 0–20: background aparece com fade</div>
+<div class="text-emerald-300"> 2. Frame 15–40: logo entra com spring (damping 12)</div>
+<div class="text-emerald-300"> 3. Frame 35–55: subtítulo sobe com slide-up</div>
+<div class="text-emerald-300"> 4. Frame 50–70: CTA aparece com bounce"</div>
+</div>
+<div class="bg-primary/10 border border-primary/30 rounded-xl p-6 mb-6">
+<div class="flex items-start space-x-3">
+<span class="text-2xl">💡</span>
+<div>
+<h4 class="font-semibold text-primary mb-2">Sobreposição intencional de frames</h4>
+<p class="text-sm text-neutral-300">Note que o logo começa no frame 15 enquanto o background ainda está entrando (até frame 20). Essa sobreposição de 5 frames cria fluidez — tudo entrando ao mesmo tempo seria rígido, tudo sequencial seria lento.</p>
+</div>
+</div>
+</div>
+<div class="space-y-4 mb-6">
+<div class="flex items-start space-x-4">
+<div class="flex items-center justify-center w-10 h-10 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-sm flex-shrink-0">1</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-4 flex-1">
+<h4 class="font-semibold text-white mb-1">Numeração define prioridade visual</h4>
+<p class="text-sm text-neutral-400">O item 1 da lista é o mais importante — fundo, container, hero. Itens posteriores são suporte.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex items-center justify-center w-10 h-10 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-sm flex-shrink-0">2</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-4 flex-1">
+<h4 class="font-semibold text-white mb-1">Especifique o intervalo de frames</h4>
+<p class="text-sm text-neutral-400">Dizer "depois do logo" é ambíguo. Dizer "frame 35–55" é determinístico e editável no próximo turno.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex items-center justify-center w-10 h-10 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-sm flex-shrink-0">3</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-4 flex-1">
+<h4 class="font-semibold text-white mb-1">Mencione o tipo de movimento por item</h4>
+<p class="text-sm text-neutral-400">"spring", "slide-up", "fade", "bounce" — o Claude usa esses termos para escolher a API correta.</p>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Lista</div><div class="text-xs text-neutral-400">Sem ambiguidade</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Frames</div><div class="text-xs text-neutral-400">Intervalos precisos</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Overlap</div><div class="text-xs text-neutral-400">5–10 frames</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Tipo</div><div class="text-xs text-neutral-400">spring/fade/slide</div></div>
+</div>
+</section>
+<!-- TÓPICO 6 -->
+<section class="mb-16" id="topico-6">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold">🎯 Hierarquia de movimento — principal lidera, resto apoia</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">Toda cena tem um <strong class="text-emerald-400">elemento principal</strong> que carrega a mensagem — ele anima com a maior intensidade (spring, scale, slide). Os outros elementos são suporte: entram suave, ficam quietos, saem primeiro. Inverta isso e a cena vira caos.</p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Sem hierarquia</h4>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-red-400 mt-0.5">✗</span><span>Background anima com spring tão forte quanto o título.</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400 mt-0.5">✗</span><span>Ícones de suporte fazem bounce chamando mais atenção que o texto.</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400 mt-0.5">✗</span><span>Tudo sai ao mesmo tempo — o espectador não sabe onde olhar.</span></li>
+</ul>
+</div>
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">✓ Com hierarquia clara</h4>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-emerald-400 mt-0.5">✓</span><span>Background: fade simples, entra primeiro, sem overshoot.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400 mt-0.5">✓</span><span>Título principal: spring com overshoot — é o herói da cena.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400 mt-0.5">✓</span><span>Elementos de apoio: slide suave com damping alto, entram depois.</span></li>
+</ul>
+</div>
+</div>
+<div class="bg-primary/10 border border-primary/30 rounded-xl p-6 mb-6">
+<div class="flex items-start space-x-3">
+<span class="text-2xl">💡</span>
+<div>
+<h4 class="font-semibold text-primary mb-2">Como descrever hierarquia para o Claude</h4>
+<p class="text-sm text-neutral-300">Basta nomear o papel: <em>"O título é o elemento principal — spring com overshoot. Os ícones são suporte — fade simples, entram 10 frames depois."</em> O Claude usa isso para calibrar damping, delay e tipo de animação por elemento.</p>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Principal</div><div class="text-xs text-neutral-400">Spring + overshoot</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Suporte</div><div class="text-xs text-neutral-400">Fade ou slide suave</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Fundo</div><div class="text-xs text-neutral-400">Entra primeiro, simples</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Regra</div><div class="text-xs text-neutral-400">Herói lidera sempre</div></div>
+</div>
+</section>
+<!-- RESUMO -->
+<section class="mb-12" id="resumo">
+<div class="bg-gradient-to-br from-emerald-900/30 to-dark-800 rounded-2xl border border-emerald-500/30 p-8">
+<h2 class="text-2xl font-bold mb-2">📋 Resumo do módulo</h2>
+<p class="text-neutral-400 text-sm mb-6">Você concluiu a Trilha 1 — Fundamentos. Está pronto para avançar às bibliotecas.</p>
+<div class="space-y-3 mb-8">
+<div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-white">Turn 1</strong><span class="text-neutral-400"> → esqueleto funcional, sem animação, só renderizar.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-white">Turn 2</strong><span class="text-neutral-400"> → duração e timing via interpolate e intervalos de frames.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-white">Turn 3</strong><span class="text-neutral-400"> → substituir interpolate por spring physics onde faz sentido.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-white">Contexto</strong><span class="text-neutral-400"> → mesma sessão acumula conhecimento — não interrompa.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-white">Lista numerada</strong><span class="text-neutral-400"> → descreva sequência com intervalos de frames explícitos.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-white">Hierarquia</strong><span class="text-neutral-400"> → principal anima forte; suporte entra suave e depois.</span></div></div>
+</div>
+<div class="bg-dark-800/50 rounded-xl border border-emerald-500/20 p-4 mb-6">
+<p class="text-sm text-emerald-400 font-semibold mb-1">🎉 Trilha 1 concluída!</p>
+<p class="text-sm text-neutral-400">Você domina o modelo mental: stack, skill, física de spring e diálogo iterativo. Na Trilha 2, você aprende as <strong class="text-white">bibliotecas de animação</strong> que desbloqueiam efeitos avançados — GSAP, Framer Motion e Lottie dentro do Remotion.</p>
+</div>
+<div class="flex flex-wrap gap-4 justify-start">
+<a class="px-6 py-3 bg-dark-700 text-white rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="modulo-1-2.html">← Módulo anterior</a>
+<a class="px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-500 transition-colors" href="../trilha2/index.html">Próxima trilha: Bibliotecas →</a>
+</div>
+</div>
+</section>
+</main>
+<footer class="border-t border-dark-600 py-8 mt-8">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>Claude Code × Remotion · Módulo 1.3 · 2026 · <a class="text-sky-400 hover:text-sky-300" href="https://inema.club" target="_blank">INEMA.CLUB</a></p>
+</div>
+</footer>
+<script>
+    const themeToggle=document.getElementById('theme-toggle'),themeToggleDarkIcon=document.getElementById('theme-toggle-dark-icon'),themeToggleLightIcon=document.getElementById('theme-toggle-light-icon'),html=document.documentElement;
+    if(localStorage.getItem('theme')==='light'||(!localStorage.getItem('theme')&&!html.classList.contains('dark'))){themeToggleDarkIcon.classList.remove('hidden');html.classList.remove('dark');}else{themeToggleLightIcon.classList.remove('hidden');}
+    themeToggle.addEventListener('click',()=>{themeToggleDarkIcon.classList.toggle('hidden');themeToggleLightIcon.classList.toggle('hidden');html.classList.toggle('dark');localStorage.setItem('theme',html.classList.contains('dark')?'dark':'light');});
+  </script>
+</body>
+</html>

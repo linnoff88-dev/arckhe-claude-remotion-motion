@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Module 2.4 · Three.js — 3D as Frames | CC × Remotion</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#FACC15', dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' } } } } }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    code, .font-mono { font-family: 'JetBrains Mono', monospace; }
+
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+    html:not(.dark) .text-blue-400 { color: #2563eb; }
+    html:not(.dark) .bg-blue-500\/20 { background: rgba(37,99,235,.12); }
+    html:not(.dark) .bg-blue-500\/10 { background: rgba(37,99,235,.08); }
+    html:not(.dark) .border-blue-500\/30 { border-color: rgba(37,99,235,.25); }
+    html:not(.dark) .hover\:bg-blue-500\/30:hover { background: rgba(37,99,235,.18); }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #2563eb; }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(37,99,235,0.08); }
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #059669; }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(5,150,105,0.08); }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #7c3aed; }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(124,58,237,0.08); }
+    html:not(.dark) .hover\:text-amber-400:hover { color: #92400e; }
+    html:not(.dark) .hover\:bg-amber-500\/10:hover { background-color: rgba(217,119,6,0.08); }
+    html:not(.dark) .text-red-400 { color: #b91c1c; }
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161,98,7,0.08); }
+    html:not(.dark) .border-primary\/30 { border-color: rgba(161,98,7,0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255,255,255,0.95); }
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+    html:not(.dark) svg[role="img"] { filter: saturate(0.82) brightness(0.96); }
+
+    /* ===== DEMOS ===== */
+    @keyframes spinY { from { transform: perspective(220px) rotateY(0deg) rotateX(15deg); } to { transform: perspective(220px) rotateY(360deg) rotateX(15deg); } }
+    @keyframes orbitDot { 0% { transform: rotate(0deg) translateX(44px) rotate(0deg); } 100% { transform: rotate(360deg) translateX(44px) rotate(-360deg); } }
+    @keyframes pulseGlow { 0%,100% { box-shadow: 0 0 8px 2px rgba(96,165,250,0.3); } 50% { box-shadow: 0 0 20px 6px rgba(96,165,250,0.7); } }
+    @keyframes fadeLayerIn { 0% { opacity:0; transform: translateY(10px); } 100% { opacity:1; transform: translateY(0); } }
+    .cube-3d { width:72px; height:72px; background: linear-gradient(135deg,#3b82f6,#1d4ed8); border-radius:8px; animation: spinY 4s linear infinite, pulseGlow 3s ease-in-out infinite; }
+    .orbit-dot { width:10px; height:10px; background:#38bdf8; border-radius:50%; position:absolute; top:50%; left:50%; margin:-5px; animation: orbitDot 3s linear infinite; }
+    .layer-card { animation: fadeLayerIn 0.6s ease both; }
+    .layer-card:nth-child(2){animation-delay:.15s}.layer-card:nth-child(3){animation-delay:.30s}.layer-card:nth-child(4){animation-delay:.45s}
+    @media (prefers-reduced-motion: reduce) { .cube-3d,.orbit-dot,.layer-card { animation: none; } .cube-3d { box-shadow: 0 0 8px 2px rgba(96,165,250,0.3); } }
+  </style>
+<link href="https://inematds.github.io/claude-remotion-motion/curso/trilha2/modulo-2-4.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/claude-remotion-motion/en/curso/trilha2/modulo-2-4.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/claude-remotion-motion/es/curso/trilha2/modulo-2-4.html" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha2/modulo-2-4.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="modulo-2-4.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">EN</a><a href="../../../es/curso/trilha2/modulo-2-4.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">ES</a></div>
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14">
+<div class="flex items-center space-x-4">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html"><span class="text-2xl">🎞️</span><span class="font-bold text-lg hidden sm:inline">CC × Remotion</span></a>
+<span class="text-neutral-600">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+</div>
+<div class="flex items-center space-x-1 sm:space-x-2">
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors" href="../trilha1/index.html"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentals</span></a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-blue-400 bg-blue-500/10" href="index.html"><span class="sm:hidden">T2</span><span class="hidden sm:inline">Libraries</span></a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors" href="../trilha3/index.html"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Projects</span></a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors" href="../trilha4/index.html"><span class="sm:hidden">T4</span><span class="hidden sm:inline">Production</span></a>
+<button class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path></svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-blue-400" href="../../index.html">Start</a><span>/</span>
+<a class="hover:text-blue-400" href="index.html">Track 2</a><span>/</span>
+<span class="text-blue-400">Module 2.4</span>
+</div>
+</nav>
+<header class="bg-gradient-to-br from-blue-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-blue-500/20 text-blue-400 text-xs font-semibold rounded-full mb-4">MODULE 2.4</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">🧊 Three.js — 3D as frames</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">Complete 3D scenes rendered as video frames. Product rotations, environmental flythroughs, explanatory animations — all in a single prompt, with <strong class="text-blue-400">deterministic control</strong> about each frame.</p>
+<div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">6</div><div class="text-xs text-neutral-400">Topics</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">35</div><div class="text-xs text-neutral-400">Minutes</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">Medium</div><div class="text-xs text-neutral-400">Level</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">Practice</div><div class="text-xs text-neutral-400">Type</div></div>
+</div>
+</div>
+</header>
+<main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+<!-- DEMO 1: cubo 3D girando + órbita de câmera -->
+<div class="rounded-2xl border border-blue-500/30 bg-dark-900/40 p-5 mb-12 overflow-hidden">
+<div class="flex items-center justify-between mb-4">
+<span class="text-xs font-semibold text-neutral-400 uppercase tracking-wide">live demo</span>
+<span class="text-xs text-blue-400 font-mono">Three.js → frame loop</span>
+</div>
+<div class="flex items-center justify-center gap-16 bg-dark-800 rounded-xl border border-dark-600 p-8">
+<!-- Cubo girando -->
+<div class="flex flex-col items-center gap-3">
+<div class="cube-3d"></div>
+<span class="text-xs text-neutral-500 font-mono">rotateY(frame * 0.02)</span>
+</div>
+<!-- Órbita de câmera -->
+<div class="flex flex-col items-center gap-3">
+<div class="relative w-24 h-24 rounded-full border border-blue-500/30 flex items-center justify-center">
+<div class="w-8 h-8 rounded-full bg-blue-500/20 border border-blue-500/40 flex items-center justify-center text-xs text-blue-400">3D</div>
+<div class="orbit-dot"></div>
+</div>
+<span class="text-xs text-neutral-500 font-mono">camera.orbit(frame)</span>
+</div>
+</div>
+<p class="text-xs text-neutral-500 mt-3 text-center">Each 3D object and camera position is calculated deterministically from the frame number — no surprises in the render.</p>
+</div>
+<!-- TÓPICO 1 -->
+<section class="mb-16" id="topico-1">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold">🌐 What Three.js is in the Remotion context</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">Three.js is the most widely used JavaScript library for creating <strong class="text-blue-400">3D graphics on the web</strong> via WebGL. In the context of Remotion, it transforms three-dimensional scenes into video frames — each frame is a static render calculated from the frame number.</p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Without Three.js</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>3D scenes require specialized software (Blender, Cinema 4D, After Effects + plugins).</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Closed workflow: export, reimport, re-render after every change.</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Difficult to version and practically impossible to automate with a prompt.</span></li>
+</ul>
+</div>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6">
+<h4 class="font-bold text-blue-400 mb-4">✓ With Three.js + Remotion</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span>3D scene described in code — Claude generates it, and you iterate in the same session.</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span>Frame N always produces the same image: deterministic rendering, no artifacts.</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span>Versionable in git, parameterizable, reusable as a React component.</span></li>
+</ul>
+</div>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Engine</div><div class="text-xs text-neutral-400">WebGL / Three.js</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Output</div><div class="text-xs text-neutral-400">Video frames</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Control</div><div class="text-xs text-neutral-400">Per frame</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Generation</div><div class="text-xs text-neutral-400">Claude Code</div></div>
+</div>
+</section>
+<!-- TÓPICO 2 -->
+<section class="mb-16" id="topico-2">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold">🎯 Use cases: when 3D is the solution</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">Three.js shines in three types of scenes that would be impractical with CSS or animated SVG: <strong class="text-blue-400">product rotation</strong>, <strong class="text-blue-400">environment flythrough</strong> e <strong class="text-blue-400">explanatory animations</strong> with real perspective.</p>
+<!-- Timeline de casos de uso -->
+<div class="space-y-4 mb-6">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400 font-bold text-sm">1</div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600">
+<h4 class="font-semibold text-white mb-1">Product rotation</h4>
+<p class="text-neutral-300 text-sm">A 3D product model slowly rotating under clean lighting. Claude generates the geometry, sets up the lighting, and ties the rotation to the frame count. The result: a solid render, consistent lighting, smooth motion — in a single prompt.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400 font-bold text-sm">2</div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600">
+<h4 class="font-semibold text-white mb-1">Environment flythrough</h4>
+<p class="text-neutral-300 text-sm">The camera moves through a 3D space along a parametric curve — architecture, spatial infographics, 3D data visualization. The camera orbits as the frame advances.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400 font-bold text-sm">3</div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600">
+<h4 class="font-semibold text-white mb-1">Explainer animations</h4>
+<p class="text-neutral-300 text-sm">Objects explode into parts, molecules assemble, data structures form in 3D. Real perspective conveys depth that flat CSS can’t.</p>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Product</div><div class="text-xs text-neutral-400">Slow rotation</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Environment</div><div class="text-xs text-neutral-400">Orbit camera</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Explanatory</div><div class="text-xs text-neutral-400">3D perspective</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Prompt</div><div class="text-xs text-neutral-400">Just one</div></div>
+</div>
+</section>
+<!-- TÓPICO 3 -->
+<section class="mb-16" id="topico-3">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold">🧪 The Three.js quality test</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">To evaluate the quality of a Three.js output, give Claude a 3D model and ask for a <strong class="text-blue-400">slow rotation with a camera orbit</strong>. The expected result: clean lighting, smooth motion, and a solid render without flicker—all from a single prompt.</p>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-5 mb-6">
+<div class="flex items-center gap-2 mb-3">
+<span class="w-3 h-3 rounded-full bg-red-400/70"></span>
+<span class="w-3 h-3 rounded-full bg-yellow-400/70"></span>
+<span class="w-3 h-3 rounded-full bg-blue-400/70"></span>
+<span class="text-xs text-neutral-500 ml-2 font-mono">test prompt</span>
+</div>
+<pre class="text-sm text-neutral-200 leading-relaxed font-mono whitespace-pre-wrap">Crie uma composição Remotion com Three.js:
+- Um cubo com material MeshStandardMaterial
+- Rotação lenta no eixo Y ligada ao frame count
+- Câmera em órbita circular com raio=5, altura=2
+- Luz direcional limpa + luz ambiente fraca
+- Render determinístico: frame N → mesma imagem</pre>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> What to evaluate in the output</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-primary">•</span><span><strong>Clean lighting:</strong> soft shadows, without blown-out highlights.</span></li>
+<li class="flex items-start space-x-2"><span class="text-primary">•</span><span><strong>Smooth movement:</strong> rotation proportional to the frame — no jumps.</span></li>
+<li class="flex items-start space-x-2"><span class="text-primary">•</span><span><strong>Solid render:</strong> without flicker or z-fighting between faces.</span></li>
+</ul>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Material</div><div class="text-xs text-neutral-400">MeshStandard</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Rotation</div><div class="text-xs text-neutral-400">frame × 0.02</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Camera</div><div class="text-xs text-neutral-400">Circular orbit</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Result</div><div class="text-xs text-neutral-400">1 prompt only</div></div>
+</div>
+</section>
+<!-- TÓPICO 4: Vanilla vs R3F com TABELA -->
+<section class="mb-16" id="topico-4">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold">⚖️ Vanilla Three.js vs. React Three Fiber</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">There are two ways to use Three.js in Remotion: the <strong class="text-blue-400">Vanilla Three.js</strong> (direct control of the WebGL pipeline) and <strong class="text-blue-400">React Three Fiber (R3F)</strong> (React wrapper with JSX for 3D). The choice matters for deterministic rendering.</p>
+<!-- DEMO 2: diagrama de camadas abstração -->
+<div class="rounded-2xl border border-blue-500/30 bg-dark-900/40 p-5 mb-6">
+<div class="flex items-center justify-between mb-4">
+<span class="text-xs font-semibold text-neutral-400 uppercase tracking-wide">live demo</span>
+<span class="text-xs text-blue-400 font-mono">abstraction layers</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<!-- Vanilla -->
+<div class="space-y-2">
+<div class="text-sm font-semibold text-blue-400 mb-3 text-center">Vanilla Three.js</div>
+<div class="layer-card bg-blue-900/30 rounded-lg p-3 border border-blue-500/30 text-center text-sm text-blue-200 font-mono">frame count</div>
+<div class="flex justify-center"><div class="w-px h-4 bg-blue-500/40"></div></div>
+<div class="layer-card bg-blue-900/40 rounded-lg p-3 border border-blue-500/30 text-center text-sm text-blue-200 font-mono">Three.js scene/camera/renderer</div>
+<div class="flex justify-center"><div class="w-px h-4 bg-blue-500/40"></div></div>
+<div class="layer-card bg-blue-900/50 rounded-lg p-3 border border-blue-500/40 text-center text-sm text-blue-100 font-mono font-bold">WebGL frame</div>
+<div class="text-xs text-neutral-500 text-center mt-2">direct control — precise timing</div>
+</div>
+<!-- R3F -->
+<div class="space-y-2">
+<div class="text-sm font-semibold text-neutral-400 mb-3 text-center">React Three Fiber</div>
+<div class="layer-card bg-dark-800 rounded-lg p-3 border border-dark-600 text-center text-sm text-neutral-300 font-mono">frame count</div>
+<div class="flex justify-center"><div class="w-px h-4 bg-neutral-600/40"></div></div>
+<div class="layer-card bg-dark-800 rounded-lg p-3 border border-dark-600 text-center text-sm text-neutral-300 font-mono">React reconciler (JSX)</div>
+<div class="flex justify-center"><div class="w-px h-4 bg-neutral-600/40"></div></div>
+<div class="layer-card bg-dark-800 rounded-lg p-3 border border-dark-600 text-center text-sm text-neutral-300 font-mono">Three.js scene</div>
+<div class="flex justify-center"><div class="w-px h-4 bg-neutral-600/40"></div></div>
+<div class="layer-card bg-dark-700 rounded-lg p-3 border border-dark-600 text-center text-sm text-neutral-200 font-mono font-bold">WebGL frame</div>
+<div class="text-xs text-neutral-500 text-center mt-2">+1 layer—may introduce timing</div>
+</div>
+</div>
+</div>
+<!-- Tabela Vanilla × R3F -->
+<div class="overflow-x-auto mb-6">
+<table class="w-full text-sm border-collapse">
+<thead>
+<tr class="border-b border-dark-600">
+<th class="text-left p-3 text-neutral-400 font-semibold">Criterion</th>
+<th class="text-left p-3 text-blue-400 font-semibold">Vanilla Three.js</th>
+<th class="text-left p-3 text-neutral-400 font-semibold">React Three Fiber</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-dark-600">
+<tr class="hover:bg-dark-800/40">
+<td class="p-3 text-neutral-300 font-medium">Pipeline control</td>
+<td class="p-3 text-blue-400">Direct (scene/camera/renderer)</td>
+<td class="p-3 text-neutral-400">Via JSX + reconciler</td>
+</tr>
+<tr class="hover:bg-dark-800/40">
+<td class="p-3 text-neutral-300 font-medium">Deterministic timing</td>
+<td class="p-3 text-blue-400">Precise — tied to the frame</td>
+<td class="p-3 text-neutral-400">Can introduce inconsistency</td>
+</tr>
+<tr class="hover:bg-dark-800/40">
+<td class="p-3 text-neutral-300 font-medium">Claude reliability</td>
+<td class="p-3 text-blue-400">High (well-documented API)</td>
+<td class="p-3 text-neutral-400">Smaller (extra abstraction)</td>
+</tr>
+<tr class="hover:bg-dark-800/40">
+<td class="p-3 text-neutral-300 font-medium">2D composition</td>
+<td class="p-3 text-neutral-400">Manual</td>
+<td class="p-3 text-blue-400">Natural (JSX + Remotion hooks)</td>
+</tr>
+<tr class="hover:bg-dark-800/40">
+<td class="p-3 text-neutral-300 font-medium">When to use</td>
+<td class="p-3 text-blue-400">Simple, contained scenes</td>
+<td class="p-3 text-neutral-400">Complexity that requires components</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-2 flex items-center"><span class="mr-2">🔷</span> Recommendation</h3>
+<p class="text-neutral-300 text-sm">Use <strong class="text-blue-400">Vanilla</strong> for simple, contained 3D scenes — Claude generates more reliable vanilla code because the API is well documented and solid in its training data. Reserve the <strong>R3F</strong> for when complexity requires composition with components and integration with Remotion’s 2D layers.</p>
+</div>
+</section>
+<!-- TÓPICO 5: SVG diagrama -->
+<section class="mb-16" id="topico-5">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold">🏗️ The Three.js → Remotion pipeline</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">The Three.js workflow inside Remotion follows four steps: create the scene, position the camera, calculate the state from the frame number, and render the frame to the canvas. Each step is pure—with no external side effects.</p>
+<div class="rounded-2xl border border-blue-500/30 bg-dark-900/40 p-4 mb-6">
+<svg aria-label="Three.js pipeline inside Remotion: frame N comes in, the Three.js scene calculates the state, the WebGL renderer generates the bitmap, and Remotion saves it as a video frame" class="w-full h-auto" role="img" viewbox="0 0 900 180">
+<defs>
+<lineargradient id="m24-grad" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#60a5fa"></stop><stop offset="1" stop-color="#3b82f6"></stop></lineargradient>
+<filter height="180%" id="m24-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="2"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<pattern height="28" id="m24-grid" patternunits="userSpaceOnUse" width="28"><circle cx="1" cy="1" fill="#3b82f6" opacity="0.10" r="1"></circle></pattern>
+<marker id="m24-ah" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#60a5fa"></path></marker>
+</defs>
+<rect fill="url(#m24-grid)" height="180" width="900" x="0" y="0"></rect>
+<!-- Box 1: frame N -->
+<g filter="url(#m24-glow)"><rect fill="#0e1622" height="50" rx="12" stroke="url(#m24-grad)" stroke-width="2.2" width="130" x="30" y="65"></rect></g>
+<text fill="#60a5fa" font-family="Inter,sans-serif" font-size="15" font-weight="700" text-anchor="middle" x="95" y="88">frame N</text>
+<text fill="#93c5fd" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="95" y="107">Remotion input</text>
+<!-- Arrow 1 -->
+<path d="M160,90 L200,90" fill="none" marker-end="url(#m24-ah)" opacity="0.7" stroke="#60a5fa" stroke-width="1.8"></path>
+<!-- Box 2: Three.js scene -->
+<rect fill="#0e1622" height="60" rx="12" stroke="#38bdf8" stroke-width="2" width="155" x="208" y="60"></rect>
+<text fill="#bae6fd" font-family="Inter,sans-serif" font-size="13" font-weight="600" text-anchor="middle" x="285" y="86">Three.js Scene</text>
+<text fill="#7dd3fc" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="285" y="103">camera · lights · mesh</text>
+<!-- Arrow 2 -->
+<path d="M363,90 L403,90" fill="none" marker-end="url(#m24-ah)" opacity="0.7" stroke="#60a5fa" stroke-width="1.8"></path>
+<!-- Box 3: WebGL Renderer -->
+<rect fill="#0e1622" height="60" rx="12" stroke="#38bdf8" stroke-width="2" width="155" x="411" y="60"></rect>
+<text fill="#bae6fd" font-family="Inter,sans-serif" font-size="13" font-weight="600" text-anchor="middle" x="488" y="86">WebGL Renderer</text>
+<text fill="#7dd3fc" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="488" y="103">render(scene, camera)</text>
+<!-- Arrow 3 -->
+<path d="M566,90 L606,90" fill="none" marker-end="url(#m24-ah)" opacity="0.7" stroke="#60a5fa" stroke-width="1.8"></path>
+<!-- Box 4: frame bitmap -->
+<g filter="url(#m24-glow)"><rect fill="#0e1622" height="50" rx="12" stroke="url(#m24-grad)" stroke-width="2.2" width="145" x="614" y="65"></rect></g>
+<text fill="#60a5fa" font-family="Inter,sans-serif" font-size="14" font-weight="700" text-anchor="middle" x="686" y="88">frame bitmap</text>
+<text fill="#93c5fd" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="686" y="107">saved by Remotion</text>
+<!-- Label topo -->
+<text fill="#60a5fa" font-family="Inter,sans-serif" font-size="12" opacity="0.6" text-anchor="middle" x="450" y="22">deterministic pipeline — same frame N → same bitmap</text>
+</svg>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> The key to determinism</h3>
+<p class="text-neutral-300 text-sm">The position of every 3D object and the camera position are calculated as <strong>pure functions of the frame number</strong>. There’s no physics state or user interaction—just math. That’s what ensures the render is identical on any machine.</p>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Entrance</div><div class="text-xs text-neutral-400">Frame number</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Scene</div><div class="text-xs text-neutral-400">Camera + mesh</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Render</div><div class="text-xs text-neutral-400">WebGL bitmap</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Result</div><div class="text-xs text-neutral-400">Video frame</div></div>
+</div>
+</section>
+<!-- TÓPICO 6 -->
+<section class="mb-16" id="topico-6">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold">📐 Three.js Best Practices with Claude</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">Three.js prompts work best when you <strong class="text-blue-400">describe the geometry, material, and motion separately</strong>. Claude understands better when the instruction is physical ("rotating cube" or "orbiting camera") than abstract ("make it look dynamic").</p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Vague prompt</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>"Create a cool 3D animation with objects."</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>"Make it look like it's flying through space."</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Without specifying geometry, material, or lighting.</span></li>
+</ul>
+</div>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6">
+<h4 class="font-bold text-blue-400 mb-4">✓ Specific prompt</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span>"Sphere with MeshPhongMaterial, Y rotation = frame × 0.015."</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span>"Camera at position (0,2,5), looking at the origin."</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span>"DirectionalLight at (1,2,3) with intensity 1.5."</span></li>
+</ul>
+</div>
+</div>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-3 flex items-center"><span class="mr-2">🔷</span> Iterate in the same session</h3>
+<p class="text-neutral-300 text-sm">Three.js is a library where rapid iteration <strong>within the same session</strong> it’s well worth it. Claude keeps the scene context, and you can adjust the lighting, camera, and geometry with follow-up prompts without rewriting everything.</p>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Geometry</div><div class="text-xs text-neutral-400">Describe the physics</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Material</div><div class="text-xs text-neutral-400">Type + color</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Movement</div><div class="text-xs text-neutral-400">frame × constant</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Session</div><div class="text-xs text-neutral-400">Iterate without restarting</div></div>
+</div>
+</section>
+<!-- RESUMO -->
+<section class="mb-12">
+<div class="bg-gradient-to-br from-blue-900/40 via-dark-800 to-dark-800 rounded-xl border border-blue-500/30 p-8">
+<h2 class="text-2xl font-bold mb-6 flex items-center"><span class="mr-3">📌</span> Module summary</h2>
+<div class="space-y-4 mb-8">
+<div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-white">Three.js renders 3D scenes as frames</strong><span class="text-neutral-400"> — every frame is deterministic: frame N → same image every time.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-white">Use cases: product, flythrough, explainer</strong><span class="text-neutral-400"> — real perspective conveys what flat CSS can’t.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-white">Vanilla for simple scenes</strong><span class="text-neutral-400"> — Claude generates more reliable vanilla; R3F when you need component-based composition.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-white">Physical, not abstract prompt</strong><span class="text-neutral-400"> — describe geometry, material, and movement separately; iterate in the same session.</span></div></div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+<h3 class="font-semibold text-blue-400 mb-2">Next module:</h3>
+<p class="text-neutral-300">2.5 — Lottie: the fastest path from prompt to usable output.</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="index.html">← Back to Track</a>
+<a class="flex-1 text-center px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-500 transition-colors" href="modulo-2-5.html">Next Module →</a>
+</div>
+</div>
+</section>
+</main>
+<footer class="border-t border-dark-600 py-8 mt-8">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>Claude Code × Remotion · Module 2.4 · 2026 · <a class="text-sky-400 hover:text-sky-300" href="https://inema.club" target="_blank">INEMA.CLUB</a></p>
+</div>
+</footer>
+<script>
+    const themeToggle=document.getElementById('theme-toggle'),themeToggleDarkIcon=document.getElementById('theme-toggle-dark-icon'),themeToggleLightIcon=document.getElementById('theme-toggle-light-icon'),html=document.documentElement;
+    if(localStorage.getItem('theme')==='light'||(!localStorage.getItem('theme')&&!html.classList.contains('dark'))){themeToggleDarkIcon.classList.remove('hidden');html.classList.remove('dark');}else{themeToggleLightIcon.classList.remove('hidden');}
+    themeToggle.addEventListener('click',()=>{themeToggleDarkIcon.classList.toggle('hidden');themeToggleLightIcon.classList.toggle('hidden');html.classList.toggle('dark');localStorage.setItem('theme',html.classList.contains('dark')?'dark':'light');});
+  </script>
+</body>
+</html>

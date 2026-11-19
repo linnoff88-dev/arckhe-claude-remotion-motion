@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Track 2 · The Libraries | CC × Remotion</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#FACC15', dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' } } } } }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    code, .font-mono { font-family: 'JetBrains Mono', monospace; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+
+    /* Light mode base */
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+    /* Blue accent (Trilha 2) */
+    html:not(.dark) .text-blue-400 { color: #2563eb; }
+    html:not(.dark) .bg-blue-500\/20 { background: rgba(37,99,235,.12); }
+    html:not(.dark) .bg-blue-500\/10 { background: rgba(37,99,235,.08); }
+    html:not(.dark) .border-blue-500\/30 { border-color: rgba(37,99,235,.25); }
+    html:not(.dark) .hover\:bg-blue-500\/30:hover { background: rgba(37,99,235,.18); }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #2563eb; }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background: rgba(37,99,235,.08); }
+    html:not(.dark) .group:hover .group-hover\:text-blue-400 { color: #2563eb; }
+    html:not(.dark) .hover\:border-blue-500\/30:hover { border-color: rgba(37,99,235,.25); }
+    /* Other trilha hovers */
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #059669; }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(5,150,105,0.08); }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #7c3aed; }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(124,58,237,0.08); }
+    html:not(.dark) .hover\:text-amber-400:hover { color: #92400e; }
+    html:not(.dark) .hover\:bg-amber-500\/10:hover { background-color: rgba(217,119,6,0.08); }
+    /* Specials */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161,98,7,0.08); }
+    html:not(.dark) .border-primary\/30 { border-color: rgba(161,98,7,0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255,255,255,0.95); }
+    html:not(.dark) .bg-dark-900\/40 { background-color: rgba(255,255,255,0.7); }
+    html:not(.dark) .text-red-400 { color: #b91c1c; }
+    html:not(.dark) .border-red-500\/30 { border-color: rgba(185,28,28,0.25); }
+    html:not(.dark) .bg-red-900\/20 { background-color: rgba(185,28,28,0.08); }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #92400e; }
+
+    /* Hero SVG animations */
+    @keyframes svgPulse { 0%,100% { opacity:.5 } 50% { opacity:1 } }
+    @keyframes svgLine { from { stroke-dashoffset: 200 } to { stroke-dashoffset: 0 } }
+    @media (prefers-reduced-motion: no-preference) {
+      .svg-node { animation: svgPulse 2.8s ease-in-out infinite; }
+      .svg-node:nth-child(2){animation-delay:.3s}
+      .svg-node:nth-child(3){animation-delay:.6s}
+      .svg-node:nth-child(4){animation-delay:.9s}
+      .svg-node:nth-child(5){animation-delay:1.2s}
+      .svg-link { stroke-dasharray: 200; animation: svgLine 1.8s ease forwards; }
+      .svg-link:nth-child(2){animation-delay:.2s}
+      .svg-link:nth-child(3){animation-delay:.4s}
+      .svg-link:nth-child(4){animation-delay:.6s}
+      .svg-link:nth-child(5){animation-delay:.8s}
+    }
+  </style>
+<link href="https://inematds.github.io/claude-remotion-motion/curso/trilha2/" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/claude-remotion-motion/en/curso/trilha2/" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/claude-remotion-motion/es/curso/trilha2/" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha2/" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="./" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">EN</a><a href="../../../es/curso/trilha2/" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">ES</a></div>
+<!-- NAV -->
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14">
+<div class="flex items-center space-x-4">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🎞️</span>
+<span class="font-bold text-lg hidden sm:inline">CC × Remotion</span>
+</a>
+<span class="text-neutral-600">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+</div>
+<div class="flex items-center space-x-1 sm:space-x-2">
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors" href="../trilha1/index.html">
+<span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentals</span>
+</a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-blue-400 bg-blue-500/10" href="index.html">
+<span class="sm:hidden">T2</span><span class="hidden sm:inline">Libraries</span>
+</a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors" href="../trilha3/index.html">
+<span class="sm:hidden">T3</span><span class="hidden sm:inline">Projects</span>
+</a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors" href="../trilha4/index.html">
+<span class="sm:hidden">T4</span><span class="hidden sm:inline">Production</span>
+</a>
+<button class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20">
+<path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+</svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20">
+<path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path>
+</svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<!-- HERO HEADER -->
+<header class="border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+<div>
+<div class="inline-flex items-center space-x-2 bg-blue-500/10 border border-blue-500/30 rounded-full px-4 py-1.5 mb-6">
+<span class="w-2 h-2 rounded-full bg-blue-400 animate-pulse"></span>
+<span class="text-blue-400 text-sm font-semibold">TRACK 2</span>
+</div>
+<h1 class="text-4xl sm:text-5xl font-extrabold mb-4 leading-tight">🧩 The Libraries</h1>
+<p class="text-neutral-300 text-lg mb-8 leading-relaxed">GSAP, D3, Three.js, Lottie, and Framer Motion—what each does best, when to use it, and how to ask Claude.</p>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center">
+<div class="text-2xl font-extrabold text-blue-400">6</div>
+<div class="text-xs text-neutral-400 mt-1">Modules</div>
+</div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center">
+<div class="text-2xl font-extrabold text-blue-400">36</div>
+<div class="text-xs text-neutral-400 mt-1">Topics</div>
+</div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center">
+<div class="text-2xl font-extrabold text-blue-400">~4h</div>
+<div class="text-xs text-neutral-400 mt-1">Duration</div>
+</div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center">
+<div class="text-2xl font-extrabold text-blue-400">⚡</div>
+<div class="text-xs text-neutral-400 mt-1">Intermediate</div>
+</div>
+</div>
+</div>
+<!-- Hero SVG: Remotion no centro ligado a 5 libs -->
+<div class="flex justify-center">
+<svg aria-label="Remotion connected to 5 libraries" height="340" viewbox="0 0 420 340" width="420" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<lineargradient id="t2-grad-center" x1="0" x2="1" y1="0" y2="1">
+<stop offset="0" stop-color="#3b82f6"></stop><stop offset="1" stop-color="#60a5fa"></stop>
+</lineargradient>
+<lineargradient id="t2-grad-lib" x1="0" x2="1" y1="0" y2="1">
+<stop offset="0" stop-color="#0e1622"></stop><stop offset="1" stop-color="#1e3a5f"></stop>
+</lineargradient>
+<filter height="180%" id="t2-glow" width="180%" x="-40%" y="-40%">
+<fegaussianblur result="b" stddeviation="2.5"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge>
+</filter>
+<pattern height="32" id="t2-grid" patternunits="userSpaceOnUse" width="32">
+<circle cx="1.3" cy="1.3" fill="#3b82f6" opacity="0.1" r="1.3"></circle>
+</pattern>
+<marker id="t2-ah" markerheight="8" markerwidth="8" orient="auto" refx="6" refy="4">
+<path d="M0,0 L8,4 L0,8 L2,4 Z" fill="#60a5fa" opacity="0.7"></path>
+</marker>
+</defs>
+<!-- Grid background -->
+<rect fill="url(#t2-grid)" height="340" rx="16" width="420"></rect>
+<!-- Connection lines -->
+<line class="svg-link" marker-end="url(#t2-ah)" opacity="0.5" stroke="#60a5fa" stroke-dasharray="6 3" stroke-width="1.5" x1="210" x2="70" y1="170" y2="60"></line>
+<line class="svg-link" marker-end="url(#t2-ah)" opacity="0.5" stroke="#38bdf8" stroke-dasharray="6 3" stroke-width="1.5" x1="210" x2="360" y1="170" y2="60"></line>
+<line class="svg-link" marker-end="url(#t2-ah)" opacity="0.5" stroke="#60a5fa" stroke-dasharray="6 3" stroke-width="1.5" x1="210" x2="50" y1="170" y2="230"></line>
+<line class="svg-link" marker-end="url(#t2-ah)" opacity="0.5" stroke="#38bdf8" stroke-dasharray="6 3" stroke-width="1.5" x1="210" x2="370" y1="170" y2="230"></line>
+<line class="svg-link" marker-end="url(#t2-ah)" opacity="0.5" stroke="#60a5fa" stroke-dasharray="6 3" stroke-width="1.5" x1="210" x2="210" y1="170" y2="300"></line>
+<!-- Center node: Remotion -->
+<circle cx="210" cy="170" fill="url(#t2-grad-center)" opacity="0.18" r="46"></circle>
+<circle cx="210" cy="170" fill="url(#t2-grad-center)" filter="url(#t2-glow)" r="34"></circle>
+<text fill="#ffffff" font-family="Inter,sans-serif" font-size="13" font-weight="700" text-anchor="middle" x="210" y="165">🎞️</text>
+<text fill="#e0f2fe" font-family="Inter,sans-serif" font-size="10" font-weight="600" text-anchor="middle" x="210" y="180">Remotion</text>
+<!-- Lib nodes -->
+<!-- GSAP -->
+<g class="svg-node">
+<rect fill="url(#t2-grad-lib)" height="46" opacity="0.9" rx="10" stroke="#3b82f6" stroke-width="1.5" width="80" x="30" y="28"></rect>
+<text fill="#60a5fa" font-family="Inter,sans-serif" font-size="11" font-weight="600" text-anchor="middle" x="70" y="48">🟢 GSAP</text>
+<text fill="#94a3b8" font-family="Inter,sans-serif" font-size="9" text-anchor="middle" x="70" y="62">Timeline</text>
+</g>
+<!-- Framer Motion -->
+<g class="svg-node">
+<rect fill="url(#t2-grad-lib)" height="46" opacity="0.9" rx="10" stroke="#38bdf8" stroke-width="1.5" width="90" x="310" y="28"></rect>
+<text fill="#38bdf8" font-family="Inter,sans-serif" font-size="10" font-weight="600" text-anchor="middle" x="355" y="48">⚖️ Framer</text>
+<text fill="#94a3b8" font-family="Inter,sans-serif" font-size="9" text-anchor="middle" x="355" y="62">Motion</text>
+</g>
+<!-- D3.js -->
+<g class="svg-node">
+<rect fill="url(#t2-grad-lib)" height="46" opacity="0.9" rx="10" stroke="#3b82f6" stroke-width="1.5" width="80" x="10" y="204"></rect>
+<text fill="#60a5fa" font-family="Inter,sans-serif" font-size="11" font-weight="600" text-anchor="middle" x="50" y="224">📊 D3.js</text>
+<text fill="#94a3b8" font-family="Inter,sans-serif" font-size="9" text-anchor="middle" x="50" y="238">Data</text>
+</g>
+<!-- Three.js -->
+<g class="svg-node">
+<rect fill="url(#t2-grad-lib)" height="46" opacity="0.9" rx="10" stroke="#38bdf8" stroke-width="1.5" width="82" x="330" y="204"></rect>
+<text fill="#38bdf8" font-family="Inter,sans-serif" font-size="11" font-weight="600" text-anchor="middle" x="371" y="224">🧊 Three</text>
+<text fill="#94a3b8" font-family="Inter,sans-serif" font-size="9" text-anchor="middle" x="371" y="238">3D WebGL</text>
+</g>
+<!-- Lottie -->
+<g class="svg-node">
+<rect fill="url(#t2-grad-lib)" height="46" opacity="0.9" rx="10" stroke="#3b82f6" stroke-width="1.5" width="100" x="160" y="276"></rect>
+<text fill="#60a5fa" font-family="Inter,sans-serif" font-size="11" font-weight="600" text-anchor="middle" x="210" y="296">✨ Lottie</text>
+<text fill="#94a3b8" font-family="Inter,sans-serif" font-size="9" text-anchor="middle" x="210" y="310">Animated JSON</text>
+</g>
+</svg>
+</div>
+</div>
+</div>
+</header>
+<main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+<!-- MAPA DA TRILHA -->
+<section class="mb-16">
+<h2 class="text-2xl font-bold mb-2">Trail map</h2>
+<p class="text-neutral-400 mb-8">Six modules covering each library in depth — click to jump straight to one.</p>
+<div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+<a class="group bg-dark-800 hover:bg-blue-500/10 border border-dark-600 hover:border-blue-500/30 rounded-xl p-4 transition-all text-center" href="#modulo-2-1">
+<div class="text-2xl mb-2">🟢</div>
+<div class="text-xs font-bold text-blue-400 mb-1">2-1</div>
+<div class="text-xs text-neutral-300 group-hover:text-blue-400 transition-colors">GSAP</div>
+</a>
+<a class="group bg-dark-800 hover:bg-blue-500/10 border border-dark-600 hover:border-blue-500/30 rounded-xl p-4 transition-all text-center" href="#modulo-2-2">
+<div class="text-2xl mb-2">⚖️</div>
+<div class="text-xs font-bold text-blue-400 mb-1">2-2</div>
+<div class="text-xs text-neutral-300 group-hover:text-blue-400 transition-colors">GSAP × Framer</div>
+</a>
+<a class="group bg-dark-800 hover:bg-blue-500/10 border border-dark-600 hover:border-blue-500/30 rounded-xl p-4 transition-all text-center" href="#modulo-2-3">
+<div class="text-2xl mb-2">📊</div>
+<div class="text-xs font-bold text-blue-400 mb-1">2-3</div>
+<div class="text-xs text-neutral-300 group-hover:text-blue-400 transition-colors">D3.js</div>
+</a>
+<a class="group bg-dark-800 hover:bg-blue-500/10 border border-dark-600 hover:border-blue-500/30 rounded-xl p-4 transition-all text-center" href="#modulo-2-4">
+<div class="text-2xl mb-2">🧊</div>
+<div class="text-xs font-bold text-blue-400 mb-1">2-4</div>
+<div class="text-xs text-neutral-300 group-hover:text-blue-400 transition-colors">Three.js</div>
+</a>
+<a class="group bg-dark-800 hover:bg-blue-500/10 border border-dark-600 hover:border-blue-500/30 rounded-xl p-4 transition-all text-center" href="#modulo-2-5">
+<div class="text-2xl mb-2">✨</div>
+<div class="text-xs font-bold text-blue-400 mb-1">2-5</div>
+<div class="text-xs text-neutral-300 group-hover:text-blue-400 transition-colors">Lottie</div>
+</a>
+<a class="group bg-dark-800 hover:bg-blue-500/10 border border-dark-600 hover:border-blue-500/30 rounded-xl p-4 transition-all text-center" href="#modulo-2-6">
+<div class="text-2xl mb-2">🗺️</div>
+<div class="text-xs font-bold text-blue-400 mb-1">2-6</div>
+<div class="text-xs text-neutral-300 group-hover:text-blue-400 transition-colors">Decision map</div>
+</a>
+</div>
+</section>
+<h2 class="text-2xl font-bold mb-8 pb-4 border-b border-dark-600">Detailed content</h2>
+<!-- MÓDULO 2-1 -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 mb-6" id="modulo-2-1">
+<div class="p-6 border-b border-dark-600">
+<div class="flex items-center justify-between mb-2">
+<span class="text-blue-400 font-bold">2.1</span>
+<span class="text-xs text-neutral-500">~40 min</span>
+</div>
+<h3 class="text-2xl font-bold mb-2">🟢 GSAP — frame-perfect timeline</h3>
+<p class="text-neutral-400 text-sm">The standard web animation library. Timeline choreography, stagger, and professional easing for slide deck style videos.</p>
+</div>
+<div class="divide-y divide-dark-600">
+<!-- Tópico 1 -->
+<div class="topic-item">
+<button class="w-full flex items-center justify-start space-x-3 p-4 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="flex items-center justify-center w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 font-bold text-sm flex-shrink-0">1</span>
+<span class="font-medium">What GSAP is and why it’s the standard</span>
+<svg class="ml-auto w-4 h-4 text-neutral-500 flex-shrink-0" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+<div class="topic-explanation px-4 pb-4">
+<div class="bg-dark-700 rounded-lg p-4 space-y-3 text-sm text-neutral-300">
+<p><strong class="text-blue-400">What it is:</strong> GreenSock Animation Platform — the most widely used JavaScript library for high-performance web animation.</p>
+<p><strong class="text-blue-400">Why learn:</strong> Precise timing control, professional easing, and natural integration with Remotion.</p>
+<p><strong class="text-blue-400">Key concepts:</strong> gsap.to(), gsap.from(), timeline, stagger, ease.</p>
+</div>
+</div>
+</div>
+<!-- Tópico 2 -->
+<div class="topic-item">
+<button class="w-full flex items-center justify-start space-x-3 p-4 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="flex items-center justify-center w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 font-bold text-sm flex-shrink-0">2</span>
+<span class="font-medium">Timeline choreography</span>
+<svg class="ml-auto w-4 h-4 text-neutral-500 flex-shrink-0" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+<div class="topic-explanation px-4 pb-4">
+<div class="bg-dark-700 rounded-lg p-4 space-y-3 text-sm text-neutral-300">
+<p><strong class="text-blue-400">What it is:</strong> Chained animations where each piece appears at exactly the right moment.</p>
+<p><strong class="text-blue-400">Why learn:</strong> It’s the foundation for slide-deck-style videos where each section is revealed in sequence.</p>
+<p><strong class="text-blue-400">Key concepts:</strong> timeline.to(), position param, overlap with "&lt;0.3", labels.</p>
+</div>
+</div>
+</div>
+<!-- Tópico 3 -->
+<div class="topic-item">
+<button class="w-full flex items-center justify-start space-x-3 p-4 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="flex items-center justify-center w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 font-bold text-sm flex-shrink-0">3</span>
+<span class="font-medium">ScrollTrigger and staggered entrances</span>
+<svg class="ml-auto w-4 h-4 text-neutral-500 flex-shrink-0" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+<div class="topic-explanation px-4 pb-4">
+<div class="bg-dark-700 rounded-lg p-4 space-y-3 text-sm text-neutral-300">
+<p><strong class="text-blue-400">What it is:</strong> Animations that cascade with controlled delays.</p>
+<p><strong class="text-blue-400">Why learn:</strong> Cards entering in sequence are a hallmark of the best product videos.</p>
+<p><strong class="text-blue-400">Key concepts:</strong> stagger: 0.1, from: "center", each, amount.</p>
+</div>
+</div>
+</div>
+<!-- Tópico 4 -->
+<div class="topic-item">
+<button class="w-full flex items-center justify-start space-x-3 p-4 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="flex items-center justify-center w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 font-bold text-sm flex-shrink-0">4</span>
+<span class="font-medium">Professional easing</span>
+<svg class="ml-auto w-4 h-4 text-neutral-500 flex-shrink-0" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+<div class="topic-explanation px-4 pb-4">
+<div class="bg-dark-700 rounded-lg p-4 space-y-3 text-sm text-neutral-300">
+<p><strong class="text-blue-400">What it is:</strong> The velocity curve that makes the animation feel physical or smooth.</p>
+<p><strong class="text-blue-400">Why learn:</strong> Linear feels robotic; ease-out feels natural. The choice sets the tone.</p>
+<p><strong class="text-blue-400">Key concepts:</strong> power1-4, back, elastic, bounce, CustomEase.</p>
+</div>
+</div>
+</div>
+<!-- Tópico 5 -->
+<div class="topic-item">
+<button class="w-full flex items-center justify-start space-x-3 p-4 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="flex items-center justify-center w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 font-bold text-sm flex-shrink-0">5</span>
+<span class="font-medium">GSAP + Remotion integration</span>
+<svg class="ml-auto w-4 h-4 text-neutral-500 flex-shrink-0" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+<div class="topic-explanation px-4 pb-4">
+<div class="bg-dark-700 rounded-lg p-4 space-y-3 text-sm text-neutral-300">
+<p><strong class="text-blue-400">What it is:</strong> Use GSAP to choreograph React elements rendered frame by frame by Remotion.</p>
+<p><strong class="text-blue-400">Why learn:</strong> Remotion renders each frame—GSAP translates “progress” into CSS values perfectly.</p>
+<p><strong class="text-blue-400">Key concepts:</strong> useCurrentFrame, interpolate, gsap.globalTimeline.</p>
+</div>
+</div>
+</div>
+<!-- Tópico 6 -->
+<div class="topic-item">
+<button class="w-full flex items-center justify-start space-x-3 p-4 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="flex items-center justify-center w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 font-bold text-sm flex-shrink-0">6</span>
+<span class="font-medium">Asking Claude: from landing page to video</span>
+<svg class="ml-auto w-4 h-4 text-neutral-500 flex-shrink-0" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+<div class="topic-explanation px-4 pb-4">
+<div class="bg-dark-700 rounded-lg p-4 space-y-3 text-sm text-neutral-300">
+<p><strong class="text-blue-400">What it is:</strong> The approach of asking Claude for a static landing page and then turning it into a GSAP animation.</p>
+<p><strong class="text-blue-400">Why learn:</strong> Reusing ready-made components greatly speeds up video production.</p>
+<p><strong class="text-blue-400">Key concepts:</strong> transformation prompt, separation of concerns, animation layers.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+<button class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors" onclick="openModal('modal-2-1')">View in Modal</button>
+<a class="px-4 py-2 text-sm bg-blue-600 hover:bg-blue-500 text-white rounded-lg transition-colors" href="modulo-2-1.html">View Full</a>
+</div>
+</div>
+<!-- MÓDULO 2-2 -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 mb-6" id="modulo-2-2">
+<div class="p-6 border-b border-dark-600">
+<div class="flex items-center justify-between mb-2">
+<span class="text-blue-400 font-bold">2.2</span>
+<span class="text-xs text-neutral-500">~35 min</span>
+</div>
+<h3 class="text-2xl font-bold mb-2">⚖️ GSAP × Framer Motion</h3>
+<p class="text-neutral-400 text-sm">Precise timeline control vs. reactive physics. Why GSAP wins for rendered video.</p>
+</div>
+<div class="divide-y divide-dark-600">
+<div class="topic-item">
+<button class="w-full flex items-center justify-start space-x-3 p-4 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="flex items-center justify-center w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 font-bold text-sm flex-shrink-0">1</span>
+<span class="font-medium">GSAP: deterministic and frame-based</span>
+<svg class="ml-auto w-4 h-4 text-neutral-500 flex-shrink-0" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+<div class="topic-explanation px-4 pb-4">
+<div class="bg-dark-700 rounded-lg p-4 space-y-3 text-sm text-neutral-300">
+<p><strong class="text-blue-400">What it is:</strong> Animations controlled by absolute time — always the same in every render.</p>
+<p><strong class="text-blue-400">Why learn:</strong> Frame-by-frame rendering requires determinism: same frame = same visual.</p>
+<p><strong class="text-blue-400">Key concepts:</strong> deterministic timeline, position param, seek(), globalTimeline.</p>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button class="w-full flex items-center justify-start space-x-3 p-4 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="flex items-center justify-center w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 font-bold text-sm flex-shrink-0">2</span>
+<span class="font-medium">Framer Motion: physical and reactive</span>
+<svg class="ml-auto w-4 h-4 text-neutral-500 flex-shrink-0" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+<div class="topic-explanation px-4 pb-4">
+<div class="bg-dark-700 rounded-lg p-4 space-y-3 text-sm text-neutral-300">
+<p><strong class="text-blue-400">What it is:</strong> Interaction-driven animations — hover, drag, layout reflow.</p>
+<p><strong class="text-blue-400">Why learn:</strong> Best for UI prototypes and interactive demos (not rendered video).</p>
+<p><strong class="text-blue-400">Key concepts:</strong> motion.div, whileHover, spring physics, AnimatePresence.</p>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button class="w-full flex items-center justify-start space-x-3 p-4 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="flex items-center justify-center w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 font-bold text-sm flex-shrink-0">3</span>
+<span class="font-medium">Decision matrix</span>
+<svg class="ml-auto w-4 h-4 text-neutral-500 flex-shrink-0" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+<div class="topic-explanation px-4 pb-4">
+<div class="bg-dark-700 rounded-lg p-4 space-y-3 text-sm text-neutral-300">
+<p><strong class="text-blue-400">What it is:</strong> Comparison table to decide which library to use for each scenario.</p>
+<p><strong class="text-blue-400">Why learn:</strong> Prevents using the wrong tool in the wrong context.</p>
+<p><strong class="text-blue-400">Key concepts:</strong> rendered video, prototyping, interactive UI, presentation.</p>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button class="w-full flex items-center justify-start space-x-3 p-4 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="flex items-center justify-center w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 font-bold text-sm flex-shrink-0">4</span>
+<span class="font-medium">Choreographed timeline A→B→C</span>
+<svg class="ml-auto w-4 h-4 text-neutral-500 flex-shrink-0" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+<div class="topic-explanation px-4 pb-4">
+<div class="bg-dark-700 rounded-lg p-4 space-y-3 text-sm text-neutral-300">
+<p><strong class="text-blue-400">What it is:</strong> A ends, B starts 0.3s later, and C overlaps B by 0.1s.</p>
+<p><strong class="text-blue-400">Why learn:</strong> This relative positioning pattern is the heart of visual storytelling.</p>
+<p><strong class="text-blue-400">Key concepts:</strong> position param "&lt;", "&lt;0.3", "+0.5", named labels.</p>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button class="w-full flex items-center justify-start space-x-3 p-4 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="flex items-center justify-center w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 font-bold text-sm flex-shrink-0">5</span>
+<span class="font-medium">Why reactive doesn't make sense in video</span>
+<svg class="ml-auto w-4 h-4 text-neutral-500 flex-shrink-0" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+<div class="topic-explanation px-4 pb-4">
+<div class="bg-dark-700 rounded-lg p-4 space-y-3 text-sm text-neutral-300">
+<p><strong class="text-blue-400">What it is:</strong> A rendered video means no one will interact with it. Hover and drag don’t exist in an MP4.</p>
+<p><strong class="text-blue-400">Why learn:</strong> Understanding the limitation helps you avoid the wrong stack choices.</p>
+<p><strong class="text-blue-400">Key concepts:</strong> headless render, frame by frame, lack of interactivity.</p>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button class="w-full flex items-center justify-start space-x-3 p-4 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="flex items-center justify-center w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 font-bold text-sm flex-shrink-0">6</span>
+<span class="font-medium">When Framer Motion still makes sense</span>
+<svg class="ml-auto w-4 h-4 text-neutral-500 flex-shrink-0" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+<div class="topic-explanation px-4 pb-4">
+<div class="bg-dark-700 rounded-lg p-4 space-y-3 text-sm text-neutral-300">
+<p><strong class="text-blue-400">What it is:</strong> UI prototypes, interactive client demos, web apps with transitions.</p>
+<p><strong class="text-blue-400">Why learn:</strong> Having both tools in your arsenal helps with different contexts.</p>
+<p><strong class="text-blue-400">Key concepts:</strong> rapid prototyping, layout animation, shared layout transitions.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+<button class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors" onclick="openModal('modal-2-2')">View in Modal</button>
+<a class="px-4 py-2 text-sm bg-blue-600 hover:bg-blue-500 text-white rounded-lg transition-colors" href="modulo-2-2.html">View Full</a>
+</div>
+</div>
+<!-- MÓDULO 2-3 -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 mb-6" id="modulo-2-3">
+<div class="p-6 border-b border-dark-600">
+<div class="flex items-center justify-between mb-2">
+<span class="text-blue-400 font-bold">2.3</span>
+<span class="text-xs text-neutral-500">~40 min</span>
+</div>
+<h3 class="text-2xl font-bold mb-2">📊 D3.js — Data Is the Content</h3>
+<p class="text-neutral-400 text-sm">A data visualization pattern. Static data becomes rich animations—you don’t draw anything; the data does the work.</p>
+</div>
+<div class="divide-y divide-dark-600">
+<div class="topic-item">
+<button class="w-full flex items-center justify-start space-x-3 p-4 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="flex items-center justify-center w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 font-bold text-sm flex-shrink-0">1</span>
+<span class="font-medium">What D3 is and why it’s powerful</span>
+<svg class="ml-auto w-4 h-4 text-neutral-500 flex-shrink-0" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+<div class="topic-explanation px-4 pb-4">
+<div class="bg-dark-700 rounded-lg p-4 space-y-3 text-sm text-neutral-300">
+<p><strong class="text-blue-400">What it is:</strong> Data-Driven Documents — automatically binds data to DOM/SVG elements.</p>
+<p><strong class="text-blue-400">Why learn:</strong> Any dataset can become an animated chart without drawing it manually.</p>
+<p><strong class="text-blue-400">Key concepts:</strong> data binding, scales, selections, enter/update/exit.</p>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button class="w-full flex items-center justify-start space-x-3 p-4 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="flex items-center justify-center w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 font-bold text-sm flex-shrink-0">2</span>
+<span class="font-medium">Demographic bar race</span>
+<svg class="ml-auto w-4 h-4 text-neutral-500 flex-shrink-0" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+<div class="topic-explanation px-4 pb-4">
+<div class="bg-dark-700 rounded-lg p-4 space-y-3 text-sm text-neutral-300">
+<p><strong class="text-blue-400">What it is:</strong> Bars that grow and reorder over time, representing shifting rankings.</p>
+<p><strong class="text-blue-400">Why learn:</strong> It’s the standard for any temporal comparison of categories.</p>
+<p><strong class="text-blue-400">Key concepts:</strong> reordering keyframes, smooth transitions, d3.transition().</p>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button class="w-full flex items-center justify-start space-x-3 p-4 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="flex items-center justify-center w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 font-bold text-sm flex-shrink-0">3</span>
+<span class="font-medium">Animated architecture diagram</span>
+<svg class="ml-auto w-4 h-4 text-neutral-500 flex-shrink-0" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+<div class="topic-explanation px-4 pb-4">
+<div class="bg-dark-700 rounded-lg p-4 space-y-3 text-sm text-neutral-300">
+<p><strong class="text-blue-400">What it is:</strong> Nodes appear in sequence, and lines draw in to connect the topology.</p>
+<p><strong class="text-blue-400">Why learn:</strong> Explains complex systems visually and progressively.</p>
+<p><strong class="text-blue-400">Key concepts:</strong> force layout, stroke-dashoffset, sequential reveal, node-link.</p>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button class="w-full flex items-center justify-start space-x-3 p-4 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="flex items-center justify-center w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 font-bold text-sm flex-shrink-0">4</span>
+<span class="font-medium">Clean data + clear description = Claude does the rest</span>
+<svg class="ml-auto w-4 h-4 text-neutral-500 flex-shrink-0" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+<div class="topic-explanation px-4 pb-4">
+<div class="bg-dark-700 rounded-lg p-4 space-y-3 text-sm text-neutral-300">
+<p><strong class="text-blue-400">What it is:</strong> The approach—you provide the dataset and describe the visual; Claude generates complete D3.</p>
+<p><strong class="text-blue-400">Why learn:</strong> You don’t need to know D3; you need to know what you want to show.</p>
+<p><strong class="text-blue-400">Key concepts:</strong> data prompt, CSV/JSON, visual specification, iteration.</p>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button class="w-full flex items-center justify-start space-x-3 p-4 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="flex items-center justify-center w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 font-bold text-sm flex-shrink-0">5</span>
+<span class="font-medium">Maps and geovisualizations</span>
+<svg class="ml-auto w-4 h-4 text-neutral-500 flex-shrink-0" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+<div class="topic-explanation px-4 pb-4">
+<div class="bg-dark-700 rounded-lg p-4 space-y-3 text-sm text-neutral-300">
+<p><strong class="text-blue-400">What it is:</strong> Growth routes, geographic data heat maps, user journeys.</p>
+<p><strong class="text-blue-400">Why learn:</strong> Geographic data tells unique stories that ordinary charts can’t.</p>
+<p><strong class="text-blue-400">Key concepts:</strong> d3.geoProjection, topojson, choropleth, path animation.</p>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button class="w-full flex items-center justify-start space-x-3 p-4 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="flex items-center justify-center w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 font-bold text-sm flex-shrink-0">6</span>
+<span class="font-medium">Best data-driven use cases</span>
+<svg class="ml-auto w-4 h-4 text-neutral-500 flex-shrink-0" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+<div class="topic-explanation px-4 pb-4">
+<div class="bg-dark-700 rounded-lg p-4 space-y-3 text-sm text-neutral-300">
+<p><strong class="text-blue-400">What it is:</strong> Charts, architecture diagrams, route maps — anything data-driven.</p>
+<p><strong class="text-blue-400">Why learn:</strong> Knowing which tool to choose for each type of data saves rework.</p>
+<p><strong class="text-blue-400">Key concepts:</strong> choice of chart type, continuous vs. categorical data, hierarchies.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+<button class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors" onclick="openModal('modal-2-3')">View in Modal</button>
+<a class="px-4 py-2 text-sm bg-blue-600 hover:bg-blue-500 text-white rounded-lg transition-colors" href="modulo-2-3.html">View Full</a>
+</div>
+</div>
+<!-- MÓDULO 2-4 -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 mb-6" id="modulo-2-4">
+<div class="p-6 border-b border-dark-600">
+<div class="flex items-center justify-between mb-2">
+<span class="text-blue-400 font-bold">2.4</span>
+<span class="text-xs text-neutral-500">~40 min</span>
+</div>
+<h3 class="text-2xl font-bold mb-2">🧊 Three.js — WebGL and 3D in video</h3>
+<p class="text-neutral-400 text-sm">3D scenes rendered frame by frame. Materials, cameras, and procedural geometry for 3D motion graphics.</p>
+</div>
+<div class="divide-y divide-dark-600">
+<div class="topic-item">
+<button class="w-full flex items-center justify-start space-x-3 p-4 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="flex items-center justify-center w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 font-bold text-sm flex-shrink-0">1</span>
+<span class="font-medium">🧊 3D scenes as video frames</span>
+<svg class="ml-auto w-4 h-4 text-neutral-500 flex-shrink-0" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+<div class="topic-explanation px-4 pb-4">
+<div class="bg-dark-700 rounded-lg p-4 space-y-3 text-sm text-neutral-300">
+<p><strong class="text-blue-400">What it is:</strong> Three.js integration with Remotion: each video frame is a WebGL render synchronized with the composition’s timing.</p>
+<p><strong class="text-blue-400">Why learn:</strong> Lets you create motion graphics with geometry, light, and depth that are impossible to replicate with CSS or SVG.</p>
+<p><strong class="text-blue-400">Key concepts:</strong> useCurrentFrame(), renderer.render(), canvas as the image source, frame determinism.</p>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button class="w-full flex items-center justify-start space-x-3 p-4 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="flex items-center justify-center w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 font-bold text-sm flex-shrink-0">2</span>
+<span class="font-medium">🎥 Vanilla Three.js — direct WebGL pipeline</span>
+<svg class="ml-auto w-4 h-4 text-neutral-500 flex-shrink-0" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+<div class="topic-explanation px-4 pb-4">
+<div class="bg-dark-700 rounded-lg p-4 space-y-3 text-sm text-neutral-300">
+<p><strong class="text-blue-400">What it is:</strong> Using pure Three.js — Scene, Camera, Renderer, Mesh — with no additional abstraction layers.</p>
+<p><strong class="text-blue-400">Why learn:</strong> Full control over the WebGL pipeline; ideal when maximum performance or custom shaders are needed.</p>
+<p><strong class="text-blue-400">Key concepts:</strong> WebGLRenderer, PerspectiveCamera, BoxGeometry, MeshStandardMaterial, animationLoop replaced by frame.</p>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button class="w-full flex items-center justify-start space-x-3 p-4 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="flex items-center justify-center w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 font-bold text-sm flex-shrink-0">3</span>
+<span class="font-medium">⚛️ React Three Fiber — composable 3D JSX</span>
+<svg class="ml-auto w-4 h-4 text-neutral-500 flex-shrink-0" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+<div class="topic-explanation px-4 pb-4">
+<div class="bg-dark-700 rounded-lg p-4 space-y-3 text-sm text-neutral-300">
+<p><strong class="text-blue-400">What it is:</strong> React wrapper for Three.js — write 3D scenes in JSX, with reusable components and hooks.</p>
+<p><strong class="text-blue-400">Why learn:</strong> Integrates naturally with Remotion’s component model; code is more readable and easier to iterate on with Claude.</p>
+<p><strong class="text-blue-400">Key concepts:</strong> &lt;Canvas&gt;, &lt;mesh&gt;, &lt;ambientLight&gt;, useFrame() replaced by useCurrentFrame(), drei helpers.</p>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button class="w-full flex items-center justify-start space-x-3 p-4 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="flex items-center justify-center w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 font-bold text-sm flex-shrink-0">4</span>
+<span class="font-medium">💡 Lighting and materials</span>
+<svg class="ml-auto w-4 h-4 text-neutral-500 flex-shrink-0" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+<div class="topic-explanation px-4 pb-4">
+<div class="bg-dark-700 rounded-lg p-4 space-y-3 text-sm text-neutral-300">
+<p><strong class="text-blue-400">What it is:</strong> Configure lights (ambient, directional, point) and materials (basic, standard, physical) to define appearance and realism.</p>
+<p><strong class="text-blue-400">Why learn:</strong> Lighting is what transforms a generic cube into an object with a visual identity — essential for premium motion.</p>
+<p><strong class="text-blue-400">Key concepts:</strong> AmbientLight, DirectionalLight, MeshPhysicalMaterial, roughness, metalness, envMap.</p>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button class="w-full flex items-center justify-start space-x-3 p-4 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="flex items-center justify-center w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 font-bold text-sm flex-shrink-0">5</span>
+<span class="font-medium">🔄 Camera Orbit and Camera Animation</span>
+<svg class="ml-auto w-4 h-4 text-neutral-500 flex-shrink-0" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+<div class="topic-explanation px-4 pb-4">
+<div class="bg-dark-700 rounded-lg p-4 space-y-3 text-sm text-neutral-300">
+<p><strong class="text-blue-400">What it is:</strong> Camera movement around objects using trigonometry or easing mapped to frames.</p>
+<p><strong class="text-blue-400">Why learn:</strong> A moving camera creates narrative depth — turning static renders into 3D cinematography.</p>
+<p><strong class="text-blue-400">Key concepts:</strong> camera.position, lookAt(), Math.sin/cos for orbit, position interpolation with spring().</p>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button class="w-full flex items-center justify-start space-x-3 p-4 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="flex items-center justify-center w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 font-bold text-sm flex-shrink-0">6</span>
+<span class="font-medium">⚖️ Vanilla vs. R3F: when to use each</span>
+<svg class="ml-auto w-4 h-4 text-neutral-500 flex-shrink-0" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+<div class="topic-explanation px-4 pb-4">
+<div class="bg-dark-700 rounded-lg p-4 space-y-3 text-sm text-neutral-300">
+<p><strong class="text-blue-400">What it is:</strong> Objective criteria for choosing between pure Three.js and React Three Fiber for each project.</p>
+<p><strong class="text-blue-400">Why learn:</strong> The right choice saves rework—R3F is better for complex compositions; Vanilla for shaders and critical performance.</p>
+<p><strong class="text-blue-400">Key concepts:</strong> reconciliation overhead, drei ecosystem, direct GPU access, integration with React state.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+<button class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors" onclick="openModal('modal-2-4')">View in Modal</button>
+<a class="px-4 py-2 text-sm bg-blue-600 hover:bg-blue-500 text-white rounded-lg transition-colors" href="modulo-2-4.html">View Full</a>
+</div>
+</div>
+<!-- MÓDULO 2-5 -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 mb-6" id="modulo-2-5">
+<div class="p-6 border-b border-dark-600">
+<div class="flex items-center justify-between mb-2">
+<span class="text-blue-400 font-bold">2.5</span>
+<span class="text-xs text-neutral-500">~35 min</span>
+</div>
+<h3 class="text-2xl font-bold mb-2">✨ Lottie — JSON animation</h3>
+<p class="text-neutral-400 text-sm">Export from After Effects / Figma to JSON and reproduce it perfectly at any size.</p>
+</div>
+<div class="divide-y divide-dark-600">
+<div class="topic-item">
+<button class="w-full flex items-center justify-start space-x-3 p-4 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="flex items-center justify-center w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 font-bold text-sm flex-shrink-0">1</span>
+<span class="font-medium">✨ The fastest path from prompt→output</span>
+<svg class="ml-auto w-4 h-4 text-neutral-500 flex-shrink-0" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+<div class="topic-explanation px-4 pb-4">
+<div class="bg-dark-700 rounded-lg p-4 space-y-3 text-sm text-neutral-300">
+<p><strong class="text-blue-400">What it is:</strong> Lottie as the most direct route from a ready-made animation to video: JSON file → Remotion component → render.</p>
+<p><strong class="text-blue-400">Why learn:</strong> Eliminates manual animation code—you describe the look, get a JSON file, and add it to the video in minutes.</p>
+<p><strong class="text-blue-400">Key concepts:</strong> lottie-web, @remotion/lottie, LottieAnimation component, loop and autoplay controlled by frame.</p>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button class="w-full flex items-center justify-start space-x-3 p-4 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="flex items-center justify-center w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 font-bold text-sm flex-shrink-0">2</span>
+<span class="font-medium">📦 Small Scope = Clean Output on the First Try</span>
+<svg class="ml-auto w-4 h-4 text-neutral-500 flex-shrink-0" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+<div class="topic-explanation px-4 pb-4">
+<div class="bg-dark-700 rounded-lg p-4 space-y-3 text-sm text-neutral-300">
+<p><strong class="text-blue-400">What it is:</strong> The principle that narrowly scoped Lottie animations (icon, loader, simple illustration) produce reliable, lightweight JSON.</p>
+<p><strong class="text-blue-400">Why learn:</strong> Complex animations produce fragile JSON; splitting them into small pieces ensures consistent quality.</p>
+<p><strong class="text-blue-400">Key concepts:</strong> scene breakdown, JSON file size, named layers, animation versioning.</p>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button class="w-full flex items-center justify-start space-x-3 p-4 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="flex items-center justify-center w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 font-bold text-sm flex-shrink-0">3</span>
+<span class="font-medium">🌐 Community reference library</span>
+<svg class="ml-auto w-4 h-4 text-neutral-500 flex-shrink-0" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+<div class="topic-explanation px-4 pb-4">
+<div class="bg-dark-700 rounded-lg p-4 space-y-3 text-sm text-neutral-300">
+<p><strong class="text-blue-400">What it is:</strong> LottieFiles and other sources of ready-made JSON animations that are free and licensed for production use.</p>
+<p><strong class="text-blue-400">Why learn:</strong> Reusing validated animations speeds up production — you don’t need to create from scratch what already exists.</p>
+<p><strong class="text-blue-400">Key concepts:</strong> lottiefiles.com, license filter, preview, JSON download, color customization via online editor.</p>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button class="w-full flex items-center justify-start space-x-3 p-4 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="flex items-center justify-center w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 font-bold text-sm flex-shrink-0">4</span>
+<span class="font-medium">🎯 Micro-interactions and animated icons</span>
+<svg class="ml-auto w-4 h-4 text-neutral-500 flex-shrink-0" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+<div class="topic-explanation px-4 pb-4">
+<div class="bg-dark-700 rounded-lg p-4 space-y-3 text-sm text-neutral-300">
+<p><strong class="text-blue-400">What it is:</strong> Using Lottie for small reinforcing animations — checkmarks, loaders, icons that “come to life” at key moments in the video.</p>
+<p><strong class="text-blue-400">Why learn:</strong> Micro-interactions increase perceived quality without a proportional increase in production costs.</p>
+<p><strong class="text-blue-400">Key concepts:</strong> entrance timing, playbackRate, animation segments, narration sync.</p>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button class="w-full flex items-center justify-start space-x-3 p-4 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="flex items-center justify-center w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 font-bold text-sm flex-shrink-0">5</span>
+<span class="font-medium">📱 App Onboarding and Tutorials</span>
+<svg class="ml-auto w-4 h-4 text-neutral-500 flex-shrink-0" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+<div class="topic-explanation px-4 pb-4">
+<div class="bg-dark-700 rounded-lg p-4 space-y-3 text-sm text-neutral-300">
+<p><strong class="text-blue-400">What it is:</strong> Lottie as the default choice for onboarding sequences — animated illustrations that explain app flows.</p>
+<p><strong class="text-blue-400">Why learn:</strong> A lightweight, scalable format that reproduces perfectly at any resolution — ideal for product videos.</p>
+<p><strong class="text-blue-400">Key concepts:</strong> onboarding storyboard, transitions between screens, duration per step, caption integration.</p>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button class="w-full flex items-center justify-start space-x-3 p-4 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="flex items-center justify-center w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 font-bold text-sm flex-shrink-0">6</span>
+<span class="font-medium">🏷️ Social clips and branded content</span>
+<svg class="ml-auto w-4 h-4 text-neutral-500 flex-shrink-0" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+<div class="topic-explanation px-4 pb-4">
+<div class="bg-dark-700 rounded-lg p-4 space-y-3 text-sm text-neutral-300">
+<p><strong class="text-blue-400">What it is:</strong> Lottie for brand identity animations on social media — animated logos, intros, bumpers, and transitions.</p>
+<p><strong class="text-blue-400">Why learn:</strong> Producing branded content at scale — reusing a Lottie animation across dozens of videos maintains a consistent identity without rework.</p>
+<p><strong class="text-blue-400">Key concepts:</strong> brand palette in JSON, reusable animations as components, color variants for different campaigns.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+<button class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors" onclick="openModal('modal-2-5')">View in Modal</button>
+<a class="px-4 py-2 text-sm bg-blue-600 hover:bg-blue-500 text-white rounded-lg transition-colors" href="modulo-2-5.html">View Full</a>
+</div>
+</div>
+<!-- MÓDULO 2-6 -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 mb-6" id="modulo-2-6">
+<div class="p-6 border-b border-dark-600">
+<div class="flex items-center justify-between mb-2">
+<span class="text-blue-400 font-bold">2.6</span>
+<span class="text-xs text-neutral-500">~30 min</span>
+</div>
+<h3 class="text-2xl font-bold mb-2">🗺️ Decision map — which library to use</h3>
+<p class="text-neutral-400 text-sm">Complete flowchart for choosing the right library based on content type, timeline, and complexity.</p>
+</div>
+<div class="divide-y divide-dark-600">
+<div class="topic-item">
+<button class="w-full flex items-center justify-start space-x-3 p-4 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="flex items-center justify-center w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 font-bold text-sm flex-shrink-0">1</span>
+<span class="font-medium">🟢 GSAP for timelines and choreography</span>
+<svg class="ml-auto w-4 h-4 text-neutral-500 flex-shrink-0" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+<div class="topic-explanation px-4 pb-4">
+<div class="bg-dark-700 rounded-lg p-4 space-y-3 text-sm text-neutral-300">
+<p><strong class="text-blue-400">What it is:</strong> GSAP selection criterion: any scene where multiple elements need to appear in sequence with precise timing.</p>
+<p><strong class="text-blue-400">Why learn:</strong> Knowing when to choose GSAP avoids using a heavier library when a timeline would do.</p>
+<p><strong class="text-blue-400">Key concepts:</strong> slide deck, sequential reveal, stagger, expressive easing, full Remotion compatibility.</p>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button class="w-full flex items-center justify-start space-x-3 p-4 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="flex items-center justify-center w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 font-bold text-sm flex-shrink-0">2</span>
+<span class="font-medium">📊 D3 for Animated Data</span>
+<svg class="ml-auto w-4 h-4 text-neutral-500 flex-shrink-0" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+<div class="topic-explanation px-4 pb-4">
+<div class="bg-dark-700 rounded-lg p-4 space-y-3 text-sm text-neutral-300">
+<p><strong class="text-blue-400">What it is:</strong> D3 selection criterion: whenever the content is derived from a dataset — the data is the main character.</p>
+<p><strong class="text-blue-400">Why learn:</strong> D3 automatically turns numbers into geometry; trying to do this manually with another library would be inefficient.</p>
+<p><strong class="text-blue-400">Key concepts:</strong> data binding, scales, animated charts, network diagrams, geographic maps.</p>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button class="w-full flex items-center justify-start space-x-3 p-4 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="flex items-center justify-center w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 font-bold text-sm flex-shrink-0">3</span>
+<span class="font-medium">🧊 Three.js for 3D and WebGL</span>
+<svg class="ml-auto w-4 h-4 text-neutral-500 flex-shrink-0" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+<div class="topic-explanation px-4 pb-4">
+<div class="bg-dark-700 rounded-lg p-4 space-y-3 text-sm text-neutral-300">
+<p><strong class="text-blue-400">What it is:</strong> Three.js selection criterion: any scene that requires real depth, procedural geometry, or physically based light rendering.</p>
+<p><strong class="text-blue-400">Why learn:</strong> Three.js has a higher setup cost—using it only when 3D is truly necessary avoids unnecessary complexity.</p>
+<p><strong class="text-blue-400">Key concepts:</strong> 3D objects, perspective camera, shader, PBR materials, interactive or cinematic scenes.</p>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button class="w-full flex items-center justify-start space-x-3 p-4 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="flex items-center justify-center w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 font-bold text-sm flex-shrink-0">4</span>
+<span class="font-medium">✨ Lottie for lightweight speed</span>
+<svg class="ml-auto w-4 h-4 text-neutral-500 flex-shrink-0" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+<div class="topic-explanation px-4 pb-4">
+<div class="bg-dark-700 rounded-lg p-4 space-y-3 text-sm text-neutral-300">
+<p><strong class="text-blue-400">What it is:</strong> Lottie selection criterion: illustration animations, icons, micro-interactions — where lightness and delivery speed matter more than control.</p>
+<p><strong class="text-blue-400">Why learn:</strong> Lottie eliminates animation code — you deliver faster and with fewer bugs when the scope is a good fit.</p>
+<p><strong class="text-blue-400">Key concepts:</strong> Pre-animated JSON, zero interpolation code, scalable, onboarding and social clips.</p>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button class="w-full flex items-center justify-start space-x-3 p-4 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="flex items-center justify-center w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 font-bold text-sm flex-shrink-0">5</span>
+<span class="font-medium">⚖️ GSAP vs. Framer Motion — the definitive choice</span>
+<svg class="ml-auto w-4 h-4 text-neutral-500 flex-shrink-0" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+<div class="topic-explanation px-4 pb-4">
+<div class="bg-dark-700 rounded-lg p-4 space-y-3 text-sm text-neutral-300">
+<p><strong class="text-blue-400">What it is:</strong> Direct comparison between GSAP (imperative timeline control) and Framer Motion (declarative, React state-driven animation).</p>
+<p><strong class="text-blue-400">Why learn:</strong> Both are valid in Remotion—the wrong choice creates rework; understanding the differences saves time.</p>
+<p><strong class="text-blue-400">Key concepts:</strong> GSAP for precise choreography, Framer Motion for prototyping and interactive UI, with some overlap in use cases.</p>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button class="w-full flex items-center justify-start space-x-3 p-4 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)">
+<span class="flex items-center justify-center w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 font-bold text-sm flex-shrink-0">6</span>
+<span class="font-medium">🧭 The 4 universal rules for choosing a library</span>
+<svg class="ml-auto w-4 h-4 text-neutral-500 flex-shrink-0" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+<div class="topic-explanation px-4 pb-4">
+<div class="bg-dark-700 rounded-lg p-4 space-y-3 text-sm text-neutral-300">
+<p><strong class="text-blue-400">What it is:</strong> Decision framework with 4 rules: install the right library, start simple, iterate with Claude, render correctly.</p>
+<p><strong class="text-blue-400">Why learn:</strong> Having an explicit decision-making process eliminates choice paralysis and ensures consistency across projects.</p>
+<p><strong class="text-blue-400">Key concepts:</strong> installation criteria, MVP first, AI iteration cycle, render validation before scaling.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+<button class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors" onclick="openModal('modal-2-6')">View in Modal</button>
+<a class="px-4 py-2 text-sm bg-blue-600 hover:bg-blue-500 text-white rounded-lg transition-colors" href="modulo-2-6.html">View Full</a>
+</div>
+</div>
+<!-- BOTTOM NAV -->
+<div class="flex flex-col sm:flex-row justify-between gap-4 mt-16 pt-8 border-t border-dark-600">
+<a class="flex items-center space-x-3 bg-dark-800 hover:bg-dark-700 border border-dark-600 rounded-xl px-6 py-4 transition-colors group" href="../trilha1/index.html">
+<span class="text-2xl">←</span>
+<div>
+<div class="text-xs text-neutral-500 mb-1">Previous</div>
+<div class="font-semibold group-hover:text-emerald-400 transition-colors">Fundamentals &amp; Setup</div>
+</div>
+</a>
+<a class="flex items-center space-x-3 bg-purple-600 hover:bg-purple-500 rounded-xl px-6 py-4 transition-colors group text-white" href="../trilha3/index.html">
+<div class="text-right">
+<div class="text-xs text-purple-200 mb-1">Next</div>
+<div class="font-semibold">Projects →</div>
+</div>
+<span class="text-2xl">→</span>
+</a>
+</div>
+</main>
+<!-- MODALS -->
+<div class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80" id="modal-2-1">
+<div class="bg-dark-900 rounded-2xl w-full max-w-4xl max-h-[90vh] flex flex-col border border-dark-600">
+<div class="flex items-center justify-between p-4 border-b border-dark-600">
+<span class="font-bold">🟢 Module 2.1 — GSAP</span>
+<button class="p-2 hover:bg-dark-700 rounded-lg transition-colors" onclick="closeModal()">✕</button>
+</div>
+<iframe class="flex-1 rounded-b-xl" frameborder="0" src="modulo-2-1.html"></iframe>
+</div>
+</div>
+<div class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80" id="modal-2-2">
+<div class="bg-dark-900 rounded-2xl w-full max-w-4xl max-h-[90vh] flex flex-col border border-dark-600">
+<div class="flex items-center justify-between p-4 border-b border-dark-600">
+<span class="font-bold">⚖️ Module 2.2 — GSAP × Framer Motion</span>
+<button class="p-2 hover:bg-dark-700 rounded-lg transition-colors" onclick="closeModal()">✕</button>
+</div>
+<iframe class="flex-1 rounded-b-xl" frameborder="0" src="modulo-2-2.html"></iframe>
+</div>
+</div>
+<div class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80" id="modal-2-3">
+<div class="bg-dark-900 rounded-2xl w-full max-w-4xl max-h-[90vh] flex flex-col border border-dark-600">
+<div class="flex items-center justify-between p-4 border-b border-dark-600">
+<span class="font-bold">📊 Module 2.3 — D3.js</span>
+<button class="p-2 hover:bg-dark-700 rounded-lg transition-colors" onclick="closeModal()">✕</button>
+</div>
+<iframe class="flex-1 rounded-b-xl" frameborder="0" src="modulo-2-3.html"></iframe>
+</div>
+</div>
+<div class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80" id="modal-2-4">
+<div class="bg-dark-900 rounded-2xl w-full max-w-4xl max-h-[90vh] flex flex-col border border-dark-600">
+<div class="flex items-center justify-between p-4 border-b border-dark-600">
+<span class="font-bold">🧊 Module 2.4 — Three.js</span>
+<button class="p-2 hover:bg-dark-700 rounded-lg transition-colors" onclick="closeModal()">✕</button>
+</div>
+<iframe class="flex-1 rounded-b-xl" frameborder="0" src="modulo-2-4.html"></iframe>
+</div>
+</div>
+<div class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80" id="modal-2-5">
+<div class="bg-dark-900 rounded-2xl w-full max-w-4xl max-h-[90vh] flex flex-col border border-dark-600">
+<div class="flex items-center justify-between p-4 border-b border-dark-600">
+<span class="font-bold">✨ Module 2.5 — Lottie</span>
+<button class="p-2 hover:bg-dark-700 rounded-lg transition-colors" onclick="closeModal()">✕</button>
+</div>
+<iframe class="flex-1 rounded-b-xl" frameborder="0" src="modulo-2-5.html"></iframe>
+</div>
+</div>
+<div class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80" id="modal-2-6">
+<div class="bg-dark-900 rounded-2xl w-full max-w-4xl max-h-[90vh] flex flex-col border border-dark-600">
+<div class="flex items-center justify-between p-4 border-b border-dark-600">
+<span class="font-bold">🗺️ Module 2.6 — Decision Map</span>
+<button class="p-2 hover:bg-dark-700 rounded-lg transition-colors" onclick="closeModal()">✕</button>
+</div>
+<iframe class="flex-1 rounded-b-xl" frameborder="0" src="modulo-2-6.html"></iframe>
+</div>
+</div>
+<script>
+    function toggleTopic(button) { const t=button.closest('.topic-item'); const e=t.querySelector('.topic-explanation'); const m=button.closest('.bg-dark-800'); m.querySelectorAll('.topic-explanation.active').forEach(x=>{if(x!==e)x.classList.remove('active')}); e.classList.toggle('active'); }
+    function openModal(id){ const m=document.getElementById(id); if(m){ m.classList.remove('hidden'); document.body.style.overflow='hidden'; } }
+    function closeModal(){ document.querySelectorAll('.modal').forEach(m=>m.classList.add('hidden')); document.body.style.overflow='auto'; }
+    document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeModal(); });
+    const themeToggle=document.getElementById('theme-toggle'),themeToggleDarkIcon=document.getElementById('theme-toggle-dark-icon'),themeToggleLightIcon=document.getElementById('theme-toggle-light-icon'),html=document.documentElement;
+    if(localStorage.getItem('theme')==='light'||(!localStorage.getItem('theme')&&!html.classList.contains('dark'))){themeToggleDarkIcon.classList.remove('hidden');html.classList.remove('dark');}else{themeToggleLightIcon.classList.remove('hidden');}
+    themeToggle.addEventListener('click',()=>{themeToggleDarkIcon.classList.toggle('hidden');themeToggleLightIcon.classList.toggle('hidden');html.classList.toggle('dark');localStorage.setItem('theme',html.classList.contains('dark')?'dark':'light');});
+  </script>
+</body>
+</html>

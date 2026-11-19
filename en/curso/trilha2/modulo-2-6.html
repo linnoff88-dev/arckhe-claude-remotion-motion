@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Module 2.6 · Decision Map — Which Library to Use | CC × Remotion</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#FACC15', dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' } } } } }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    code, .font-mono { font-family: 'JetBrains Mono', monospace; }
+
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+    html:not(.dark) .text-blue-400 { color: #2563eb; }
+    html:not(.dark) .bg-blue-500\/20 { background: rgba(37,99,235,.12); }
+    html:not(.dark) .bg-blue-500\/10 { background: rgba(37,99,235,.08); }
+    html:not(.dark) .border-blue-500\/30 { border-color: rgba(37,99,235,.25); }
+    html:not(.dark) .hover\:bg-blue-500\/30:hover { background: rgba(37,99,235,.18); }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #2563eb; }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(37,99,235,0.08); }
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #059669; }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(5,150,105,0.08); }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #7c3aed; }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(124,58,237,0.08); }
+    html:not(.dark) .hover\:text-amber-400:hover { color: #92400e; }
+    html:not(.dark) .hover\:bg-amber-500\/10:hover { background-color: rgba(217,119,6,0.08); }
+    html:not(.dark) .text-red-400 { color: #b91c1c; }
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161,98,7,0.08); }
+    html:not(.dark) .border-primary\/30 { border-color: rgba(161,98,7,0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255,255,255,0.95); }
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+    html:not(.dark) svg[role="img"] { filter: saturate(0.82) brightness(0.96); }
+
+    /* ===== DEMOS ===== */
+    @keyframes nodeAppear {
+      0%   { opacity: 0; transform: scale(0.7); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+    @keyframes lineDraw {
+      from { stroke-dashoffset: 200; }
+      to   { stroke-dashoffset: 0; }
+    }
+    @keyframes libBadgePulse {
+      0%,100% { opacity: 0.7; transform: scale(0.97); }
+      50%      { opacity: 1; transform: scale(1.02); }
+    }
+    .tree-node { animation: nodeAppear 0.5s ease both; }
+    .tree-node:nth-child(2){animation-delay:.1s}
+    .tree-node:nth-child(3){animation-delay:.2s}
+    .tree-node:nth-child(4){animation-delay:.3s}
+    .tree-node:nth-child(5){animation-delay:.4s}
+    .tree-line { stroke-dasharray: 200; stroke-dashoffset: 200; animation: lineDraw 0.8s ease 0.2s forwards; }
+    .lib-badge { animation: libBadgePulse 2.8s ease-in-out infinite; }
+    .lib-badge:nth-child(2){animation-delay:.5s}
+    .lib-badge:nth-child(3){animation-delay:1s}
+    .lib-badge:nth-child(4){animation-delay:1.5s}
+    .lib-badge:nth-child(5){animation-delay:2s}
+    @media (prefers-reduced-motion: reduce) {
+      .tree-node,.tree-line,.lib-badge { animation: none; }
+      .tree-line { stroke-dashoffset: 0; }
+      .lib-badge { opacity: 1; transform: scale(1); }
+    }
+  </style>
+<link href="https://inematds.github.io/claude-remotion-motion/curso/trilha2/modulo-2-6.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/claude-remotion-motion/en/curso/trilha2/modulo-2-6.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/claude-remotion-motion/es/curso/trilha2/modulo-2-6.html" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha2/modulo-2-6.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="modulo-2-6.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">EN</a><a href="../../../es/curso/trilha2/modulo-2-6.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">ES</a></div>
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14">
+<div class="flex items-center space-x-4">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html"><span class="text-2xl">🎞️</span><span class="font-bold text-lg hidden sm:inline">CC × Remotion</span></a>
+<span class="text-neutral-600">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+</div>
+<div class="flex items-center space-x-1 sm:space-x-2">
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors" href="../trilha1/index.html"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentals</span></a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-blue-400 bg-blue-500/10" href="index.html"><span class="sm:hidden">T2</span><span class="hidden sm:inline">Libraries</span></a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors" href="../trilha3/index.html"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Projects</span></a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors" href="../trilha4/index.html"><span class="sm:hidden">T4</span><span class="hidden sm:inline">Production</span></a>
+<button class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path></svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-blue-400" href="../../index.html">Start</a><span>/</span>
+<a class="hover:text-blue-400" href="index.html">Track 2</a><span>/</span>
+<span class="text-blue-400">Module 2.6</span>
+</div>
+</nav>
+<header class="bg-gradient-to-br from-blue-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-blue-500/20 text-blue-400 text-xs font-semibold rounded-full mb-4">MODULE 2.6 · ENDS LEARNING PATH 2</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">🗺️ Decision map — which library to use</h1>
+<p class="text-lg text-neutral-400 max-w-3xl">Five libraries, five areas of use. This module consolidates the matrix: for each type of motion, <strong class="text-blue-400">one library is clearly the winner</strong>. Plus the universal rules that apply no matter which one you choose.</p>
+<div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">6</div><div class="text-xs text-neutral-400">Topics</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">30</div><div class="text-xs text-neutral-400">Minutes</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">Synthesis</div><div class="text-xs text-neutral-400">Level</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">Reference</div><div class="text-xs text-neutral-400">Type</div></div>
+</div>
+</div>
+</header>
+<main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+<!-- DEMO 1: árvore de decisão animada -->
+<div class="rounded-2xl border border-blue-500/30 bg-dark-900/40 p-5 mb-12 overflow-hidden">
+<div class="flex items-center justify-between mb-4">
+<span class="text-xs font-semibold text-neutral-400 uppercase tracking-wide">live demo</span>
+<span class="text-xs text-blue-400 font-mono">decision tree · 5 libs</span>
+</div>
+<div class="overflow-x-auto">
+<svg aria-label="Decision tree: what type of motion? → GSAP for structured timelines, D3 for animated data, Three.js for 3D scenes, Lottie for micro-animations, Framer for reactive motion" class="w-full h-auto min-w-[600px]" role="img" viewbox="0 0 900 260">
+<defs>
+<lineargradient id="m26-grad" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#60a5fa"></stop><stop offset="1" stop-color="#3b82f6"></stop></lineargradient>
+<filter height="180%" id="m26-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="2"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<pattern height="28" id="m26-grid" patternunits="userSpaceOnUse" width="28"><circle cx="1" cy="1" fill="#3b82f6" opacity="0.09" r="1"></circle></pattern>
+<marker id="m26-ah" markerheight="8" markerwidth="8" orient="auto" refx="6" refy="4"><path d="M0,0 L8,4 L0,8 L2,4 Z" fill="#60a5fa" opacity="0.7"></path></marker>
+</defs>
+<rect fill="url(#m26-grid)" height="260" width="900" x="0" y="0"></rect>
+<!-- Raiz: que tipo de motion? -->
+<g class="tree-node" filter="url(#m26-glow)">
+<rect fill="#0e1622" height="46" rx="13" stroke="url(#m26-grad)" stroke-width="2.3" width="220" x="340" y="16"></rect>
+<text fill="#60a5fa" font-family="Inter,sans-serif" font-size="14" font-weight="700" text-anchor="middle" x="450" y="37">What kind of motion?</text>
+<text fill="#93c5fd" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="450" y="53">starting point</text>
+</g>
+<!-- Linhas da raiz para nós folha -->
+<line class="tree-line" fill="none" marker-end="url(#m26-ah)" opacity="0.5" stroke="#38bdf8" stroke-width="1.5" x1="392" x2="100" y1="62" y2="170"></line>
+<line class="tree-line" fill="none" marker-end="url(#m26-ah)" opacity="0.5" stroke="#38bdf8" stroke-width="1.5" x1="420" x2="256" y1="62" y2="170"></line>
+<line class="tree-line" fill="none" marker-end="url(#m26-ah)" opacity="0.5" stroke="#38bdf8" stroke-width="1.5" x1="450" x2="450" y1="62" y2="170"></line>
+<line class="tree-line" fill="none" marker-end="url(#m26-ah)" opacity="0.5" stroke="#38bdf8" stroke-width="1.5" x1="480" x2="644" y1="62" y2="170"></line>
+<line class="tree-line" fill="none" marker-end="url(#m26-ah)" opacity="0.5" stroke="#38bdf8" stroke-width="1.5" x1="508" x2="800" y1="62" y2="170"></line>
+<!-- Nó GSAP -->
+<g class="tree-node lib-badge">
+<rect fill="#0e2018" height="54" rx="12" stroke="#34d399" stroke-width="1.8" width="150" x="24" y="172"></rect>
+<text fill="#34d399" font-family="Inter,sans-serif" font-size="13" font-weight="700" text-anchor="middle" x="99" y="195">GSAP</text>
+<text fill="#a7f3d0" font-family="Inter,sans-serif" font-size="10" text-anchor="middle" x="99" y="212">structured timeline</text>
+<text fill="#6ee7b7" font-family="Inter,sans-serif" font-size="9.5" text-anchor="middle" x="99" y="224">SaaS intros · launch videos</text>
+</g>
+<!-- Nó D3 -->
+<g class="tree-node lib-badge">
+<rect fill="#0e1a2e" height="54" rx="12" stroke="#60a5fa" stroke-width="1.8" width="143" x="183" y="172"></rect>
+<text fill="#60a5fa" font-family="Inter,sans-serif" font-size="13" font-weight="700" text-anchor="middle" x="254" y="195">D3</text>
+<text fill="#bae6fd" font-family="Inter,sans-serif" font-size="10" text-anchor="middle" x="254" y="212">animated data</text>
+<text fill="#7dd3fc" font-family="Inter,sans-serif" font-size="9.5" text-anchor="middle" x="254" y="224">data → chart → video</text>
+</g>
+<!-- Nó Three.js -->
+<g class="tree-node lib-badge">
+<rect fill="#0e1622" height="54" rx="12" stroke="#38bdf8" stroke-width="1.8" width="150" x="375" y="172"></rect>
+<text fill="#38bdf8" font-family="Inter,sans-serif" font-size="13" font-weight="700" text-anchor="middle" x="450" y="195">Three.js</text>
+<text fill="#bae6fd" font-family="Inter,sans-serif" font-size="10" text-anchor="middle" x="450" y="212">3D scenes</text>
+<text fill="#7dd3fc" font-family="Inter,sans-serif" font-size="9.5" text-anchor="middle" x="450" y="224">product · flythrough · explainer</text>
+</g>
+<!-- Nó Lottie -->
+<g class="tree-node lib-badge">
+<rect fill="#1a1228" height="54" rx="12" stroke="#a78bfa" stroke-width="1.8" width="150" x="569" y="172"></rect>
+<text fill="#a78bfa" font-family="Inter,sans-serif" font-size="13" font-weight="700" text-anchor="middle" x="644" y="195">Lottie</text>
+<text fill="#ddd6fe" font-family="Inter,sans-serif" font-size="10" text-anchor="middle" x="644" y="212">micro-animation</text>
+<text fill="#c4b5fd" font-family="Inter,sans-serif" font-size="9.5" text-anchor="middle" x="644" y="224">social · onboarding · brand</text>
+</g>
+<!-- Nó Framer -->
+<g class="tree-node lib-badge">
+<rect fill="#1c150a" height="54" rx="12" stroke="#fbbf24" stroke-width="1.8" width="150" x="725" y="172"></rect>
+<text fill="#fbbf24" font-family="Inter,sans-serif" font-size="13" font-weight="700" text-anchor="middle" x="800" y="195">Framer Motion</text>
+<text fill="#fde68a" font-family="Inter,sans-serif" font-size="10" text-anchor="middle" x="800" y="212">reactive motion</text>
+<text fill="#fcd34d" font-family="Inter,sans-serif" font-size="9.5" text-anchor="middle" x="800" y="224">physical · spring · interactive UI</text>
+</g>
+</svg>
+</div>
+<p class="text-xs text-neutral-500 mt-3 text-center">Five clear branches from a central question — identify the type of motion and the right library appears.</p>
+</div>
+<!-- TÓPICO 1 -->
+<section class="mb-16" id="topico-1">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold">🗺️ The complete matrix of the 5 libraries</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">Each library has a <strong class="text-blue-400">clear winning zone</strong>. Using the right one means quick results; using the wrong one means fighting the tool as you iterate. The matrix below is the definitive guide.</p>
+<!-- Tabela-matriz das 5 libs -->
+<div class="overflow-x-auto mb-6">
+<table class="w-full text-sm border-collapse">
+<thead>
+<tr class="border-b border-dark-600">
+<th class="text-left p-3 text-neutral-400 font-semibold">Library</th>
+<th class="text-left p-3 text-neutral-400 font-semibold">Best for</th>
+<th class="text-left p-3 text-neutral-400 font-semibold">Typical example</th>
+<th class="text-left p-3 text-neutral-400 font-semibold">When NOT to use it</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-dark-600">
+<tr class="hover:bg-dark-800/40">
+<td class="p-3 font-semibold text-emerald-400">GSAP</td>
+<td class="p-3 text-neutral-300">Structured timeline, fixed choreography</td>
+<td class="p-3 text-neutral-400">SaaS intro, launch video, text sequence</td>
+<td class="p-3 text-neutral-500">Reactive / physics-based movement (use Framer)</td>
+</tr>
+<tr class="hover:bg-dark-800/40">
+<td class="p-3 font-semibold text-blue-400">D3</td>
+<td class="p-3 text-neutral-300">Data that becomes an animated story</td>
+<td class="p-3 text-neutral-400">Bar chart race, heat map, timeline</td>
+<td class="p-3 text-neutral-500">Animations without data (GSAP is simpler)</td>
+</tr>
+<tr class="hover:bg-dark-800/40">
+<td class="p-3 font-semibold text-cyan-400">Three.js</td>
+<td class="p-3 text-neutral-300">3D scenes rendered as frames</td>
+<td class="p-3 text-neutral-400">Product rotation, flythrough, 3D explainer</td>
+<td class="p-3 text-neutral-500">Simple 2D animations (overkill)</td>
+</tr>
+<tr class="hover:bg-dark-800/40">
+<td class="p-3 font-semibold text-purple-400">Lottie</td>
+<td class="p-3 text-neutral-300">Lightweight, fast micro-animations</td>
+<td class="p-3 text-neutral-400">Social clip, onboarding, brand icon</td>
+<td class="p-3 text-neutral-500">Complex or data-heavy scenes (use GSAP / D3)</td>
+</tr>
+<tr class="hover:bg-dark-800/40">
+<td class="p-3 font-semibold text-yellow-400">Framer Motion</td>
+<td class="p-3 text-neutral-300">Reactive, physics-based, spring movement</td>
+<td class="p-3 text-neutral-400">Interactive UI, page transitions, drag</td>
+<td class="p-3 text-neutral-500">Fixed video timeline (use GSAP)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Libs</div><div class="text-xs text-neutral-400">5 total</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Criterion</div><div class="text-xs text-neutral-400">Type of motion</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Overlay</div><div class="text-xs text-neutral-400">Minimum</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Right zone</div><div class="text-xs text-neutral-400">Fast result</div></div>
+</div>
+</section>
+<!-- TÓPICO 2 -->
+<section class="mb-16" id="topico-2">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold">🎞️ GSAP — when choreography is the message</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">GSAP is the choice for <strong class="text-blue-400">any video where sequence matters</strong>: text that enters the scene, elements revealed in sequence, choreography fixed on the timeline. SaaS intros, launch videos, product presentations.</p>
+<div class="space-y-3 mb-6">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center text-emerald-400 font-bold text-sm">✓</div>
+<div class="flex-1 bg-dark-800 rounded-xl p-4 border border-dark-600">
+<h4 class="font-semibold text-white mb-1">GSAP over Framer for fixed choreography</h4>
+<p class="text-neutral-300 text-sm">Framer Motion is great for reactive motion (the user interacts, the UI responds). But in rendered video, the timeline is fixed — GSAP maps directly to that. Framer adds a physics abstraction layer that doesn’t make sense without interaction.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400 font-bold text-sm">→</div>
+<div class="flex-1 bg-dark-800 rounded-xl p-4 border border-dark-600">
+<h4 class="font-semibold text-white mb-1">Framer for responsive, physics-based motion</h4>
+<p class="text-neutral-300 text-sm">When the video simulates an interactive UI (drag, spring, inertia), Framer provides real physics. It's the only case where Framer beats GSAP inside Remotion.</p>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">GSAP</div><div class="text-xs text-neutral-400">Fixed timeline</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-yellow-400 font-bold text-sm mb-1">Framer</div><div class="text-xs text-neutral-400">Physics-based / responsive</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Overlap</div><div class="text-xs text-neutral-400">Minimum</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Rule</div><div class="text-xs text-neutral-400">Choreography → GSAP</div></div>
+</div>
+</section>
+<!-- TÓPICO 3 -->
+<section class="mb-16" id="topico-3">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold">📊 D3 and Three.js — Domain Specialists</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">D3 and Three.js are specialists: each solves a very specific problem better than any other library. Outside that domain, they’re overengineering.</p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6">
+<h4 class="font-bold text-blue-400 mb-3 flex items-center"><span class="mr-2">📊</span> D3 — data becomes animation</h4>
+<p class="text-neutral-300 text-sm mb-3">Feed in the data, describe the chart, and Claude renders it. D3 is the only library where the data and animation live in the same model—you don’t need to convert, map, or sync them manually.</p>
+<ul class="space-y-2 text-sm">
+<li class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span class="text-neutral-300">Bar chart race with real data</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span class="text-neutral-300">Interactive timeline (in the video)</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span class="text-neutral-300">Heatmap with transition</span></li>
+</ul>
+</div>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6">
+<h4 class="font-bold text-cyan-400 mb-3 flex items-center"><span class="mr-2">🧊</span> Three.js — real perspective</h4>
+<p class="text-neutral-300 text-sm mb-3">For anything that requires three-dimensional depth, lighting, and a camera — Three.js is the only way. Vanilla for simple projects; R3F when you need composition in components.</p>
+<ul class="space-y-2 text-sm">
+<li class="flex items-start space-x-2"><span class="text-cyan-400">✓</span><span class="text-neutral-300">3D product rotation</span></li>
+<li class="flex items-start space-x-2"><span class="text-cyan-400">✓</span><span class="text-neutral-300">Environment flythrough</span></li>
+<li class="flex items-start space-x-2"><span class="text-cyan-400">✓</span><span class="text-neutral-300">3D explainer animation</span></li>
+</ul>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Rule for choosing between D3 and Three.js</h3>
+<p class="text-neutral-300 text-sm">Have data? Use D3. Have a z-axis? Use Three.js. If you're thinking, "would it work here?", it probably would—but if you had to think about it, GSAP might be simpler for the job.</p>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">D3</div><div class="text-xs text-neutral-400">Data → chart</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-cyan-400 font-bold text-sm mb-1">Three.js</div><div class="text-xs text-neutral-400">Z-axis → 3D</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Out of domain</div><div class="text-xs text-neutral-400">Overengineering</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Question</div><div class="text-xs text-neutral-400">Maybe GSAP</div></div>
+</div>
+</section>
+<!-- TÓPICO 4 -->
+<section class="mb-16" id="topico-4">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold">✨ Lottie — speed above all</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">Lottie is the choice when <strong class="text-blue-400">speed matters more than complexity</strong>. Micro-content, social clips, onboarding—the fastest path from prompt to a production-ready output. The library Claude gets right on the first try most often.</p>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+<div class="bg-dark-800 rounded-xl p-5 border border-dark-600">
+<div class="text-purple-400 text-xl font-bold mb-2">Social</div>
+<p class="text-neutral-400 text-sm">Clean motion and a perfect loop. The kind that works on Reels without looking software-made.</p>
+</div>
+<div class="bg-dark-800 rounded-xl p-5 border border-dark-600">
+<div class="text-purple-400 text-xl font-bold mb-2">Onboarding</div>
+<p class="text-neutral-400 text-sm">Illustrations that move to guide the user. Lightweight, fast-loading, and the mobile industry standard.</p>
+</div>
+<div class="bg-dark-800 rounded-xl p-5 border border-dark-600">
+<div class="text-purple-400 text-xl font-bold mb-2">Brand</div>
+<p class="text-neutral-400 text-sm">Animated icons, loading screens, confirmations. Small touches that bring the identity to life.</p>
+</div>
+</div>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-2 flex items-center"><span class="mr-2">🔷</span> When Lottie falls short</h3>
+<p class="text-neutral-300 text-sm">Animations with structured data (use D3), long choreographies (use GSAP), or 3D scenes (use Three.js). Outside these exceptions, if you're choosing between Lottie and GSAP for something simple, choose Lottie — it's faster.</p>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">Lottie wins</div><div class="text-xs text-neutral-400">Micro + social</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Speed</div><div class="text-xs text-neutral-400">1 prompt → done</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Reuse</div><div class="text-xs text-neutral-400">Web + mobile</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Simple question</div><div class="text-xs text-neutral-400">Lottie wins</div></div>
+</div>
+</section>
+<!-- TÓPICO 5: SVG árvore + DEMO 2 badges animados -->
+<section class="mb-16" id="topico-5">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold">🔮 The 4 Universal Rules</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">Regardless of which library you choose, four rules always apply. These are the principles that make Claude Code + Remotion work well with any library.</p>
+<!-- DEMO 2: badges das 4 regras pulsando -->
+<div class="rounded-2xl border border-blue-500/30 bg-dark-900/40 p-5 mb-6">
+<div class="flex items-center justify-between mb-4">
+<span class="text-xs font-semibold text-neutral-400 uppercase tracking-wide">live demo</span>
+<span class="text-xs text-blue-400 font-mono">4 rules · always valid</span>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4 bg-dark-800 rounded-xl border border-dark-600 p-6">
+<div class="lib-badge bg-blue-900/30 rounded-xl border border-blue-500/30 p-4 text-center">
+<div class="text-2xl mb-2">🧩</div>
+<div class="text-blue-400 font-bold text-sm">Install the skill</div>
+<div class="text-xs text-neutral-500 mt-1">always the first step</div>
+</div>
+<div class="lib-badge bg-blue-900/30 rounded-xl border border-blue-500/30 p-4 text-center">
+<div class="text-2xl mb-2">🌱</div>
+<div class="text-blue-400 font-bold text-sm">Start simple</div>
+<div class="text-xs text-neutral-500 mt-1">without overengineering</div>
+</div>
+<div class="lib-badge bg-blue-900/30 rounded-xl border border-blue-500/30 p-4 text-center">
+<div class="text-2xl mb-2">🔄</div>
+<div class="text-blue-400 font-bold text-sm">Iterate in the session</div>
+<div class="text-xs text-neutral-500 mt-1">without restarting the context</div>
+</div>
+<div class="lib-badge bg-blue-900/30 rounded-xl border border-blue-500/30 p-4 text-center">
+<div class="text-2xl mb-2">⚙️</div>
+<div class="text-blue-400 font-bold text-sm">Correct render</div>
+<div class="text-xs text-neutral-500 mt-1">right settings at the end</div>
+</div>
+</div>
+</div>
+<!-- Detalhes das 4 regras -->
+<div class="space-y-3 mb-6">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400 font-bold text-sm">1</div>
+<div class="flex-1 bg-dark-800 rounded-xl p-4 border border-dark-600">
+<h4 class="font-semibold text-white mb-1">Install the skill before anything else</h4>
+<p class="text-neutral-300 text-sm">The 28 Remotion rule files in Claude’s context are what ensure the generated code is correct for video rendering. Without the skill, Claude generates browser code—not rendering code.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400 font-bold text-sm">2</div>
+<div class="flex-1 bg-dark-800 rounded-xl p-4 border border-dark-600">
+<h4 class="font-semibold text-white mb-1">Start with the simplest version</h4>
+<p class="text-neutral-300 text-sm">Any scene works with fewer elements than you think. A cube before a full scene; a chart before a dashboard. Simple things can be delivered in one prompt; complex ones need several.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400 font-bold text-sm">3</div>
+<div class="flex-1 bg-dark-800 rounded-xl p-4 border border-dark-600">
+<h4 class="font-semibold text-white mb-1">Iterate in the same session</h4>
+<p class="text-neutral-300 text-sm">The scene context stays with Claude for as long as the session lasts. Color, speed, geometry, or layout adjustments are follow-up prompts—not new prompts from scratch.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400 font-bold text-sm">4</div>
+<div class="flex-1 bg-dark-800 rounded-xl p-4 border border-dark-600">
+<h4 class="font-semibold text-white mb-1">Render with the right settings</h4>
+<p class="text-neutral-300 text-sm">FPS, resolution, and codec affect the final quality. Before rendering, confirm the settings for <code class="text-blue-400">remotion.config.ts</code> — the skill guides you to the right values.</p>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Skill</div><div class="text-xs text-neutral-400">Always first</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Simple</div><div class="text-xs text-neutral-400">Less = faster</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Session</div><div class="text-xs text-neutral-400">Context persists</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Render</div><div class="text-xs text-neutral-400">Correct configs</div></div>
+</div>
+</section>
+<!-- TÓPICO 6 -->
+<section class="mb-16" id="topico-6">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold">🚀 Track 2 complete — what comes next</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">You now have the complete map of the libraries and the universal rules. The <strong class="text-blue-400">Track 3 — Projects</strong> put all of this into practice: complete end-to-end projects with each library, from prompt to final MP4.</p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ What doesn't work without the map</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Choosing the library based on familiarity, not the type of motion.</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Use GSAP for everything — it works, but adds unnecessary complexity.</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Trying to use data with Three.js—D3 is the right tool.</span></li>
+</ul>
+</div>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6">
+<h4 class="font-bold text-blue-400 mb-4">✓ With the map in mind</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span>The first prompt already uses the right library — fewer iterations.</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span>Faster production-ready output.</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span>Claude generates more reliable code when the library is the right one for the problem.</span></li>
+</ul>
+</div>
+</div>
+<div class="bg-purple-900/20 rounded-xl border border-purple-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-purple-400 mb-3 flex items-center"><span class="mr-2">🎯</span> In Track 3, you will</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-purple-400">→</span><span>Build a SaaS intro video from scratch with GSAP.</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400">→</span><span>Create a bar chart race with D3 from real data.</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400">→</span><span>Render a 3D product scene with Three.js.</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400">→</span><span>Compose a complete social clip with Lottie.</span></li>
+</ul>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Track 2</div><div class="text-xs text-neutral-400">Completed ✓</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">Track 3</div><div class="text-xs text-neutral-400">Complete projects</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Libs</div><div class="text-xs text-neutral-400">5 mastered</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Next</div><div class="text-xs text-neutral-400">End-to-end</div></div>
+</div>
+</section>
+<!-- RESUMO FINAL -->
+<section class="mb-12">
+<div class="bg-gradient-to-br from-blue-900/40 via-dark-800 to-dark-800 rounded-xl border border-blue-500/30 p-8">
+<h2 class="text-2xl font-bold mb-6 flex items-center"><span class="mr-3">📌</span> Track 2 Summary</h2>
+<div class="space-y-4 mb-8">
+<div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-white">GSAP</strong><span class="text-neutral-400"> — structured timeline (SaaS intros, launch videos). GSAP over Framer for fixed choreography.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-white">D3</strong><span class="text-neutral-400"> — animated data. Provide the data, describe the chart, Claude renders it.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-cyan-400 mt-1">✓</span><div><strong class="text-white">Three.js</strong><span class="text-neutral-400"> — 3D scenes (vanilla for simple ones, R3F when you need component-based composition).</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-white">Lottie</strong><span class="text-neutral-400"> — lightweight and fast (social clips, micro-content, the fastest path from prompt to output).</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-white">4 universal rules</strong><span class="text-neutral-400"> — install the skill, start simple, iterate in the session, render with the right configs.</span></div></div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+<h3 class="font-semibold text-purple-400 mb-2">Next track:</h3>
+<p class="text-neutral-300">Track 3 — Projects: end-to-end projects with each library, from prompt to MP4.</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="modulo-2-5.html">← Previous Module</a>
+<a class="flex-1 text-center px-6 py-3 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-500 transition-colors" href="../trilha3/index.html">Next track: Projects →</a>
+</div>
+</div>
+</section>
+</main>
+<footer class="border-t border-dark-600 py-8 mt-8">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>Claude Code × Remotion · Module 2.6 · 2026 · <a class="text-sky-400 hover:text-sky-300" href="https://inema.club" target="_blank">INEMA.CLUB</a></p>
+</div>
+</footer>
+<script>
+    const themeToggle=document.getElementById('theme-toggle'),themeToggleDarkIcon=document.getElementById('theme-toggle-dark-icon'),themeToggleLightIcon=document.getElementById('theme-toggle-light-icon'),html=document.documentElement;
+    if(localStorage.getItem('theme')==='light'||(!localStorage.getItem('theme')&&!html.classList.contains('dark'))){themeToggleDarkIcon.classList.remove('hidden');html.classList.remove('dark');}else{themeToggleLightIcon.classList.remove('hidden');}
+    themeToggle.addEventListener('click',()=>{themeToggleDarkIcon.classList.toggle('hidden');themeToggleLightIcon.classList.toggle('hidden');html.classList.toggle('dark');localStorage.setItem('theme',html.classList.contains('dark')?'dark':'light');});
+  </script>
+</body>
+</html>

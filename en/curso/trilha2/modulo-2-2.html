@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Module 2.2 · GSAP × Framer Motion | CC × Remotion</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#FACC15', dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' } } } } }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    code, .font-mono { font-family: 'JetBrains Mono', monospace; }
+
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+    html:not(.dark) .text-blue-400 { color: #2563eb; }
+    html:not(.dark) .bg-blue-500\/20 { background: rgba(37,99,235,.12); }
+    html:not(.dark) .bg-blue-500\/10 { background: rgba(37,99,235,.08); }
+    html:not(.dark) .border-blue-500\/30 { border-color: rgba(37,99,235,.25); }
+    html:not(.dark) .hover\:bg-blue-500\/30:hover { background: rgba(37,99,235,.18); }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #2563eb; }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background: rgba(37,99,235,.08); }
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #059669; }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(5,150,105,0.08); }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #7c3aed; }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(124,58,237,0.08); }
+    html:not(.dark) .hover\:text-amber-400:hover { color: #92400e; }
+    html:not(.dark) .hover\:bg-amber-500\/10:hover { background-color: rgba(217,119,6,0.08); }
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161,98,7,0.08); }
+    html:not(.dark) .border-primary\/30 { border-color: rgba(161,98,7,0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255,255,255,0.95); }
+    html:not(.dark) .bg-dark-900\/40 { background-color: rgba(255,255,255,0.7); }
+    html:not(.dark) .text-red-400 { color: #b91c1c; }
+    html:not(.dark) .border-red-500\/30 { border-color: rgba(185,28,28,0.25); }
+    html:not(.dark) .bg-red-900\/20 { background-color: rgba(185,28,28,0.08); }
+    html:not(.dark) .bg-emerald-900\/20 { background-color: rgba(5,150,105,0.08); }
+    html:not(.dark) .border-emerald-500\/30 { border-color: rgba(5,150,105,0.25); }
+    html:not(.dark) .text-emerald-400 { color: #059669; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #92400e; }
+
+    /* ===== DEMOS ===== */
+    /* Demo 1: A→B→C timeline coreografada */
+    @keyframes m22-blockA {
+      0%   { opacity: 0; transform: translateX(-30px); }
+      20%  { opacity: 1; transform: translateX(0); }
+      80%  { opacity: 1; transform: translateX(0); }
+      100% { opacity: 0; transform: translateX(-30px); }
+    }
+    @keyframes m22-blockB {
+      0%   { opacity: 0; transform: translateY(20px); }
+      35%  { opacity: 0; transform: translateY(20px); }
+      55%  { opacity: 1; transform: translateY(0); }
+      80%  { opacity: 1; transform: translateY(0); }
+      100% { opacity: 0; transform: translateY(20px); }
+    }
+    @keyframes m22-blockC {
+      0%   { opacity: 0; transform: scale(0.85); }
+      55%  { opacity: 0; transform: scale(0.85); }
+      75%  { opacity: 1; transform: scale(1); }
+      80%  { opacity: 1; transform: scale(1); }
+      100% { opacity: 0; transform: scale(0.85); }
+    }
+    .m22-block-a { animation: m22-blockA 4s ease-in-out infinite; }
+    .m22-block-b { animation: m22-blockB 4s ease-in-out infinite; }
+    .m22-block-c { animation: m22-blockC 4s ease-in-out infinite; }
+
+    /* Demo 2: card "reativo" simulando hover loop */
+    @keyframes m22-hoverLoop {
+      0%, 40%, 100% { transform: scale(1);   box-shadow: none; }
+      20%            { transform: scale(1.06); box-shadow: 0 0 20px rgba(59,130,246,0.4); }
+    }
+    .m22-reactive-card { animation: m22-hoverLoop 3s ease-in-out infinite; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .m22-block-a, .m22-block-b, .m22-block-c { animation: none; opacity: 1; transform: none; }
+      .m22-reactive-card { animation: none; }
+    }
+  </style>
+<link href="https://inematds.github.io/claude-remotion-motion/curso/trilha2/modulo-2-2.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/claude-remotion-motion/en/curso/trilha2/modulo-2-2.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/claude-remotion-motion/es/curso/trilha2/modulo-2-2.html" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha2/modulo-2-2.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="modulo-2-2.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">EN</a><a href="../../../es/curso/trilha2/modulo-2-2.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">ES</a></div>
+<!-- NAV -->
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14">
+<div class="flex items-center space-x-4">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🎞️</span>
+<span class="font-bold text-lg hidden sm:inline">CC × Remotion</span>
+</a>
+<span class="text-neutral-600">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+</div>
+<div class="flex items-center space-x-1 sm:space-x-2">
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors" href="../trilha1/index.html">
+<span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentals</span>
+</a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-blue-400 bg-blue-500/10" href="index.html">
+<span class="sm:hidden">T2</span><span class="hidden sm:inline">Libraries</span>
+</a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors" href="../trilha3/index.html">
+<span class="sm:hidden">T3</span><span class="hidden sm:inline">Projects</span>
+</a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors" href="../trilha4/index.html">
+<span class="sm:hidden">T4</span><span class="hidden sm:inline">Production</span>
+</a>
+<button class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path></svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<!-- BREADCRUMB -->
+<nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-blue-400" href="../../index.html">Start</a>
+<span>/</span>
+<a class="hover:text-blue-400" href="index.html">Track 2</a>
+<span>/</span>
+<span class="text-blue-400">Module 2.2</span>
+</div>
+</nav>
+<!-- MODULE HEADER -->
+<header class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-10">
+<div class="inline-flex items-center space-x-2 bg-blue-500/10 border border-blue-500/30 rounded-full px-4 py-1.5 mb-4">
+<span class="text-blue-400 text-sm font-semibold">MODULE 2.2</span>
+</div>
+<h1 class="text-3xl sm:text-4xl font-extrabold mb-3">⚖️ GSAP × Framer Motion</h1>
+<p class="text-neutral-300 text-lg mb-6 max-w-2xl">Precise timeline control vs. reactive physics. A direct comparison so you can always choose the right tool — and understand why GSAP wins for rendered video.</p>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-xl font-extrabold text-blue-400">6</div><div class="text-xs text-neutral-400 mt-1">Topics</div></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-xl font-extrabold text-blue-400">~35</div><div class="text-xs text-neutral-400 mt-1">Minutes</div></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-xl font-extrabold text-blue-400">⚡</div><div class="text-xs text-neutral-400 mt-1">Intermediate</div></div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 text-center"><div class="text-xl font-extrabold text-blue-400">⚖️</div><div class="text-xs text-neutral-400 mt-1">Comparison</div></div>
+</div>
+</header>
+<main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
+<!-- TÓPICO 1 -->
+<section class="mb-16" id="topico-1">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold">🎯 Two completely different paradigms</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">GSAP and Framer Motion aren’t competing—they serve <strong class="text-blue-400">opposing contexts</strong>. One is built for maximum control over time; the other is built to respond to the user. Understanding this fundamental difference saves hours of frustration.</p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6">
+<h4 class="font-bold text-blue-400 mb-4">🟢 GSAP — the time paradigm</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span>Based on an absolute timeline—t=0 is always the same.</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span>Seek() to any point in time.</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span>Rendered frame ≡ frame in the final video.</span></li>
+</ul>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+<h4 class="font-bold text-neutral-300 mb-4">⚛️ Framer Motion — state paradigm</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-neutral-400">→</span><span>Physics-based—spring, inertia, drag.</span></li>
+<li class="flex items-start space-x-2"><span class="text-neutral-400">→</span><span>Animations triggered in response to interactions.</span></li>
+<li class="flex items-start space-x-2"><span class="text-neutral-400">→</span><span>The result depends on user timing — it’s nondeterministic.</span></li>
+</ul>
+</div>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">GSAP</div><div class="text-xs text-neutral-400">Absolute time</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Framer</div><div class="text-xs text-neutral-400">State + physics</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Video</div><div class="text-xs text-neutral-400">GSAP wins</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Web UI</div><div class="text-xs text-neutral-400">Framer shines</div></div>
+</div>
+</section>
+<!-- TÓPICO 2 — TABELA -->
+<section class="mb-16" id="topico-2">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold">📊 Decision Matrix</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">Use this table as a quick reference. Before choosing a library, identify the consumption context: rendered video (MP4) or interactive interface (browser/app).</p>
+<div class="overflow-x-auto mb-6">
+<table class="w-full text-sm border-collapse">
+<thead>
+<tr class="bg-blue-500/10 border border-blue-500/30">
+<th class="text-left px-4 py-3 font-semibold text-blue-400">Criterion</th>
+<th class="text-left px-4 py-3 font-semibold text-blue-400">GSAP</th>
+<th class="text-left px-4 py-3 font-semibold text-neutral-300">Framer Motion</th>
+</tr>
+</thead>
+<tbody>
+<tr class="border-b border-dark-600">
+<td class="px-4 py-3 text-neutral-400">Rendered video (Remotion)</td>
+<td class="px-4 py-3 text-blue-400 font-semibold">✓ Ideal</td>
+<td class="px-4 py-3 text-red-400">✗ Doesn't work</td>
+</tr>
+<tr class="border-b border-dark-600 bg-dark-700/20">
+<td class="px-4 py-3 text-neutral-400">Deterministic animation</td>
+<td class="px-4 py-3 text-blue-400 font-semibold">✓ Native</td>
+<td class="px-4 py-3 text-red-400">✗ Depends on interaction</td>
+</tr>
+<tr class="border-b border-dark-600">
+<td class="px-4 py-3 text-neutral-400">Hover / drag / gestures</td>
+<td class="px-4 py-3 text-neutral-400">Possible, but verbose</td>
+<td class="px-4 py-3 text-emerald-400 font-semibold">✓ Native and elegant</td>
+</tr>
+<tr class="border-b border-dark-600 bg-dark-700/20">
+<td class="px-4 py-3 text-neutral-400">UI prototyping</td>
+<td class="px-4 py-3 text-neutral-400">Can be used</td>
+<td class="px-4 py-3 text-emerald-400 font-semibold">✓ Much faster</td>
+</tr>
+<tr class="border-b border-dark-600">
+<td class="px-4 py-3 text-neutral-400">Layout animations (reflow)</td>
+<td class="px-4 py-3 text-neutral-400">Manual</td>
+<td class="px-4 py-3 text-emerald-400 font-semibold">✓ AnimatePresence</td>
+</tr>
+<tr class="border-b border-dark-600 bg-dark-700/20">
+<td class="px-4 py-3 text-neutral-400">Seek to a specific frame</td>
+<td class="px-4 py-3 text-blue-400 font-semibold">✓ tl.seek()</td>
+<td class="px-4 py-3 text-red-400">✗ Doesn't exist</td>
+</tr>
+<tr class="border-b border-dark-600">
+<td class="px-4 py-3 text-neutral-400">Choreographed timeline</td>
+<td class="px-4 py-3 text-blue-400 font-semibold">✓ Core feature</td>
+<td class="px-4 py-3 text-neutral-400">Possible, but limited</td>
+</tr>
+<tr>
+<td class="px-4 py-3 text-neutral-400">Browser performance</td>
+<td class="px-4 py-3 text-blue-400 font-semibold">✓ Excellent</td>
+<td class="px-4 py-3 text-blue-400 font-semibold">✓ Very good</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">MP4 video</div><div class="text-xs text-neutral-400">Always GSAP</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">React app</div><div class="text-xs text-neutral-400">Framer or both</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Prototype</div><div class="text-xs text-neutral-400">Framer wins</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Presentation</div><div class="text-xs text-neutral-400">Always GSAP</div></div>
+</div>
+</section>
+<!-- TÓPICO 3 — DEMO A→B→C + demo reativo -->
+<section class="mb-16" id="topico-3">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold">🎬 Side-by-side demonstration</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">Left: choreographed timeline (GSAP) — A ends, B starts, C overlaps. Right: “reactive” card (Framer Motion style) — hover/scale loop that <strong class="text-red-400">doesn't make sense in a rendered video</strong>, since nobody will hover over an MP4.</p>
+<!-- DEMO 1+2 lado a lado -->
+<div class="rounded-2xl border border-blue-500/30 bg-dark-900/40 p-6 mb-6">
+<div class="text-xs font-semibold text-neutral-400 uppercase tracking-wide mb-5">live demo</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<!-- Left: GSAP coreografado -->
+<div>
+<div class="text-sm font-semibold text-blue-400 mb-3 flex items-center space-x-2">
+<span class="w-2 h-2 rounded-full bg-blue-400 animate-pulse"></span>
+<span>GSAP — timeline A→B→C</span>
+</div>
+<div class="bg-dark-800 rounded-xl p-4 border border-blue-500/30 min-h-[160px] relative overflow-hidden space-y-3">
+<div class="m22-block-a bg-blue-500/20 border border-blue-500/40 rounded-lg px-4 py-3">
+<div class="text-sm font-semibold text-blue-400">A — title</div>
+<div class="text-xs text-neutral-400">enters from the left</div>
+</div>
+<div class="m22-block-b bg-cyan-500/20 border border-cyan-500/40 rounded-lg px-4 py-3">
+<div class="text-sm font-semibold text-cyan-400">B — subtitle</div>
+<div class="text-xs text-neutral-400">rises from below (0.3s later)</div>
+</div>
+<div class="m22-block-c bg-blue-400/15 border border-blue-400/30 rounded-lg px-4 py-3">
+<div class="text-sm font-semibold text-blue-300">C — CTA</div>
+<div class="text-xs text-neutral-400">scale in (overlaps B)</div>
+</div>
+</div>
+<p class="text-xs text-neutral-500 mt-2">✓ Deterministic — same result in any render</p>
+</div>
+<!-- Right: Framer "reativo" -->
+<div>
+<div class="text-sm font-semibold text-neutral-400 mb-3 flex items-center space-x-2">
+<span class="w-2 h-2 rounded-full bg-neutral-500"></span>
+<span>Framer Motion — reactive card</span>
+</div>
+<div class="bg-dark-800 rounded-xl p-4 border border-dark-600 min-h-[160px] flex items-center justify-center">
+<div class="m22-reactive-card bg-dark-700 border border-dark-600 rounded-xl px-6 py-5 text-center cursor-default">
+<div class="text-3xl mb-2">🖱️</div>
+<div class="text-sm font-semibold text-neutral-300">whileHover</div>
+<div class="text-xs text-neutral-500 mt-1">scale: 1.06</div>
+</div>
+</div>
+<p class="text-xs text-red-400 mt-2">✗ Hover doesn't exist in MP4 — this pattern doesn't generate video</p>
+</div>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-2 flex items-center"><span class="mr-2">💡</span> The golden rule</h3>
+<p class="text-neutral-300">If your final product is a <strong>video file</strong>, use GSAP. If it’s a <strong>interface the user will interact with</strong>, Framer Motion saves code.</p>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">A→B→C</div><div class="text-xs text-neutral-400">Chained timeline</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">whileHover</div><div class="text-xs text-neutral-400">Requires interaction</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">seek()</div><div class="text-xs text-neutral-400">Jump to frame</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">spring</div><div class="text-xs text-neutral-400">Physical, non-linear</div></div>
+</div>
+</section>
+<!-- TÓPICO 4 — GSAP determinístico em detalhes -->
+<section class="mb-16" id="topico-4">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold">🔬 Why GSAP Is Deterministic and Frame-Based</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">Remotion renders frames <strong class="text-blue-400">headless</strong>: it “freezes” time on each frame, takes a screenshot, and moves to the next one. For this to work, the visual state must be 100% dependent on the frame number—never on the system clock.</p>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4">🧠 The problem with requestAnimationFrame</h3>
+<p class="text-neutral-300 mb-3">CSS animations and Framer Motion use <code class="text-blue-400">requestAnimationFrame</code> — they depend on the real clock. When Remotion renders frame 60, it doesn't "wait 2 real seconds"; it jumps straight there. CSS animations would always be at t=0.</p>
+<div class="bg-dark-800 rounded-lg p-4 font-mono text-sm overflow-x-auto">
+<span class="text-neutral-500">// ❌ CSS animation — ignores Remotion’s current frame</span><br/>
+<span class="text-red-400">@keyframes fade { from { opacity:0 } to { opacity:1 } }</span><br/><br/>
+<span class="text-neutral-500">// ✓ GSAP + seek — goes exactly to the correct frame</span><br/>
+          tl.<span class="text-cyan-400">seek</span>(frame / fps); <span class="text-neutral-500">// frame=60, fps=30 → seek(2.0)</span>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Not deterministic</h4>
+<ul class="space-y-2 text-sm text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>CSS <code>animation</code> — clock-based</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Framer Motion spring — variable physics</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>setTimeout/setInterval — imprecise timing</span></li>
+</ul>
+</div>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6">
+<h4 class="font-bold text-blue-400 mb-4">✓ Deterministic for Remotion</h4>
+<ul class="space-y-2 text-sm text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span>GSAP with <code>tl.seek()</code></span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span><code>interpolate(frame, [...])</code> native Remotion</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span>Remotion spring (not Framer)</span></li>
+</ul>
+</div>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">headless</div><div class="text-xs text-neutral-400">Render without display</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">determinism</div><div class="text-xs text-neutral-400">Frame = single state</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">seek()</div><div class="text-xs text-neutral-400">GSAP solution</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">rAF</div><div class="text-xs text-neutral-400">CSS problem</div></div>
+</div>
+</section>
+<!-- TÓPICO 5 — quando Framer faz sentido -->
+<section class="mb-16" id="topico-5">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold">✅ When Framer Motion still makes sense</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">Framer Motion isn’t inferior — it’s different. There are contexts where it saves days of work. The key is not to confuse it with the final product.</p>
+<!-- Timeline de casos de uso legítimos -->
+<div class="space-y-4 mb-6">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center text-emerald-400 font-bold">✓</div>
+<div class="bg-dark-800 rounded-xl p-4 flex-1 border border-dark-600">
+<h4 class="font-semibold text-emerald-400 mb-1">Rapid prototyping</h4>
+<p class="text-sm text-neutral-400">Show a UI idea to the client in hours. Framer Motion + shadcn = a prototype in an afternoon.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center text-emerald-400 font-bold">✓</div>
+<div class="bg-dark-800 rounded-xl p-4 flex-1 border border-dark-600">
+<h4 class="font-semibold text-emerald-400 mb-1">React apps with route transitions</h4>
+<p class="text-sm text-neutral-400">AnimatePresence makes component enter/exit transitions trivial. It’s impossible to replicate this as simply with GSAP.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center text-emerald-400 font-bold">✓</div>
+<div class="bg-dark-800 rounded-xl p-4 flex-1 border border-dark-600">
+<h4 class="font-semibold text-emerald-400 mb-1">Drag and gestures</h4>
+<p class="text-sm text-neutral-400">Draggable dashboards, carousels with inertia, kanban boards. Framer makes them trivial.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-red-500/20 border border-red-500/30 flex items-center justify-center text-red-400 font-bold">✗</div>
+<div class="bg-dark-800 rounded-xl p-4 flex-1 border border-dark-600">
+<h4 class="font-semibold text-red-400 mb-1">Rendered Remotion video</h4>
+<p class="text-sm text-neutral-400">Framer Motion doesn't work here — without seek(), spring physics is indeterministic, so the final result is unpredictable.</p>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Prototypes</div><div class="text-xs text-neutral-400">Framer wins</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Web apps</div><div class="text-xs text-neutral-400">Framer wins</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">MP4 video</div><div class="text-xs text-neutral-400">GSAP is required</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Presentations</div><div class="text-xs text-neutral-400">GSAP is required</div></div>
+</div>
+</section>
+<!-- TÓPICO 6 — Como pedir ao Claude -->
+<section class="mb-16" id="topico-6">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold">💬 How to Ask Claude for the Right Tool</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed">Claude knows both libraries, but <strong class="text-blue-400">you need to make the context explicit</strong>. Without context, Claude may generate Framer Motion code for a Remotion video—and that won’t work.</p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-3">✗ Vague prompt</h4>
+<p class="text-sm text-neutral-300 font-mono bg-dark-800 rounded-lg p-3">"Animate these cards as they enter the screen"</p>
+<p class="text-xs text-neutral-400 mt-2">Claude can use CSS, Framer, or GSAP—luck determines the result.</p>
+</div>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6">
+<h4 class="font-bold text-blue-400 mb-3">✓ Contextualized prompt</h4>
+<p class="text-sm text-neutral-300 font-mono bg-dark-800 rounded-lg p-3">"I'm using Remotion 4 with GSAP. Animate these cards with a 0.2s stagger, fade-up, using tl.seek(frame/fps)"</p>
+<p class="text-xs text-neutral-400 mt-2">Guaranteed, correct result.</p>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-2 flex items-center"><span class="mr-2">💡</span> Prompt template for GSAP + Remotion</h3>
+<p class="text-neutral-300 text-sm font-mono bg-dark-800 rounded-lg p-4 mt-2">"Create a Remotion composition with GSAP. Use tl.seek(frame/fps) to synchronize. [describe the animation]. FPS: 30, duration: [Ns]."</p>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Context</div><div class="text-xs text-neutral-400">Always specify</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Remotion</div><div class="text-xs text-neutral-400">Mention the version</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">seek()</div><div class="text-xs text-neutral-400">Be explicit</div></div>
+<div class="bg-dark-800 rounded-lg p-4 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">FPS</div><div class="text-xs text-neutral-400">Always provide information</div></div>
+</div>
+</section>
+<!-- RESUMO -->
+<section class="bg-dark-800 rounded-2xl border border-blue-500/30 p-8 mb-12">
+<h2 class="text-2xl font-bold mb-6">📋 Module Summary</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div>
+<h3 class="font-semibold text-blue-400 mb-3">What we learned</h3>
+<ul class="space-y-2 text-sm text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-0.5">✓</span><span>GSAP and Framer serve opposite paradigms</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-0.5">✓</span><span>Rendered video requires determinism — GSAP + seek()</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-0.5">✓</span><span>Framer Motion shines in prototyping and interactive UI</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-0.5">✓</span><span>CSS animations are incompatible with headless rendering</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-0.5">✓</span><span>Context in the prompt ensures Claude chooses the right tool</span></li>
+</ul>
+</div>
+<div>
+<h3 class="font-semibold text-blue-400 mb-3">Next module</h3>
+<div class="bg-dark-700 rounded-xl p-4 border border-dark-600">
+<div class="text-blue-400 font-bold mb-1">📊 2.3 — D3.js — Data Is the Content</div>
+<p class="text-sm text-neutral-400">When the data itself is the animation. Bar races, architecture diagrams, and visualizations Claude generates from a CSV.</p>
+</div>
+</div>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex items-center space-x-2 bg-dark-700 hover:bg-dark-600 border border-dark-600 rounded-xl px-5 py-3 transition-colors" href="modulo-2-1.html">
+<span>← 2.1 GSAP</span>
+</a>
+<a class="flex items-center space-x-2 bg-blue-600 hover:bg-blue-500 text-white rounded-xl px-5 py-3 transition-colors font-semibold" href="modulo-2-3.html">
+<span>Next: 📊 D3.js →</span>
+</a>
+</div>
+</section>
+</main>
+<script>
+    const themeToggle=document.getElementById('theme-toggle'),themeToggleDarkIcon=document.getElementById('theme-toggle-dark-icon'),themeToggleLightIcon=document.getElementById('theme-toggle-light-icon'),html=document.documentElement;
+    if(localStorage.getItem('theme')==='light'||(!localStorage.getItem('theme')&&!html.classList.contains('dark'))){themeToggleDarkIcon.classList.remove('hidden');html.classList.remove('dark');}else{themeToggleLightIcon.classList.remove('hidden');}
+    themeToggle.addEventListener('click',()=>{themeToggleDarkIcon.classList.toggle('hidden');themeToggleLightIcon.classList.toggle('hidden');html.classList.toggle('dark');localStorage.setItem('theme',html.classList.contains('dark')?'dark':'light');});
+  </script>
+</body>
+</html>
