@@ -1,4 +1,4 @@
-﻿# Claude Code Ã— Remotion â€” Motion Graphics com CÃ³digo
+# Claude Code Ã— Remotion â€” Motion Graphics com CÃ³digo
 
 <div align="center">
   <img src="capa/logo.svg" alt="Arckhé AI" height="48" />
@@ -6,9 +6,9 @@
 </div>
 
 
-Curso gratuito em PT-BR (formato INEMA.CLUB) sobre gerar **motion graphics de produÃ§Ã£o com cÃ³digo**, combinando **Claude Code + Remotion** com as bibliotecas certas: **GSAP, D3, Three.js, Lottie e Framer Motion**.
+Curso gratuito em PT-BR (formato ARCKHÉ AI) sobre gerar **motion graphics de produÃ§Ã£o com cÃ³digo**, combinando **Claude Code + Remotion** com as bibliotecas certas: **GSAP, D3, Three.js, Lottie e Framer Motion**.
 
-âž¡ï¸ **[Acessar o curso](https://inematds.github.io/claude-remotion-motion/)**
+âž¡ï¸ **[Acessar o curso](https://linnoff88-dev.github.io/
 
 ## Trilhas
 
@@ -25,7 +25,7 @@ Material da sÃ©rie "Claude Code Ã— Remotion" (workflow de produÃ§Ã£o co
 
 ---
 
-Parte do ecossistema [INEMA.CLUB](https://inema.club). Veja tambÃ©m o [curso de Remotion (81 templates)](https://inematds.github.io/remotion-templates/).
+Parte do ecossistema [ARCKHÉ AI](https://ARCKHÉ AI). Veja tambÃ©m o [curso de Remotion (81 templates)](https://linnoff88-dev.github.io/
 
 ---
 
